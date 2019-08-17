@@ -1,0 +1,303 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{43e451b8-1a0f-48d3-8ebd-39ff044ae48c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map">
+      <UniqueIdentifier>{34bd9e72-1f19-4f6b-8e21-0a7d1b29d4a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Manager">
+      <UniqueIdentifier>{1bc11b58-cc92-4c80-a64b-106a33b92355}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Base">
+      <UniqueIdentifier>{2f23a166-d41f-4620-b972-f00fd1cfd1d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Constant">
+      <UniqueIdentifier>{9eca5004-e340-4a54-a3dd-78aa5438b88e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Component">
+      <UniqueIdentifier>{62f291ec-32a3-42de-bec0-1b0b353b1808}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Image">
+      <UniqueIdentifier>{67506dcd-6c33-4caa-b6b3-73ccf436675c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Xml">
+      <UniqueIdentifier>{ed150c6f-d54e-4f88-a714-3cb48e689ba1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{3d901e20-cd6f-4490-9911-9ab379ed1e74}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MapleStory.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="MainFrm.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ChildView.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ProxyID.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="MRoad.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="MCollision.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="View.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="MobManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseScene.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="MObject.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Asset.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Constants.h">
+      <Filter>Constant</Filter>
+    </ClInclude>
+    <ClInclude Include="common.h">
+      <Filter>Constant</Filter>
+    </ClInclude>
+    <ClInclude Include="MInput.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Mob.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="MPlayer.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="MCharacter.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="BatchRender.h">
+      <Filter>Image</Filter>
+    </ClInclude>
+    <ClInclude Include="MSprite.h">
+      <Filter>Image</Filter>
+    </ClInclude>
+    <ClInclude Include="MSpriteComponent.h">
+      <Filter>Image</Filter>
+    </ClInclude>
+    <ClInclude Include="SprMgr.h">
+      <Filter>Image</Filter>
+    </ClInclude>
+    <ClInclude Include="AssetMgr.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectMgr.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="TempObj.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="MWData.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="MTile.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="MBack.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="World.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="rapidxml.hpp">
+      <Filter>Xml</Filter>
+    </ClInclude>
+    <ClInclude Include="rapidxml_iterators.hpp">
+      <Filter>Xml</Filter>
+    </ClInclude>
+    <ClInclude Include="rapidxml_print.hpp">
+      <Filter>Xml</Filter>
+    </ClInclude>
+    <ClInclude Include="rapidxml_utils.hpp">
+      <Filter>Xml</Filter>
+    </ClInclude>
+    <ClInclude Include="Node.h">
+      <Filter>Xml</Filter>
+    </ClInclude>
+    <ClInclude Include="MainScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="MapleStory.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="MainFrm.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ChildView.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="MWData.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ProxyID.cpp">
+      <Filter>헤더 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="MRoad.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="MCollision.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="View.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="MobManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseScene.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="MObject.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Asset.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="MPlayer.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Mob.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="MInput.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="MCharacter.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="BatchRender.cpp">
+      <Filter>Image</Filter>
+    </ClCompile>
+    <ClCompile Include="MSprite.cpp">
+      <Filter>Image</Filter>
+    </ClCompile>
+    <ClCompile Include="MSpriteComponent.cpp">
+      <Filter>Image</Filter>
+    </ClCompile>
+    <ClCompile Include="SprMgr.cpp">
+      <Filter>Image</Filter>
+    </ClCompile>
+    <ClCompile Include="AssetMgr.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectMgr.cpp">
+      <Filter>Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="MTile.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="TempObj.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="MBack.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="World.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Node.cpp">
+      <Filter>Xml</Filter>
+    </ClCompile>
+    <ClCompile Include="MainScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="MapleStory.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\MapleStory.rc2">
+      <Filter>리소스 파일</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\MapleStory.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
