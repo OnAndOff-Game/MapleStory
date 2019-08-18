@@ -1,32 +1,46 @@
 #pragma once
 
-class MSprite
+class MSprite : public Component
 {
 public:
 
 	MSprite();
-	MSprite(const SPRDATA& _sprdata);
+	MSprite(const SPRDATA& _sprdata, EMRenderType _type);
 	~MSprite();
 
 	void Init();
-	void Update(DWORD _dwElsape);
+	void Update(MObject* _obj, float _delta);
+	void Release();
 
-	void SetAnim(const std::string& _anim);
+	EMAnimType GetAnimType();
+	std::string& GetName();
+
+	void SetFrame(int _frame);
+	int GetFrame();
+
+	int GetCurrentDelay();
+
+	//void SetAnim(const std::string& _anim);
 	void SetAsset(Asset* _asset);
 
 	void LoadData(const std::string& _name);
-		
 
+public:
+
+	EMRenderType m_eRenderType;
+		
 private:
 	
 	SPRDATA m_SprData;
 
-//	IMG_DATA
+	std::vector<IMG_DATA*> m_vImgData;
 
 	std::vector<Asset*> m_vAsset;
 
-	Gdiplus::Point ImgSize;
-	Gdiplus::Point ImgUV;
-	Gdiplus::Image* ImageTexture;
+	int m_nFrame;
+
+	//Gdiplus::Point ImgSize;
+	//Gdiplus::Point ImgUV;
+	//Gdiplus::Image* ImageTexture;
 };
 

@@ -3,7 +3,6 @@
 
 MRoad::MRoad()
 {
-	m_vRGroup.clear();
 	m_vRoad.clear();
 }
 
@@ -19,54 +18,31 @@ void MRoad::LoadData(Node* pNode)
 {
 	for (auto o = pNode->begin(); o; o = o++)
 	{
+		auto layer = std::stoi(o.GetName());
 		for (auto o2 = o.begin(); o2; o2 = o2++)
-		{					   		
-			MRoadGroup group;
-
-			group.layer = std::stoi(o.GetName());
-			group.num = std::stoi(o2.GetName());
-
+		{
+			auto group = std::stoi(o2.GetName());
+			
 			for (auto o3 = o2.begin(); o3; o3 = o3++)
 			{
-				m_vRoad[group.num].line1.X = o3["x1"].GetValueInt();
-				m_vRoad[group.num].line1.Y = o3["y1"].GetValueInt();
-				m_vRoad[group.num].line2.X = o3["x2"].GetValueInt();
-				m_vRoad[group.num].line2.Y = o3["y2"].GetValueInt();
-				m_vRoad[group.num].prv	= o3["prev"].GetValueInt();
-				m_vRoad[group.num].nxt	= o3["next"].GetValueInt();
-							   
-				if (m_vRoad[group.num].prv == 0)
-					group.Begin = std::stoi(o3.GetName());
-				
-				if (m_vRoad[group.num].nxt == 0)
-					group.End = std::stoi(o3.GetName());
+				RoadLine rl;
+				rl.layer = layer;
+				rl.group = group;
+				rl.id = std::stoi(o3.GetName());				
+				rl.line1.X = o3["x1"].GetValueInt();
+				rl.line1.Y = o3["y1"].GetValueInt();
+				rl.line2.X = o3["x2"].GetValueInt();
+				rl.line2.Y = o3["y2"].GetValueInt();
+				rl.prv		= o3["prev"].GetValueInt();
+				rl.nxt		= o3["next"].GetValueInt();
 
-
-				if (group.line.size() == 0)
-				{
-					group.colpt1.X = m_vRoad[group.num].line1.X;
-					group.colpt1.Y = m_vRoad[group.num].line1.Y;
-					group.colpt2.X = m_vRoad[group.num].line2.X;
-					group.colpt2.Y = m_vRoad[group.num].line2.Y;
-				}
-
-				if (group.colpt1.X > m_vRoad[group.num].line1.X)
-					group.colpt1.X = m_vRoad[group.num].line1.X;
-
-				if (group.colpt1.Y > m_vRoad[group.num].line1.Y)
-					group.colpt1.Y = m_vRoad[group.num].line1.Y;
-				
-				if (group.colpt2.X < m_vRoad[group.num].line2.X)
-					group.colpt2.X = m_vRoad[group.num].line2.X;
-
-				if (group.colpt2.Y < m_vRoad[group.num].line2.Y)
-					group.colpt2.Y = m_vRoad[group.num].line2.Y;
-
-				group.line.push_back(std::stoi(o3.GetName()));
+				m_vRoad.push_back(rl);
 			}
-			m_vRGroup.push_back(group);
 		}
-	}
+	}	
+
+	std::sort(m_vRoad.begin(), m_vRoad.end(),
+		[](RoadLine const& _l1, RoadLine const& _l2) { return _l1.id < _l2.id; });
 }
 
 void MRoad::Update(float _delta)
@@ -75,41 +51,52 @@ void MRoad::Update(float _delta)
 
 RoadLine* MRoad::GetLine(Gdiplus::Point& _pt)
 {
-	MRoadGroup* pTemp = nullptr;
-	int dt = 0;
 
-	for (auto it : m_vRGroup)
-	{
-		if (_pt.Y > it.colpt1.Y && _pt.X > it.colpt1.X && _pt.X < it.colpt2.X)
-		{
-			if (_pt.Y - it.colpt1.Y > 0)
-			{
-				if (dt == 0)
-				{
-					dt = _pt.Y - it.colpt1.Y;
-					pTemp = &it;
-				}
-				else
-					if (dt > _pt.Y - it.colpt1.Y)
-					{
-						dt = _pt.Y - it.colpt1.Y;
-						pTemp = &it;
-					}
-			}
-		}
-	}
+	//int cnt = 0;
+	////MRoadGroup* pTemp = nullptr;
+	//int dt = 0;
 
-	for (int i = 0; i < pTemp->line.size(); ++i)
-	{
-		if (m_vRoad[pTemp->line[i]].line1.X > _pt.X && m_vRoad[pTemp->line[i]].line1.X < _pt.X)
-			return &m_vRoad[pTemp->line[i]];
-	}
+	//for (auto &it : m_vRoad)
+	//{
+	//	double wd = it.line2.X - it.line1.X;
+	//	double ht = it.line2.Y - it.line1.Y;
 
+
+
+	//	if (_pt.Y > it..Y && _pt.X > it.colpt1.X && _pt.X < it.colpt2.X)
+	//	{
+	//		if (_pt.Y - it.colpt1.Y > 0)
+	//		{
+	//			if (dt == 0)
+	//			{
+	//				dt = _pt.Y - it.colpt1.Y;
+	//			}
+
+	//			else
+	//				if (dt > _pt.Y - it.colpt1.Y)
+	//				{
+	//					dt = _pt.Y - it.colpt1.Y;
+	//					cnt++;
+	//				}
+	//		}
+	//	}
+	//}
+
+	////std::cout << "캐릭 x : " << _pt.X << "캐릭 y : " << _pt.Y;
+
+
+	//for (int i = 0; i < m_vRGroup[cnt].line.size(); ++i)
+	//{
+	//	if (m_vRoad[m_vRGroup[cnt].line[i]].line1.X < _pt.X && m_vRoad[m_vRGroup[cnt].line[i]].line2.X > _pt.X)
+	//	{
+	//	//	std::cout << "좌표 x : " << pt.X << "캐릭 y : " << pt.Y;
+	//		return &m_vRoad[m_vRGroup[cnt].line[i]];
+	//	}
+	//}
 	return nullptr;
 }
 
 void MRoad::Release()
 {
-	m_vRGroup.clear();
 	m_vRoad.clear();
 }

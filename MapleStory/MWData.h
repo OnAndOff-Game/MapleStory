@@ -126,6 +126,9 @@ struct MobInfo
 
 struct RoadLine
 {
+	int layer;
+	int group;
+	int id;
 	Gdiplus::Point line1;
 	Gdiplus::Point line2;
 	int prv;

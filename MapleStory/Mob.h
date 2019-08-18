@@ -1,5 +1,7 @@
 #pragma once
 
+class MSpriteComponent;
+
 class Mob : public MObject
 {
 public:
@@ -26,6 +28,9 @@ public:
 	void Dead();
 	void Skill();
 	void Attack();
+	
+	bool GetFalling() { return bFalling; }
+	void SetFalling(bool _bFalling) {bFalling = _bFalling;}
 
 private:
 
@@ -33,14 +38,26 @@ private:
 
 private:
 
-	Node* m_pPaser;
+	bool bFalling;
+
+	ProxyID m_ProxyID;
+
+	Node m_Paser;
 
 	std::string m_strName;
 
 	int m_nHp;
 	int m_nMp;
+	
+	int m_nSkillCnt;
+	int m_nAtkCnt;
 	const MobInfo* m_pMobInfo;
 
-	std::vector<Component*> m_vComponent;	
+	std::vector<Component*> m_vComponent;
+	   
+	MSpriteComponent* m_pSprites;
+//	MSpriteComponent;
+	//MInput;
+//	Skill;
 };
 

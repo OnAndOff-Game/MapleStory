@@ -19,12 +19,12 @@ Map::Map(const char* fileName)
 	mapNode = Node(mapCode.c_str());
 
 
-	//pMob = new Mob("Mob/131.img.xml");
+	pMob = new Mob("Mob/131.img.xml");
 
-	//pMob->SetPosition(Point(50, 10));
-	//pMob->Init();
+	pMob->SetPosition(Point(50, 10));
+	pMob->Init();
 
-	//pMob->Move();
+	pMob->Move();
 }
 
 Map::~Map()
@@ -171,7 +171,7 @@ void Map::Update(float delta)
 	//	pMob->SetPosition(Gdiplus::Point(pt.X, pLine->line1.Y));
 	//else
 	//	pMob->Offset(0, 0);
-	//pMob->Update(delta);
+	pMob->Update(delta);
 }
 
 void Map::Release()

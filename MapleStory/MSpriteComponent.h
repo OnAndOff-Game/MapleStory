@@ -1,12 +1,18 @@
 #pragma once
 
+class MSprite;
+
 class MSpriteComponent : public Component
 {
 public:
+	MSpriteComponent();
+	MSpriteComponent(const std::string& _filename,EMRenderType _type);
+	MSpriteComponent(int _strid, EMRenderType _type);
+	~MSpriteComponent();
 
 	void Init();
-	void Update(MObject* _obj, DWORD _elapsedTime);
-
+	void Update(MObject* _obj, float _delta);
+	void Release();
 
 	int GetCurFrame();
 
@@ -17,26 +23,32 @@ public:
 	void Resume();
 	void Reverse();
 
-	void SetSpriteAnim(class MSprite* _Sprite);
+	void SetCurrentAnim(EMAnimType _type);
+	void SetCurrentAnim(EMAnimType _type, int _cnt);
+	void SetSpriteAnim(MSprite* _Sprite);
 
 	//
+	void SetLooping(bool _bLooping);
 	bool IsLooping() const;
 	//bool 
 private:
+	
+	std::multimap<EMAnimType, MSprite*> m_mSprites;
 
-	MSprite* m_pSpriteAnim;
+	EMRenderType m_eRenderType;
 
-	std::vector<MSprite*> m_vSprites;
+	MSprite* m_pSprite;
+
+	int m_nSprID;
 
 	int m_nFrame;
-	int m_nCurFrame;
 
 	bool m_bLooping;
 	bool m_bPlaying;
+	
+	float m_nCurrentTime;
 
 	float m_fFrameUpdateSec;
 	float m_fPlayRate;
-
-
 };
 

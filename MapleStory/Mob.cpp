@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "MSprite.h"
+#include "MSpriteComponent.h"
 #include "Mob.h"
 
 Mob::Mob()
@@ -7,7 +8,7 @@ Mob::Mob()
 }
 
 Mob::Mob(const std::string& _filename) : m_strName(_filename),
-m_pPaser(nullptr)
+ m_nSkillCnt(0), m_nAtkCnt(0), bFalling(true)
 {
 	LoadData(_filename);
 }
@@ -19,12 +20,23 @@ Mob::~Mob()
 void Mob::Init()
 {
 	//LoadData(m_strName);
+	m_pSprites->Init();
+
+	m_pSprites->SetLooping(true);
 }
 
 void Mob::Release()
 {
+	if (m_pSprites != nullptr)
+	{
+		m_pSprites->Release();
+		delete m_pSprites;
+		m_pSprites = nullptr;
+	}
+
 	for (auto it : m_vComponent)
 	{
+		it->Release();
 		delete it;
 	}
 
@@ -33,23 +45,40 @@ void Mob::Release()
 
 void Mob::Update(float _delta)
 {
+
+	if (bFalling)
+	{
+		Offset(0, 1);
+	}
+
+
+	for (auto it : m_vComponent)
+	{
+		it->Update(this, _delta);
+	}
+
+	m_pSprites->Update(this, _delta);
 }
 
 void Mob::Move()
 {
 	//spr->anim("move")
+	m_pSprites->SetCurrentAnim(EMAnimType::eMA_Moving);
 }
 
 void Mob::Jump()
 {
+
 }
 
 void Mob::Stand()
 {
+	m_pSprites->SetCurrentAnim(EMAnimType::eMA_Standing);
 }
 
 void Mob::Dead()
 {
+	m_pSprites->SetCurrentAnim(EMAnimType::eMA_Die);
 }
 
 void Mob::Skill()
@@ -62,38 +91,44 @@ void Mob::Attack()
 
 void Mob::LoadData(const std::string& _filename)
 {
-	if (m_pPaser == nullptr)
-		m_pPaser = new Node(_filename.c_str());
+	m_Paser = Node(_filename.c_str());
 	
-	std::string sprname = m_pPaser[0].GetName(); // 이름
-	int ane = stoi(sprname);
+	std::string sprname = _filename; // 이름
+	sprname.replace(sprname.find(".xml"), 4, "");
 
-	if(SPRMGR->GetSprDataCnt(ane) == 0)
-	for (auto o = m_pPaser[0].begin(); o; o = o++) //anim name
+	int sprid = std::stoi(m_Paser.GetName());
+	
+	if(SPRMGR->GetSprDataCnt(sprid) == 0)
+	for (auto o = m_Paser.begin(); o; o = o++) //anim name
 	{
 		if (strcmp(o.GetName(), "info"))
 		{
 			SPRDATA sprdata;
 			int nCnt = 0;
 
+			sprdata.path = sprname;
 			sprdata.name = o.GetName();
-			
-			for (auto t = m_pPaser[0][o.GetName()].begin(); t; t = t++) // num
+			//int a = sprdata.name.find("skill");
+			//sprdata.name.compare("Attack");
+
+			for (auto t = m_Paser[o.GetName()].begin(); t; t = t++) // num
 			{
 				o.GetName();
 				std::string file;
 
 				IMG_DATA imgdata;
 
-				file = _filename + '/' + sprdata.name + '.' + t.GetName() + ".png";
-
-				file.replace(file.find(".xml"), 4, "");
+				file = sprname + '/' + sprdata.name + '.' + t.GetName() + ".png";
 
 				imgdata.filename = file;
 				imgdata.id = atoi(t.GetName());
 				imgdata.imgsize = t.GetValuePoint();
 
-				for (auto f = m_pPaser[0][o.GetName()][t.GetName()].begin(); f; f = f++) // element
+				//if(t.GetValuePoint() ==
+				
+				//t.GetValueInt();
+			
+				for (auto f = m_Paser[o.GetName()][t.GetName()].begin(); f; f = f++) // element
 				{
 					if (imgdata.imgsize.X * imgdata.imgsize.Y == 1)
 					{
@@ -135,7 +170,6 @@ void Mob::LoadData(const std::string& _filename)
 					if (!t["a1"].IsNull())
 						imgdata.a1 = t["a1"].GetValueInt();
 
-					//std::cout << node[0][o.GetName()][t.GetName()][f.GetName()].GetValueString() << std::endl;
 				}
 
 				ASSETMGR->SetAssetData(imgdata);
@@ -144,15 +178,59 @@ void Mob::LoadData(const std::string& _filename)
 
 			sprdata.cnt = nCnt;
 
-			SPRMGR->SetSprData(sprdata);
+			if (!sprdata.name.find("move") || !sprdata.name.find("walk"))
+			{
+				sprdata.type = EMAnimType::eMA_Moving;
+			}
+
+			else if (!sprdata.name.find("stand"))
+			{
+				sprdata.type = EMAnimType::eMA_Standing;
+			}
+
+			else if (!sprdata.name.find("skill"))
+			{
+				sprdata.type = EMAnimType::eMA_Skill;
+				m_nSkillCnt++;
+			}
+
+			else if (!sprdata.name.find("jump"))
+			{
+				sprdata.type = EMAnimType::eMA_Jumping;
+			}
+
+			else if (!sprdata.name.find("attack"))
+			{
+				sprdata.type = EMAnimType::eMA_Attack;
+				m_nAtkCnt++;
+			}
+
+			else if (!sprdata.name.find("hit"))
+			{
+				sprdata.type = EMAnimType::eMA_Hit;
+			}
+
+			else if (!sprdata.name.find("die"))
+			{
+				sprdata.type = EMAnimType::eMA_Die;
+			}
+
+			else if (!sprdata.name.find("chase"))
+			{
+				sprdata.type = EMAnimType::eMA_Chase;
+			}
+			
+			else
+			{
+				char* p = nullptr;
+				p = "a";
+			}
+
+			SPRMGR->SetSprData(sprid, sprdata);
 		}
 	}
 
-	//m_pPaser->Release();
-
-	if (m_pPaser != nullptr)
-	{
-		delete m_pPaser;
-		m_pPaser = nullptr;
-	}
+	m_pSprites = new MSpriteComponent(sprid, EMRenderType::eMR_Obj);
+	
+	//m_vComponent.push_back(pSC);
 }
