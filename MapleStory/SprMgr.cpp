@@ -15,10 +15,10 @@ SprMgr::~SprMgr()
 	}
 }
 
-SPRDATA& SprMgr::GetSprData(const char* _sprname, int _cnt)
-{
-	return m_mSprData[std::stoi(_sprname)][_cnt];
-}
+//SPRDATA& SprMgr::GetSprData(const char* _sprname, int _cnt)
+//{
+//	return m_mSprData[std::stoi(_sprname)][_cnt];
+//}
 
 SPRDATA& SprMgr::GetSprData(int _sprid, int _cnt)
 {
@@ -29,12 +29,13 @@ int SprMgr::GetSprDataCnt(const char* _sprname)
 {
 	return m_mSprData[std::stoi(_sprname)].size();
 }
+
 int SprMgr::GetSprDataCnt(int _sprid)
 {
 	return m_mSprData[_sprid].size();
 }
 
-void SprMgr::SetSprData(SPRDATA& _sprdata)
+void SprMgr::SetSprData(int _sprid, SPRDATA& _sprdata)
 {
-	m_mSprData[std::stoi(_sprdata.sprname)].push_back(_sprdata);
+	m_mSprData[_sprid].push_back(_sprdata);
 }

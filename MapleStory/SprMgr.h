@@ -9,14 +9,14 @@ public:
 
 	void LoadData(const char* _filename);
 	
-	SPRDATA& GetSprData(const char* _sprname, int _cnt);
+	//SPRDATA& GetSprData(const char* _sprname, int _cnt);
 	SPRDATA& GetSprData(int _sprid, int _cnt);
 
 
 	int GetSprDataCnt(const char* _sprname);
 	int GetSprDataCnt(int _sprid);
 	
-	void SetSprData(SPRDATA& _sprdata);
+	void SetSprData(int _sprid, SPRDATA& _sprdata);
 	
 private:
 

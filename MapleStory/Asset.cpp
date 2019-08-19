@@ -6,7 +6,7 @@ Asset::Asset()
 	//m_pImgDB = nullptr;
 }
 
-Asset::Asset(EMRenderType _type, const std::string& _imgname, int _z, bool _billboard)
+Asset::Asset(EMRenderType _type, const std::string& _assetname, int _z, bool _billboard)
 {
 	m_eType = _type;
 	bFlip = false;
@@ -14,7 +14,28 @@ Asset::Asset(EMRenderType _type, const std::string& _imgname, int _z, bool _bill
 	bBillBoard = _billboard;
 	z = _z;
 
-	m_pImg = SpriteManager->GetAssetImg(_imgname);
+	m_pImg = SpriteManager->GetAssetImg(_assetname);
+	//SetAssetData(_imgname);
+
+	rect.X = 0;
+	rect.Y = 0;
+	ImgSize.X = rect.Width = m_pImg->GetWidth();
+	ImgSize.Y = rect.Height = m_pImg->GetHeight();
+	Alpha = 1.0f;
+	CustomPos.X = ImgSize.X / 2;
+	CustomPos.Y = ImgSize.Y / 2;
+}
+
+Asset::Asset(EMRenderType _type, const std::string& _assetname, IMG_DATA const& _imgdata, bool _billboard)
+{
+	m_eType = _type;
+	bFlip = false;
+	bRender = true;
+	bBillBoard = _billboard;
+	z = _imgdata.z;
+	CustomPos = _imgdata.origin;
+
+	m_pImg = SpriteManager->GetAssetImg(_assetname);
 	//SetAssetData(_imgname);
 
 	rect.X = 0;
@@ -38,8 +59,8 @@ Asset::Asset(EMRenderType _type, const std::string& _imgname, Gdiplus::Rect& _si
 	ImgSize.Y = m_pImg->GetHeight();
 	rect = _size;
 	Alpha = 1.0f;
-	Pos.X = _size.X;
-	Pos.Y = _size.Y;
+	CustomPos.X = _size.Width / 2;
+	CustomPos.Y = _size.Height / 2;
 }
 
 Asset::~Asset()
@@ -56,14 +77,14 @@ void Asset::Update(MObject* _obj, float _delta)
 	{
 		if (!bBillBoard)
 		{
-			rect.X = _obj->Transform.Translation.X - View::viewPort.X; // + 카메라 X
-			rect.Y = _obj->Transform.Translation.Y - View::viewPort.Y; // + 카메라 Y
+			rect.X = _obj->Transform.Translation.X - View::viewPort.X + Constants::SCREEN_SIZE_X / 2 - CustomPos.X;
+			rect.Y = _obj->Transform.Translation.Y - View::viewPort.Y + Constants::SCREEN_SIZE_Y / 2 - CustomPos.Y;
 		}
 
 		else
 		{
-			rect.X = _obj->Transform.Translation.X;
-			rect.Y = _obj->Transform.Translation.Y;
+			rect.X = _obj->Transform.Translation.X - CustomPos.X;
+			rect.Y = _obj->Transform.Translation.Y - CustomPos.Y;
 		}
 
 		if (rect.X - rect.Width < Constants::SCREEN_SIZE_X  &&

@@ -65,39 +65,38 @@ typedef struct MTransform
 
 typedef struct SprData
 {
-	EMAnimType type;
-	std::string path;
-	std::string sprname;
-	std::string name;
-	int	cnt;
+	EMAnimType type;	// 드로우 타입
+	std::string path;   // 경로 ex) Object\acc1.img
+	std::string sprname; // 파일 명칭 ex) woodMarble.artificiality
+	std::string name;	// 이름 숫자 2
+	int	cnt;			// 갯수 0 결과 = woodMarble.artificiality.2.0
 }SPRDATA, *LPSPRDATA;
 
 typedef struct Img_Data
 {
-	std::string filename; // 
-	int id;
+	std::string filename; // 파일 경로 + 이름 ex)  woodMarble.artificiality.2.0.png
+	int id;				  // png 앞에 있는 숫자 Sprdata의 cnt가 MAX 숫자
 
 	Gdiplus::Point imgsize; // x * y == 1 link
 
-	Gdiplus::Point origin;
-	Gdiplus::Point head;
-	Gdiplus::Point lt;
-	Gdiplus::Point rb;
+	Gdiplus::Point origin; // 좌표 이거 없으면 중점 좌표를 계산해서 넣어야함
+	Gdiplus::Point head; //충돌안하면 안씀
+	Gdiplus::Point lt;  //충돌안하면 안씀
+	Gdiplus::Point rb; // 충돌안하면
 
-	int delay;
+	int delay;			// anim 출력 딜레이
+				
+	int z;				// z값
 
-	int z;
+	int a0;				// 알파 0값
+	int a1;				// 알파 1값
 
-	int a0;
-	int a1;
-
-	std::string link;
+	std::string link;   // 링크 안씀
 }IMG_DATA, *LPIMG_DATA;
 
 struct MobInfo
 {
 	int acc; // 명중
-
 	bool bodyAttack; // 몸통 판정
 	int category;
 	int eva;//회피
@@ -117,15 +116,12 @@ struct MobInfo
 	char elemAttr[256]; //상태? 약점? 2 반감 3 약점 / I = 얼음, F = 불, L = 전기, S = 독 
 	int fs; // 미끄러짐
 };
-//
-//struct skill
-//{
-//	std::string id; // 1 전사 2 마법사 3 궁수 4 도적
-//
-//};
 
 struct RoadLine
 {
+	int layer;
+	int group;
+	int id;
 	Gdiplus::Point line1;
 	Gdiplus::Point line2;
 	int prv;
