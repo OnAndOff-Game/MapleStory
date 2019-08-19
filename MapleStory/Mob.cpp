@@ -55,23 +55,19 @@ void Mob::Release()
 
 void Mob::Update(float _delta)
 {
-
-	View::viewPort.X;
-	//if (bFalling)
-	//{
-	//	Offset(0, 1);
-	//}
+	m_pPhysics->SetImgData(m_pSprites->GetCurrentImgData());
 
 	if (GetAsyncKeyState(VK_RIGHT))
 	{
+		m_pSprites->SetFlip(true);
 		m_pPhysics->SetVelocityX(1);
 	}
 
 	else if (GetAsyncKeyState(VK_LEFT))
 	{
+		m_pSprites->SetFlip(false);
 		m_pPhysics->SetVelocityX(-1);
 	}
-
 
 	for (auto it : m_vComponent)
 	{
@@ -179,7 +175,12 @@ void Mob::LoadData(const std::string& _filename)
 
 					if (!t["origin"].IsNull())
 						imgdata.origin = t["origin"].GetValuePoint();
-
+					else
+					{
+						imgdata.origin.X = imgdata.imgsize.X / 2;
+						imgdata.origin.Y = imgdata.imgsize.Y / 2;
+					}
+					
 					if (!t["lt"].IsNull())
 						imgdata.lt = t["lt"].GetValuePoint();
 
@@ -194,10 +195,18 @@ void Mob::LoadData(const std::string& _filename)
 
 					if (!t["a0"].IsNull())
 						imgdata.a0 = t["a0"].GetValueInt();
+					else
+						imgdata.a0 = 0;
 
 					if (!t["a1"].IsNull())
 						imgdata.a1 = t["a1"].GetValueInt();
+					else
+						imgdata.a1 = 0;
 
+					if (!t["z"].IsNull())
+						imgdata.z = t["z"].GetValueInt();
+					else
+						imgdata.z = 0;
 				}
 
 				ASSETMGR->SetAssetData(imgdata);

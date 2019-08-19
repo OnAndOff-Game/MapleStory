@@ -19,9 +19,11 @@ public:
 	int GetFrame();
 
 	int GetCurrentDelay();
+	IMG_DATA const& GetCurrentImgData();
 
 	//void SetAnim(const std::string& _anim);
 	void SetAsset(Asset* _asset);
+	void SetFlip(bool _flip);
 
 	void LoadData(const std::string& _name);
 

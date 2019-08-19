@@ -5,7 +5,7 @@ double const fall_speed = 670;
 double const gravity_acc = 2000;
 double const walk_speed = 125;
 
-MPhysics::MPhysics() : m_pRL(nullptr)
+MPhysics::MPhysics() : m_pRL(nullptr), m_pImgData(nullptr)
 {
 
 	vx = vy = 0.0f;
@@ -22,12 +22,14 @@ void MPhysics::Init()
 
 void MPhysics::Update(MObject* _obj, float _delta)
 {
-	float delta = _delta / 3;
+	float delta = _delta;
+
+	std::cout << "delta : " << _delta << std::endl;
 
 	if (m_pRL == nullptr)
 	{
 		vy = 1;
-		Gdiplus::Point pos = _obj->GetPosition();
+		Gdiplus::Point pos = m_pImgData->origin;
 
 		double dx1 = vx * delta;
 		double dy1 = vy * delta;
@@ -122,8 +124,8 @@ void MPhysics::Update(MObject* _obj, float _delta)
 
 			else if (nxt->line1.Y > nxt->line2.Y)
 			{
-				nx = nxt->line2.X - 1.0f;
-				ny = nxt->line2.Y;
+				nx = m_pRL->line2.X - 1.0f;
+				ny = m_pRL->line2.Y;
 				vx = 0; vy = 0;
 			}
 
@@ -175,12 +177,15 @@ void MPhysics::Update(MObject* _obj, float _delta)
 		}
 		_obj->SetPosition(nx, ny);	
 	}
-
-
 }
 
 void MPhysics::Release()
 {
+}
+
+void MPhysics::SetImgData(IMG_DATA const& _imgdata)
+{
+	m_pImgData = &_imgdata;
 }
 
 void MPhysics::SetVelocity(float _vx, float _vy)

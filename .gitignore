@@ -15,3 +15,4 @@ MapleStory/x64/Debug/MapleStory.Build.CppClean.log
 x64/Debug/MapleStory.exe
 x64/Debug/MapleStory.ilk
 x64/Debug/MapleStory.pdb
+*.opendb

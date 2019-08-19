@@ -6,19 +6,15 @@ MSpriteComponent::MSpriteComponent()
 {
 }
 
-MSpriteComponent::MSpriteComponent(const std::string& _filename, EMRenderType _type) : m_eRenderType(_type)
+MSpriteComponent::MSpriteComponent(const std::string& _filename, EMRenderType _type) : m_eRenderType(_type),
+m_nCurrentTime(0), m_nFrame(0), m_bPlaying(true), m_bLooping(true), m_bFlip(false), m_pSprite(nullptr)
 {
 	m_nSprID = std::stoi(_filename);
-	m_bPlaying = m_bLooping = true;
-	m_nCurrentTime = 0;
-	m_nFrame = 0;
 }
 
-MSpriteComponent::MSpriteComponent(int _strid, EMRenderType _type) : m_nSprID(_strid), m_eRenderType(_type)
+MSpriteComponent::MSpriteComponent(int _strid, EMRenderType _type) : m_nSprID(_strid), m_eRenderType(_type),
+m_nCurrentTime(0), m_nFrame(0), m_bPlaying(true), m_bLooping(true), m_bFlip(false), m_pSprite(nullptr)
 {
-	m_bPlaying = m_bLooping = true;
-	m_nCurrentTime = 0;
-	m_nFrame = 0;
 }
 
 MSpriteComponent::~MSpriteComponent()
@@ -36,7 +32,7 @@ void MSpriteComponent::Init()
 		pSpr->Init();
 
 		m_mSprites.insert(std::make_pair(pSpr->GetAnimType(), pSpr));
-	}
+	}	
 }
 
 void MSpriteComponent::Update(MObject* _obj, float _delta)
@@ -61,9 +57,15 @@ void MSpriteComponent::Update(MObject* _obj, float _delta)
 				m_pSprite->SetFrame(m_nFrame);
 			}
 		}
+
+
+		m_pSprite->SetFlip(m_bFlip);
+
+		m_pSprite->Update(_obj, _delta);
 	}
 
-	m_pSprite->Update(_obj, _delta);
+	//imgdata;
+
 }
 
 void MSpriteComponent::Release()
@@ -129,7 +131,20 @@ void MSpriteComponent::SetCurrentAnim(EMAnimType _type, int _cnt)
 	}
 }
 
+IMG_DATA const& MSpriteComponent::GetCurrentImgData()
+{
+	if (m_pSprite != nullptr)
+		return m_pSprite->GetCurrentImgData();
+	else
+		return m_mSprites.find(EMAnimType::eMA_Standing)->second->GetCurrentImgData();
+}
+
 void MSpriteComponent::SetLooping(bool _bLooping)
 {
 	m_bLooping = _bLooping;
+}
+
+void MSpriteComponent::SetFlip(bool _flip)
+{
+	m_bFlip = _flip;
 }

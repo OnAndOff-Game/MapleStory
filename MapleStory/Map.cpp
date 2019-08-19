@@ -206,8 +206,8 @@ void Map::Update(float delta)
 
 	pt = pMob->GetPosition();
 
-	if (test)
-		std::cout << "캐릭 x : " << pt.X << "캐릭 y : " << pt.Y << std::endl;
+//	if (test)
+	//	std::cout << "캐릭 x : " << pt.X << "캐릭 y : " << pt.Y << std::endl;
 
 
 }

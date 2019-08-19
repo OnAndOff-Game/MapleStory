@@ -26,11 +26,15 @@ public:
 	void SetCurrentAnim(EMAnimType _type);
 	void SetCurrentAnim(EMAnimType _type, int _cnt);
 	void SetSpriteAnim(MSprite* _Sprite);
-
+	
+	IMG_DATA const& GetCurrentImgData();
 	//
 	void SetLooping(bool _bLooping);
 	bool IsLooping() const;
-	//bool 
+	//bool
+
+	void SetFlip(bool _flip);
+
 private:
 	
 	std::multimap<EMAnimType, MSprite*> m_mSprites;
@@ -45,6 +49,7 @@ private:
 
 	bool m_bLooping;
 	bool m_bPlaying;
+	bool m_bFlip;
 	
 	float m_nCurrentTime;
 
