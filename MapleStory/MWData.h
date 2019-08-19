@@ -97,7 +97,6 @@ typedef struct Img_Data
 struct MobInfo
 {
 	int acc; // 명중
-
 	bool bodyAttack; // 몸통 판정
 	int category;
 	int eva;//회피
@@ -117,12 +116,6 @@ struct MobInfo
 	char elemAttr[256]; //상태? 약점? 2 반감 3 약점 / I = 얼음, F = 불, L = 전기, S = 독 
 	int fs; // 미끄러짐
 };
-//
-//struct skill
-//{
-//	std::string id; // 1 전사 2 마법사 3 궁수 4 도적
-//
-//};
 
 struct RoadLine
 {

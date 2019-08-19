@@ -56,8 +56,8 @@ void Asset::Update(MObject* _obj, float _delta)
 	{
 		if (!bBillBoard)
 		{
-			rect.X = _obj->Transform.Translation.X - View::viewPort.X; // + 카메라 X
-			rect.Y = _obj->Transform.Translation.Y - View::viewPort.Y; // + 카메라 Y
+			rect.X = _obj->Transform.Translation.X - View::viewPort.X + Constants::SCREEN_SIZE_X / 2; // + 카메라 X
+			rect.Y = _obj->Transform.Translation.Y - View::viewPort.Y + Constants::SCREEN_SIZE_Y / 2; // + 카메라 Y
 		}
 
 		else

@@ -1,6 +1,6 @@
 #pragma once
 
-class MRoad
+class MRoad : public Singleton<MRoad>
 {
 public:
 
@@ -11,13 +11,14 @@ public:
 	void LoadData(class Node* pNode);
 	void Update(float _delta);
 	RoadLine* GetLine(Gdiplus::Point& _pt);
-//	RoadLine* GetLine(Gdiplus::Point& _pt);
+	RoadLine* GetLine(int _num);
 	
 	void Release();
 
-private:
+public:
 	
 	std::vector<RoadLine>	m_vRoad;
 		
 };
 
+#define ROAD MRoad::GetInstance()

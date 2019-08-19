@@ -42,6 +42,7 @@
 #include "GameManager.h"
 #include "SprMgr.h"
 #include "AssetMgr.h"
+#include "MRoad.h"
 
 using namespace Constants;
 using namespace Gdiplus;

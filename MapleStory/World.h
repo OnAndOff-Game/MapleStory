@@ -78,6 +78,16 @@ namespace Maple
 		int y2;
 	};
 
+	struct PORTAL
+	{
+		std::string pn;
+		int pt;
+		int x;
+		int y;
+		int tm;
+		std::string tn;
+	};
+
 	struct LAYER
 	{
 		INFO info;
@@ -91,6 +101,7 @@ namespace Maple
 		LAYER layer[8];
 		std::list<MBack*> back;
 		std::list<FOOTHOLD> footHold;
+		std::list<PORTAL> portal;
 		
 		CPoint centerPos;
 		CPoint mapSize;

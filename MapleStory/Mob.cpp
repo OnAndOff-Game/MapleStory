@@ -1,13 +1,14 @@
 #include "pch.h"
 #include "MSprite.h"
 #include "MSpriteComponent.h"
+#include "MPhysics.h"
 #include "Mob.h"
 
 Mob::Mob()
 {
 }
 
-Mob::Mob(const std::string& _filename) : m_strName(_filename),
+Mob::Mob(const std::string& _filename) : m_strName(_filename), m_pPhysics(nullptr),
  m_nSkillCnt(0), m_nAtkCnt(0), bFalling(true)
 {
 	LoadData(_filename);
@@ -23,10 +24,19 @@ void Mob::Init()
 	m_pSprites->Init();
 
 	m_pSprites->SetLooping(true);
+
+	m_pPhysics = new MPhysics;
 }
 
 void Mob::Release()
 {
+	if (m_pPhysics != nullptr)
+	{
+		m_pPhysics->Release();
+		delete m_pPhysics;
+		m_pPhysics = nullptr;
+	}
+
 	if (m_pSprites != nullptr)
 	{
 		m_pSprites->Release();
@@ -46,9 +56,20 @@ void Mob::Release()
 void Mob::Update(float _delta)
 {
 
-	if (bFalling)
+	View::viewPort.X;
+	//if (bFalling)
+	//{
+	//	Offset(0, 1);
+	//}
+
+	if (GetAsyncKeyState(VK_RIGHT))
 	{
-		Offset(0, 1);
+		m_pPhysics->SetVelocityX(1);
+	}
+
+	else if (GetAsyncKeyState(VK_LEFT))
+	{
+		m_pPhysics->SetVelocityX(-1);
 	}
 
 
@@ -57,7 +78,14 @@ void Mob::Update(float _delta)
 		it->Update(this, _delta);
 	}
 
+	m_pPhysics->Update(this, _delta);
 	m_pSprites->Update(this, _delta);
+}
+
+void Mob::SetComponent(Component* _pComp)
+{
+	if(_pComp != nullptr)
+		m_vComponent.push_back(_pComp);
 }
 
 void Mob::Move()

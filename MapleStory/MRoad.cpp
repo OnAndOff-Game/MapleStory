@@ -96,6 +96,14 @@ RoadLine* MRoad::GetLine(Gdiplus::Point& _pt)
 	return nullptr;
 }
 
+RoadLine* MRoad::GetLine(int _num)
+{
+	if (_num > m_vRoad.size() || _num < 0)
+		return nullptr;
+	else
+		return &m_vRoad[_num];
+}
+
 void MRoad::Release()
 {
 	m_vRoad.clear();
