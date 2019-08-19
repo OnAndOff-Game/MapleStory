@@ -1,6 +1,7 @@
 #pragma once
 
 class MSpriteComponent;
+class MPhysics;
 
 class Mob : public MObject
 {
@@ -14,7 +15,9 @@ public:
 
 	void Update(float _delta);
 	void Render(Gdiplus::Graphics* _memG);
-	
+	void SetComponent(Component* _pComp);
+
+
 	void Hit(int _damage);
 
 	int GetExp();
@@ -56,6 +59,7 @@ private:
 	std::vector<Component*> m_vComponent;
 	   
 	MSpriteComponent* m_pSprites;
+	MPhysics* m_pPhysics;
 //	MSpriteComponent;
 	//MInput;
 //	Skill;

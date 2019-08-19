@@ -157,7 +157,7 @@ UINT CMapleStoryApp::funcThread(LPVOID pParam)
 {
 	while (true)
 	{
-		DWORD tick = GetTickCount();
+		DWORD tick = GetTickCount64();
 		DWORD Delta = tick - PrevTick;
 		if (CMainFrame * MainFrm = static_cast<CMainFrame*>(theApp.GetMainWnd()))
 		{

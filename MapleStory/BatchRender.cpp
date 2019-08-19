@@ -107,12 +107,12 @@ void BatchRender::Render(Gdiplus::Graphics* _view, const BatchElement& _element)
 		if (_element.bFlip)
 			bm.RotateFlip(Rotate180FlipY);
 
-		_view->DrawImage(&bm, Gdiplus::Rect(_element.Pos.X - _element.SizeX / 2, _element.Pos.Y - _element.SizeY / 2, _element.SizeX, _element.SizeY));
+		_view->DrawImage(&bm, Gdiplus::Rect(_element.Pos.X, _element.Pos.Y, _element.SizeX, _element.SizeY));
 	}
 
 	else
 	{
-		_view->DrawImage(_element.img, Gdiplus::Rect(_element.Pos.X - _element.SizeX / 2, _element.Pos.Y - _element.SizeY / 2, _element.SizeX, _element.SizeY));
+		_view->DrawImage(_element.img, Gdiplus::Rect(_element.Pos.X, _element.Pos.Y, _element.SizeX, _element.SizeY));
 	}
 
 //	if(Delta != 0)

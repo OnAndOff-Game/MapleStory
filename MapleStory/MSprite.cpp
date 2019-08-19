@@ -32,7 +32,7 @@ void MSprite::Init()
 		LPIMG_DATA pImgdata = ASSETMGR->GetAssetData(filename);
 		
 		m_vImgData.push_back(pImgdata);
-		m_vAsset.push_back(new Asset(m_eRenderType, filename, pImgdata->z));
+		m_vAsset.push_back(new Asset(m_eRenderType, filename, *pImgdata));
 	}
 }
 
@@ -67,6 +67,10 @@ void MSprite::SetFrame(int _frame)
 {
 	if (m_nFrame > m_SprData.cnt)
 		m_nFrame = m_SprData.cnt;
+
+	else if (_frame < 0)
+		m_nFrame = 0;
+
 	else
 		m_nFrame = _frame;
 }
@@ -84,6 +88,11 @@ int MSprite::GetCurrentDelay()
 		return -1;
 }
 
+IMG_DATA const& MSprite::GetCurrentImgData()
+{
+	return *m_vImgData[m_nFrame];
+}
+
 void MSprite::LoadData(const std::string& _name)
 {
 }
@@ -91,4 +100,9 @@ void MSprite::LoadData(const std::string& _name)
 void MSprite::SetAsset(Asset* _asset)
 {
 	m_vAsset.push_back(_asset);
+}
+
+void MSprite::SetFlip(bool _flip)
+{
+	m_vAsset[m_nFrame]->SetFlip(_flip);
 }

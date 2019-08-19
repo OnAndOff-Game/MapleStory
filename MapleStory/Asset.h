@@ -5,6 +5,7 @@ class Asset : public Component
 public:
 	Asset();
 	Asset(EMRenderType _type, const std::string& _assetname, int _z = 0, bool _billboard = false);
+	Asset(EMRenderType _type, const std::string& _assetname, IMG_DATA const& _imgdata, bool _billboard = false);
 	Asset(EMRenderType _type, const std::string& _assetname, Gdiplus::Rect& _size, int _z = 0, bool _billboard = false);
 	~Asset();
 	void Init();
@@ -18,7 +19,7 @@ public:
 	void SetAlpha(float _alpha);
 	void SetAlphablending();
 
-	void SetFlip() { bFlip = !bFlip; }
+	void SetFlip(bool _flip) { bFlip = _flip; }
 
 	void SetRotate(bool _bRotate);
 	void SetDrawPoint();
@@ -34,7 +35,7 @@ private:
 	EMRenderType	m_eType;
 
 	Gdiplus::Image* m_pImg;
-	Gdiplus::Point Pos;
+	Gdiplus::Point CustomPos;
 	Gdiplus::Point ImgSize;
 
 	bool bBillBoard;
@@ -43,7 +44,7 @@ private:
 	bool bFlip;
 	bool bRender;
 	Gdiplus::Rect rect;
-	
+	   	
 	//IMG_DATA const* m_pImgDB;
 };
 

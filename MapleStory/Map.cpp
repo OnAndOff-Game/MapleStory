@@ -5,6 +5,7 @@
 #include "TempObj.h"
 #include "MRoad.h"
 #include "Mob.h"
+#include "MPhysics.h"
 #include "Map.h"
 
 Map::Map()
@@ -15,16 +16,11 @@ Map::Map(const char* fileName)
 {
 	mapCode = fileName;
 	world = new World();
-	m_pRoad = new MRoad();
 	mapNode = Node(mapCode.c_str());
 
 
 	pMob = new Mob("Mob/131.img.xml");
-
-	pMob->SetPosition(Point(50, 10));
-	pMob->Init();
-
-	pMob->Move();
+	test = true;
 }
 
 Map::~Map()
@@ -33,7 +29,6 @@ Map::~Map()
 
 void Map::Init()
 {
-
 	for (int i = 0; i < 8; i++)
 	{
 		Node info = mapNode[i]["info"]["tS"];
@@ -82,8 +77,7 @@ void Map::Init()
 			pTempObj->SetPosition(temp.x, temp.y);
 			world->layer[i].obj.push_back(pTempObj);
 		}
-	}
-
+	}	
 
 	for (int i = 0; i < 8; i++)
 	{
@@ -106,7 +100,23 @@ void Map::Init()
 		}
 	}
 
-	m_pRoad->LoadData(&mapNode["foothold"]);
+	Node portal = mapNode["portal"];
+
+	for (auto p = portal.begin(); p; p = p++)
+	{
+		Maple::PORTAL pot;
+
+		pot.pn = p["pn"].GetValueString();
+		pot.pt = p["pt"].GetValueInt();
+		pot.x = p["x"].GetValueInt();
+		pot.y = p["y"].GetValueInt();
+		pot.tm = p["tm"].GetValueInt();
+		pot.tn = p["tn"].GetValueString();
+
+		world->portal.push_back(pot);
+	}
+
+	ROAD->LoadData(&mapNode["foothold"]);
 
 	Node BackGround = mapNode["back"];
 	for (auto o = BackGround.begin(); o; o = o++)
@@ -137,7 +147,11 @@ void Map::Init()
 
 		world->back.push_back(pBack);
 	}
-	
+	//pMob->SetPosition();
+	pMob->SetPosition(world->portal.begin()->x, world->portal.begin()->y);
+	pMob->Init();
+
+	pMob->Move();
 }
 
 void Map::Load(const char* fileName)
@@ -147,6 +161,18 @@ void Map::Load(const char* fileName)
 
 void Map::Update(float delta)
 {
+
+	if (GetAsyncKeyState(VK_DOWN))
+	{
+		pMob->SetPosition(world->portal.begin()->x, world->portal.begin()->y);
+		test = false;
+	}
+
+	if (GetAsyncKeyState(VK_DOWN))
+	{
+		test = true;
+	}
+
 	for (auto t : world->back)
 	{
 		t->Update(delta);
@@ -171,7 +197,19 @@ void Map::Update(float delta)
 	//	pMob->SetPosition(Gdiplus::Point(pt.X, pLine->line1.Y));
 	//else
 	//	pMob->Offset(0, 0);
+
+	Gdiplus::Point pt = pMob->GetPosition();
+	View::viewPort.X = pt.X;
+	View::viewPort.Y = pt.Y;
+
 	pMob->Update(delta);
+
+	pt = pMob->GetPosition();
+
+//	if (test)
+	//	std::cout << "캐릭 x : " << pt.X << "캐릭 y : " << pt.Y << std::endl;
+
+
 }
 
 void Map::Release()
@@ -190,5 +228,4 @@ void Map::Release()
 		}
 	}
 	delete	world;
-	delete m_pRoad;
 }

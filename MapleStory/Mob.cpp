@@ -1,13 +1,14 @@
 #include "pch.h"
 #include "MSprite.h"
 #include "MSpriteComponent.h"
+#include "MPhysics.h"
 #include "Mob.h"
 
 Mob::Mob()
 {
 }
 
-Mob::Mob(const std::string& _filename) : m_strName(_filename),
+Mob::Mob(const std::string& _filename) : m_strName(_filename), m_pPhysics(nullptr),
  m_nSkillCnt(0), m_nAtkCnt(0), bFalling(true)
 {
 	LoadData(_filename);
@@ -23,10 +24,19 @@ void Mob::Init()
 	m_pSprites->Init();
 
 	m_pSprites->SetLooping(true);
+
+	m_pPhysics = new MPhysics;
 }
 
 void Mob::Release()
 {
+	if (m_pPhysics != nullptr)
+	{
+		m_pPhysics->Release();
+		delete m_pPhysics;
+		m_pPhysics = nullptr;
+	}
+
 	if (m_pSprites != nullptr)
 	{
 		m_pSprites->Release();
@@ -45,19 +55,33 @@ void Mob::Release()
 
 void Mob::Update(float _delta)
 {
+	m_pPhysics->SetImgData(m_pSprites->GetCurrentImgData());
 
-	if (bFalling)
+	if (GetAsyncKeyState(VK_RIGHT))
 	{
-		Offset(0, 1);
+		m_pSprites->SetFlip(true);
+		m_pPhysics->SetVelocityX(1);
 	}
 
+	else if (GetAsyncKeyState(VK_LEFT))
+	{
+		m_pSprites->SetFlip(false);
+		m_pPhysics->SetVelocityX(-1);
+	}
 
 	for (auto it : m_vComponent)
 	{
 		it->Update(this, _delta);
 	}
 
+	m_pPhysics->Update(this, _delta);
 	m_pSprites->Update(this, _delta);
+}
+
+void Mob::SetComponent(Component* _pComp)
+{
+	if(_pComp != nullptr)
+		m_vComponent.push_back(_pComp);
 }
 
 void Mob::Move()
@@ -151,7 +175,12 @@ void Mob::LoadData(const std::string& _filename)
 
 					if (!t["origin"].IsNull())
 						imgdata.origin = t["origin"].GetValuePoint();
-
+					else
+					{
+						imgdata.origin.X = imgdata.imgsize.X / 2;
+						imgdata.origin.Y = imgdata.imgsize.Y / 2;
+					}
+					
 					if (!t["lt"].IsNull())
 						imgdata.lt = t["lt"].GetValuePoint();
 
@@ -166,10 +195,18 @@ void Mob::LoadData(const std::string& _filename)
 
 					if (!t["a0"].IsNull())
 						imgdata.a0 = t["a0"].GetValueInt();
+					else
+						imgdata.a0 = 0;
 
 					if (!t["a1"].IsNull())
 						imgdata.a1 = t["a1"].GetValueInt();
+					else
+						imgdata.a1 = 0;
 
+					if (!t["z"].IsNull())
+						imgdata.z = t["z"].GetValueInt();
+					else
+						imgdata.z = 0;
 				}
 
 				ASSETMGR->SetAssetData(imgdata);

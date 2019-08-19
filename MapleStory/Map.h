@@ -25,7 +25,8 @@ private:
 	World* world;
 	Mob* pMob;
 	Node mapNode;
-	MRoad* m_pRoad;
+
+	bool test;
 
 	Gdiplus::PointF Target;
 };
