@@ -53,7 +53,7 @@ void BatchRender::BatchDraw(EMRenderType _type, Gdiplus::Image* _img, const Gdip
 
 void BatchRender::Draw(Gdiplus::Graphics* _view)
 {
-
+	//std::cout << "BatchMap : " << BatchMap.size() << std::endl;
 	for (auto it : BatchMap)
 	{
 	//	if(it.z == 1)

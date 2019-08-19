@@ -74,7 +74,7 @@ typedef struct SprData
 
 typedef struct Img_Data
 {
-	std::string filename; // 파일 경로 + 이름 ex)  woodMarble.artificiality.2.0.png
+	std::string filename; // 파일 경로 + 이름 ex)  Object\acc1.img\woodMarble.artificiality.2.0.png
 	int id;				  // png 앞에 있는 숫자 Sprdata의 cnt가 MAX 숫자
 
 	Gdiplus::Point imgsize; // x * y == 1 link

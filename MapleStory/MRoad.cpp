@@ -104,6 +104,25 @@ RoadLine* MRoad::GetLine(int _num)
 		return &m_vRoad[_num];
 }
 
+void MRoad::Render(Gdiplus::Graphics* _mem)
+{
+	Gdiplus::Pen* pPen = new Gdiplus::Pen(Gdiplus::Color(255, 0, 0), 3);
+
+	for (auto& it : m_vRoad)
+	{
+	//	-View::viewPort.X + Constants::SCREEN_SIZE_X / 2
+
+		View::viewPort;
+
+		//_mem->DrawLine(pPen, it.line1, it.line2);
+
+
+		_mem->DrawLine(pPen, it.line1.X - View::viewPort.X + Constants::SCREEN_SIZE_X / 2, it.line1.Y - View::viewPort.Y + Constants::SCREEN_SIZE_Y / 2,
+			it.line2.X - View::viewPort.X + Constants::SCREEN_SIZE_X / 2, it.line2.Y - View::viewPort.Y + Constants::SCREEN_SIZE_Y / 2);
+	}
+
+}
+
 void MRoad::Release()
 {
 	m_vRoad.clear();
