@@ -1,25 +1,11 @@
 #pragma once
 
-struct OBJECT
-{
-	std::string oS;
-	std::string l0;
-	std::string l1;
-	std::string l2;
-	int x;
-	int y;
-	int z;
-	int f;
-	int zM;
-};
-
-
 class TempObj : public MObject
 {
 public:
 
 	TempObj();
-	TempObj(const OBJECT& _objdata, Asset* _asset);
+	TempObj(const Maple::OBJECT& _objdata, Asset* _asset);
 	~TempObj();
 
 	void Init();
@@ -31,9 +17,10 @@ public:
 
 public:
 	
-	OBJECT ObjData;
+	Maple::OBJECT ObjData;
 
 private:
 
 	Asset* mAsset;
 };
+

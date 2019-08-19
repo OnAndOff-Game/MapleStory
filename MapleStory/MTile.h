@@ -1,27 +1,11 @@
 #pragma once
 
-struct TILE
-{
-	int x;
-	int y;
-	std::string u;
-	std::string no;
-	int zM;
-	std::string GetTileName()
-	{
-		std::string temp = u;
-		temp += "." + no + ".png";
-
-		return temp;
-	}
-};
-
 class MTile : public MObject
 {
 public:
 
 	MTile();
-	MTile(const TILE& _tiledata, Asset* _asset);
+	MTile(const Maple::TILE& _tiledata, Asset* _asset);
 	~MTile();
 
 	void Init();
@@ -33,7 +17,7 @@ public:
 
 public:
 
-	TILE TileData;
+	Maple::TILE TileData;
 	
 
 private:

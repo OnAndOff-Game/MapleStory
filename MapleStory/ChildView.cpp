@@ -88,6 +88,7 @@ int CChildView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	SceneManager::GetInstance().LoadScene("GameScene");
 	AfxBeginThread(&CMapleStoryApp::funcThread, NULL);
+	// TODO:  여기에 특수화된 작성 코드를 추가합니다.
 
 	return 0;
 }

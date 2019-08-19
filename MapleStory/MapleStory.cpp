@@ -148,7 +148,6 @@ void CMapleStoryApp::OnAppAbout()
 {
 	CAboutDlg aboutDlg;
 	aboutDlg.DoModal();
-	
 }
 
 // CMapleStoryApp 메시지 처리기
@@ -167,7 +166,6 @@ UINT CMapleStoryApp::funcThread(LPVOID pParam)
 				SceneManager::GetInstance().Update(Delta);
 				//std::cout << "ASD" << std::endl;
 				CChildView* view = MainFrm->GetView();
-
 
 				CRect rc;
 				view->GetClientRect(rc);

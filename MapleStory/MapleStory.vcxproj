@@ -214,7 +214,6 @@
     <ClInclude Include="MObject.h" />
     <ClInclude Include="MobManager.h" />
     <ClInclude Include="MPlayer.h" />
-    <ClInclude Include="MPortal.h" />
     <ClInclude Include="MRoad.h" />
     <ClInclude Include="MSprite.h" />
     <ClInclude Include="MSpriteComponent.h" />
@@ -259,7 +258,6 @@
     <ClCompile Include="MObject.cpp" />
     <ClCompile Include="MobManager.cpp" />
     <ClCompile Include="MPlayer.cpp" />
-    <ClCompile Include="MPortal.cpp" />
     <ClCompile Include="MRoad.cpp" />
     <ClCompile Include="MSprite.cpp" />
     <ClCompile Include="MSpriteComponent.cpp" />

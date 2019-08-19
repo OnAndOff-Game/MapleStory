@@ -1,12 +1,10 @@
 #pragma once
-#include "Node.h"
-#include "Asset.h"
-#include "MTile.h"
-#include "MBack.h"
-#include "MPortal.h"
-#include "TempObj.h"
 #include <list>
 
+class MTile;
+class MBack;
+class TempObj;
+class MTemp;
 
 namespace Maple
 {
@@ -24,6 +22,52 @@ namespace Maple
 		std::string mapMark;
 
 		std::string tS;
+	};
+
+	struct BACK
+	{
+		int x;
+		int y;
+		int rx;
+		int ry;
+		int type;
+		int cx;
+		int cy;
+		std::string bS;
+		std::string no;
+		int a;
+		int front;
+		int ani;
+		int f;
+	};
+
+	struct TILE
+	{
+		int x;
+		int y;
+		std::string u;
+		std::string no;
+		int zM;
+		std::string GetTileName()
+		{
+			std::string temp = u;
+			temp += "." + no + ".png";
+
+			return temp;
+		}
+	};
+
+	struct OBJECT
+	{
+		std::string oS;
+		std::string l0;
+		std::string l1;
+		std::string l2;
+		int x;
+		int y;
+		int z;
+		int f;
+		int zM;
 	};
 
 	struct FOOTHOLD
@@ -47,13 +91,7 @@ namespace Maple
 		LAYER layer[8];
 		std::list<MBack*> back;
 		std::list<FOOTHOLD> footHold;
-		std::list<MPortal*> portal;
-
-		void PortalData(Node o);
-		void BackData(Node o);
-		void ObjData(Node o, int i);
-		void TileData(Node o, int i);
-
+		
 		CPoint centerPos;
 		CPoint mapSize;
 	};
