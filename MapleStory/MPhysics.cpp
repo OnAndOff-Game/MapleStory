@@ -7,7 +7,7 @@ double const walk_speed = 125;
 
 
 
-bool GetIntersectPoint(const Gdiplus::Point& AP1, const Gdiplus::Point& AP2,
+bool GetIntersectPoint(const Gdiplus::PointF& AP1, const Gdiplus::PointF& AP2,
 	const Gdiplus::Point& BP1, const Gdiplus::Point& BP2, Gdiplus::PointF* IP)
 {
 	double t;
@@ -32,7 +32,8 @@ bool GetIntersectPoint(const Gdiplus::Point& AP1, const Gdiplus::Point& AP2,
 
 MPhysics::MPhysics() : m_pRL(nullptr), m_pImgData(nullptr)
 {
-	vx = vy = 0.0f;
+	vx = 0;
+	vy = 1;
 	RoadNum = 0;
 }
 
@@ -46,162 +47,174 @@ void MPhysics::Init()
 
 void MPhysics::Update(MObject* _obj, float _delta)
 {
-	float delta = (_delta);
+	//float delta = (_delta);
+	
+	//	std::cout << Lerp(0, walk_speed, delta) << std::endl;
 
-	Gdiplus::Point pt = _obj->GetPosition();
+		//_obj->Offset(Lerp(0, 50, delta), 0);
 
-//	std::cout << Lerp(0, walk_speed, delta) << std::endl;
+	//	std::cout << "delta : " << _delta << std::endl;
 
-	//_obj->Offset(Lerp(0, 50, delta), 0);
+		//fabsf
+	int stab = 0;
+	float delta = _delta * 0.001f;
+	Gdiplus::PointF pos(_obj->GetPosition().X, _obj->GetPosition().Y);
 
-//	std::cout << "delta : " << _delta << std::endl;
-
-	//fabsf
-
-	if (m_pRL == nullptr)
+	if (stab < _delta)
 	{
-		vy = 1;
-		Gdiplus::Point poss = _obj->GetPosition();
-		
+		stab = 0;
+	}
 
-
-		Gdiplus::Point pos = _obj->GetPosition();
-		poss.X += vx * delta;
-		poss.Y += vy * delta;
-		
-		Gdiplus::PointF temp;
-
-		for (auto& it : ROAD->m_vRoad)
+	while (stab < _delta)
+	{
+		stab++;
+		if (m_pRL == nullptr)
 		{
-			if (GetIntersectPoint(pt, poss, it.line1, it.line2, &temp) == true)
-			{
-				std::cout << "x : " << temp.X << "y : " << temp.Y << std::endl;
+			Gdiplus::PointF d(vx * walk_speed * delta, vy * fall_speed * delta);
+			Gdiplus::PointF posd = pos + d;
+			Gdiplus::PointF crd;
+			bool bCheck = false;
 
-				m_pRL = &it;
+			for (auto& it : ROAD->m_vRoad)
+			{
+				if (GetIntersectPoint(pos, posd, it.line1, it.line2, &crd) == true)
+				{
+					std::cout << "x : " << crd.X << "y : " << crd.Y << std::endl;
+
+					m_pRL = &it;
+					bCheck = true;
+				}				
 			}
-		}
 
-		_obj->SetPosition(temp.X, temp.Y);
-
-		if (m_pRL != nullptr)
-		{
-			double fx = m_pRL->line2.X - m_pRL->line1.X;
-			double fy = m_pRL->line2.Y - m_pRL->line1.Y;
-
-			if (m_pRL->line1.X == m_pRL->line2.X)
+			if (!bCheck)
 			{
-				_obj->Offset(0, 1);
-				m_pRL = nullptr;
+				crd = posd;
+				vy = 1;
 			}
-			
-			else if (m_pRL->line1.X > m_pRL->line2.X)
+
+			pos = crd;
+									
+			if (m_pRL != nullptr)
 			{
-				if (fy > 0)
-					_obj->Offset(1, 0);
+				double fx = m_pRL->line2.X - m_pRL->line1.X;
+				double fy = m_pRL->line2.Y - m_pRL->line1.Y;
+
+				if (m_pRL->line1.X == m_pRL->line2.X)
+				{
+					if (fy > 0)
+						pos.X += -1.0f;
+					else
+						pos.X += 1.0f;
+
+					vx = 0;
+					m_pRL = nullptr;
+				}
+
 				else
-					_obj->Offset(-1, 0);
-
-				m_pRL = nullptr;
+				{
+					vy = 0;
+				}
 			}
-			else
+		}
+
+		else
+		{
+			double nx = pos.X + vx * walk_speed * delta;
+			double ny = pos.Y + vy * fall_speed * delta;
+
+			if (nx > m_pRL->line2.X)
 			{
-				if (vy > 5)
-					vy = 5;
+				RoadLine* nxt = nullptr;
+
+				if (m_pRL->nxt)
+					nxt = ROAD->GetLine(m_pRL->nxt);
+
+				if (nxt == nullptr)
+				{
+					nx = m_pRL->line2.X + 1.0f;
+					ny = m_pRL->line2.Y;
+					vy = 1;
+					m_pRL = nullptr;
+				}
+
+				else if (nxt->line1.X < nxt->line2.X)
+				{
+					m_pRL = nxt;
+
+					double fx = m_pRL->line2.X - m_pRL->line1.X;
+					double fy = m_pRL->line2.Y - m_pRL->line1.Y;
+					double dot = (vx * walk_speed * delta * fx + vy * fall_speed * delta * fy) / (fx * fx + fy * fy);
+					
+					if(nx < m_pRL->line1.X)
+						nx = m_pRL->line1.X;
+
+					ny = m_pRL->line1.Y + dot * fy;
+				}
+
+				else if (nxt->line1.Y < nxt->line2.Y)
+				{
+					nx = m_pRL->line2.X + 1.0f;
+					ny = m_pRL->line2.Y;
+					vx = 0; vy = 0;
+				}
+
+				else
+				{
+					nx = m_pRL->line2.X + 1.0f;
+					ny = m_pRL->line2.Y;
+					m_pRL = nullptr;
+				}
 			}
 
-			double dot = (vx * fx + vy * fy) / (fx * fx + fy * fy);
-			vx = dot * fx;
-			vy = dot * fy;
+			else if (nx < m_pRL->line1.X)
+			{
+				RoadLine* prev = ROAD->GetLine(m_pRL->prv);
+
+				if (prev != nullptr)
+				{
+					nx = m_pRL->line1.X - 1.0f;
+					ny = m_pRL->line1.Y;
+					m_pRL = nullptr;
+				}
+
+				else if (prev->line1.X < prev->line2.X)
+				{
+					m_pRL = prev;
+
+					double fx = m_pRL->line2.X - m_pRL->line1.X;
+					double fy = m_pRL->line2.Y - m_pRL->line1.Y;
+					double dot = (vx * fx + vy * fy) / (fx * fx + fy * fy);
+				
+					nx = m_pRL->line2.X;
+					ny = m_pRL->line2.Y;
+					vx = dot * fx;
+					vy = dot * fy;
+				}
+
+				else if (prev->line1.Y > prev->line2.Y)
+				{
+					nx = m_pRL->line1.X + 1.0f;
+					ny = m_pRL->line1.Y;
+					vx = 0;
+					vy = 0;
+				}
+
+				else
+				{
+					nx = m_pRL->line1.X - 1.0f;
+					ny = m_pRL->line1.Y;
+					m_pRL = nullptr;
+				}
+			}
+
+			pos.X = nx;
+			pos.Y = ny;
+	//		_obj->SetPosition(nx, ny);
 		}
 	}
 
-	else
-	{
-		Gdiplus::Point pos = _obj->GetPosition();
+	_obj->SetPosition(pos.X, pos.Y);
 
-		double nx = pos.X + vx * delta;
-		double ny = pos.Y + vy * delta;
-
-		if (nx > m_pRL->line2.X)
-		{
-			RoadLine* nxt = ROAD->GetLine(m_pRL->nxt);
-			if (nxt != nullptr)
-			{
-				nx = m_pRL->line2.X + 1.0f;
-				ny = m_pRL->line2.Y;
-				m_pRL = nullptr;
-			}
-
-			else if (nxt->line1.X < nxt->line2.X)
-			{
-				m_pRL = nxt;
-				
-				double fx = m_pRL->line2.X - m_pRL->line1.X;
-				double fy = m_pRL->line2.Y - m_pRL->line1.Y;
-				double dot = (vx * fx + vy * fy) / (fx * fx + fy * fy);
-				
-				nx = m_pRL->line1.X;
-				ny = m_pRL->line1.Y;
-
-				vx = dot * fx;
-				vy = dot * fy;
-			}
-
-			else if (nxt->line1.Y > nxt->line2.Y)
-			{
-				nx = m_pRL->line2.X - 1.0f;
-				ny = m_pRL->line2.Y;
-				vx = 0; vy = 0;
-			}
-
-			else
-			{
-				nx = m_pRL->line2.X + 1.0f;
-				ny = m_pRL->line2.Y;
-				m_pRL = nullptr;
-			}
-		}
-
-		else if (nx < m_pRL->line1.X)
-		{
-			RoadLine* prev = ROAD->GetLine(m_pRL->prv);
-
-			if (prev != nullptr)
-			{
-				nx = m_pRL->line1.X - 1.0f;
-				ny = m_pRL->line1.Y;
-				m_pRL = nullptr;
-			}
-
-			else if (prev->line1.X < prev->line2.X)
-			{
-				m_pRL = prev;
-				double fx = m_pRL->line2.X - m_pRL->line1.X;
-				double fy = m_pRL->line2.Y - m_pRL->line1.Y;
-				double dot = (vx * fx + vy * fy) / (fx * fx + fy * fy);
-				nx = m_pRL->line2.X;
-				ny = m_pRL->line2.Y;
-				vx = dot * fx;
-				vy = dot * fy;
-			}
-
-			else if (prev->line1.Y < prev->line2.Y)
-			{
-				nx = m_pRL->line1.X + 1.0f;
-				ny = m_pRL->line1.Y;
-				vx = 0;
-				vy = 0;
-			}
-
-			else
-			{
-				nx = m_pRL->line1.X - 1.0f;
-				ny = m_pRL->line1.Y;
-				m_pRL = nullptr;
-			}
-		}
-		_obj->SetPosition(nx, ny);	
-	}
 }
 
 void MPhysics::Release()

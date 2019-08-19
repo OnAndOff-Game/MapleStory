@@ -164,15 +164,10 @@ void Map::Update(float delta)
 
 	if (GetAsyncKeyState(VK_DOWN))
 	{
-		pMob->SetPosition(world->portal.begin()->x, world->portal.begin()->y);
+		pMob->SetPosition(world->portal.begin()->x, world->portal.begin()->y - 10);
 		test = false;
 	}
-
-	if (GetAsyncKeyState(VK_DOWN))
-	{
-		test = true;
-	}
-
+	
 	for (auto t : world->back)
 	{
 		t->Update(delta);
