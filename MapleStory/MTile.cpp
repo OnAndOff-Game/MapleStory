@@ -6,7 +6,7 @@ MTile::MTile() : mAsset(nullptr)
 {
 }
 
-MTile::MTile(const Maple::TILE& _tiledata,Asset* _asset)
+MTile::MTile(const TILE& _tiledata,Asset* _asset)
 {
 	TileData = _tiledata;
 	mAsset = _asset;

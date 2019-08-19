@@ -27,6 +27,7 @@ void GameScene::Update(float Delta)
 		target.Y += 30;
 	View::viewPort.X = Lerp(View::viewPort.X, target.X, 5 * Delta * 0.001);
 	View::viewPort.Y = Lerp(View::viewPort.Y, target.Y, 5 * Delta * 0.001);
+
 }
 
 void GameScene::Render(Gdiplus::Graphics* _memG)
