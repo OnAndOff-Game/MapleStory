@@ -121,15 +121,3 @@ Node Node::operator[](Node* o)
 {
 	return operator[](o->GetValueString().c_str());
 }
-
-//Node child = m_data[0]["0"]["tile"];
-//for (auto o = child.begin(); o; o = o++)
-//{
-//	std::cout << "tile number : " << o.node->first_attribute()->value() << std::endl;
-//	std::cout << "x:" << o["x"].GetValueInt() << std::endl;
-//	std::cout << "y:" << o["y"].GetValueInt() << std::endl;
-//	std::cout << "u:" << o["u"].GetValueString() << std::endl;
-//	std::cout << "no:" << o["no"].GetValueInt() << std::endl;
-//	std::cout << "zM:" << o["zM"].GetValueInt() << std::endl;
-//	std::cout << std::endl;
-//}

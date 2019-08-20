@@ -85,6 +85,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(ProjectDir)MapleStory</OutDir>
+    <TargetName>MapleStory</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -202,6 +204,7 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameScene.h" />
+    <ClInclude Include="ISkill.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="MainScene.h" />
     <ClInclude Include="Map.h" />
@@ -215,6 +218,7 @@
     <ClInclude Include="MobManager.h" />
     <ClInclude Include="MPhysics.h" />
     <ClInclude Include="MPlayer.h" />
+    <ClInclude Include="MPortal.h" />
     <ClInclude Include="MRoad.h" />
     <ClInclude Include="MSprite.h" />
     <ClInclude Include="MSpriteComponent.h" />
@@ -247,6 +251,7 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="ISkill.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="MainScene.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -260,6 +265,7 @@
     <ClCompile Include="MobManager.cpp" />
     <ClCompile Include="MPhysics.cpp" />
     <ClCompile Include="MPlayer.cpp" />
+    <ClCompile Include="MPortal.cpp" />
     <ClCompile Include="MRoad.cpp" />
     <ClCompile Include="MSprite.cpp" />
     <ClCompile Include="MSpriteComponent.cpp" />

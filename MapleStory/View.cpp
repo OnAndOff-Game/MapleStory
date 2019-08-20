@@ -1,10 +1,13 @@
 #include "pch.h"
 #include "View.h"
 
-Gdiplus::PointF View::viewPort = Gdiplus::PointF(0,0);
+Gdiplus::PointF View::viewPort;
+Gdiplus::Point View::Target;
 
-void View::CameraFollow(Gdiplus::PointF& pt, int speed)
+void View::CameraFollow(int speed)
 {
-	viewPort.X = Lerp(viewPort.X, pt.X, speed);
-	viewPort.Y = Lerp(viewPort.Y, pt.Y, speed);
+	Gdiplus::PointF temp;
+	temp.X = Lerp(viewPort.X, Target.X, speed*0.001);
+	temp.Y = Lerp(viewPort.Y, Target.Y, speed*0.001);
+	viewPort = temp;
 }

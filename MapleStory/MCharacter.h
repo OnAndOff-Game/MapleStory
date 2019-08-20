@@ -1,5 +1,5 @@
 #pragma once
-
+#include "MSprite.h"
 
 class MCharacter : public MObject
 {
@@ -15,6 +15,8 @@ public:
 	void Down();
 	void Dead();
 
+	void LoadData(const std::string& _filename);
+
 private:
 
 	int m_nHp;
@@ -22,6 +24,8 @@ private:
 
 	bool m_bDie;
 
+	EMAnimType playerState;
 
+	MSprite* animState[5];
 };
 

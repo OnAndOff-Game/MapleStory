@@ -11,6 +11,7 @@ enum EMRenderType : int{
 
 enum EMAnimType : int{
 
+	eMA_Static,
 	eMA_Standing,
 	eMA_Moving,
 	eMA_Jumping,
@@ -67,7 +68,7 @@ typedef struct SprData
 {
 	EMAnimType type;	// 드로우 타입
 	std::string path;   // 경로 ex) Object\acc1.img
-	std::string sprname; // 파일 명칭 ex) woodMarble.artificiality
+	std::string sprname; // 파일 명칭 ex) woodMarble.artificiality / pv
 	std::string name;	// 이름 숫자 2
 	int	cnt;			// 갯수 0 결과 = woodMarble.artificiality.2.0
 }SPRDATA, *LPSPRDATA;

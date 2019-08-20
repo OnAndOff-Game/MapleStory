@@ -1,18 +1,18 @@
+﻿################################################################################
+# 이 .gitignore 파일은 Microsoft(R) Visual Studio에서 자동으로 만들어졌습니다.
+################################################################################
 
-*.png
-*.obj
-*.xml
-*.tlog
-*.ipch
+/.vs/MapleStory/v16/ipch
+/MapleStory/MapleStory/Back
+/MapleStory/MapleStory/Character
+/MapleStory/MapleStory/Mob
+/MapleStory/MapleStory/Object
+/MapleStory/MapleStory/Portal
+/MapleStory/MapleStory/Tile
+/MapleStory/MapleStory/xml
+/MapleStory/MapleStory
+/MapleStory/x64/Release/MapleStory.tlog
+/MapleStory/x64/Release
+/x64/Release
 *.db
-MapleStory/x64/Debug/MapleStory.log
-MapleStory/x64/Debug/MapleStory.pch
-MapleStory/x64/Debug/MapleStory.res
-MapleStory/x64/Debug/MapleStory.vcxproj.FileListAbsolute.txt
-MapleStory/x64/Debug/vc142.idb
-MapleStory/x64/Debug/vc142.pdb
-MapleStory/x64/Debug/MapleStory.Build.CppClean.log
-x64/Debug/MapleStory.exe
-x64/Debug/MapleStory.ilk
-x64/Debug/MapleStory.pdb
 *.opendb

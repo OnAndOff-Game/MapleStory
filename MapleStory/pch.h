@@ -22,7 +22,7 @@
 #include "Constants.h"
 #include "common.h"
 #include "MWData.h"
-#include "World.h"
+
 
 #include "ProxyID.h"
 #include "Node.h"
@@ -35,6 +35,7 @@
 #include "MObject.h"
 #include "BaseScene.h"
 
+#include "World.h"
 #include "GameScene.h"
 #include "MainScene.h"
 #include "SceneManager.h"
