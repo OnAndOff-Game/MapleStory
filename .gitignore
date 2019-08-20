@@ -3,3 +3,16 @@
 ################################################################################
 
 /.vs/MapleStory/v16/ipch
+/MapleStory/MapleStory/Back
+/MapleStory/MapleStory/Character
+/MapleStory/MapleStory/Mob
+/MapleStory/MapleStory/Object
+/MapleStory/MapleStory/Portal
+/MapleStory/MapleStory/Tile
+/MapleStory/MapleStory/xml
+/MapleStory/MapleStory
+/MapleStory/x64/Release/MapleStory.tlog
+/MapleStory/x64/Release
+/x64/Release
+*.db
+*.opendb

@@ -1,10 +1,10 @@
 #include "pch.h"
-#include "MBack.h"
 #include "Asset.h"
+#include "MBack.h"
 
 
 
-MBack::MBack(const Maple::BACK& _backdata, Asset* _asset)
+MBack::MBack(const BACK& _backdata, Asset* _asset)
 {
 	BackData = _backdata;
 	mAsset = _asset;

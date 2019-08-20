@@ -20,7 +20,6 @@ Map::Map(const char* fileName)
 
 
 	pMob = new Mob("Mob/131.img.xml");
-	test = true;
 }
 
 Map::~Map()
@@ -35,85 +34,25 @@ void Map::Init()
 		if (!info.IsNull())
 		{
 			world->layer[i].info.tS = "Tile\\" + info.GetValueString() + ".img";
-			//std::cout << world->layer[i].info.tS << std::endl;
-			//SpriteManager->LoadResource(world->layer[i].info.tS.c_str()); -> getasset 시 자동 생성
 		}
 
 		Node tile = mapNode[i]["tile"];
 
 		for (auto o = tile.begin(); o; o = o++)
 		{
-			Maple::TILE temp;
-			temp.x = o["x"].GetValueInt();
-			temp.y = o["y"].GetValueInt();
-			temp.u = o["u"].GetValueString();
-			temp.no = o["no"].GetValueString();
-			temp.zM = o["zM"].GetValueInt();
-
-
-			MTile* pTile = new MTile(temp, new Asset(EMRenderType::eMR_Map, world->layer[i].info.tS + '/' + temp.GetTileName(), i));
-
-			world->layer[i].tile.push_back(pTile);
+			world->TileData(o, i);
 		}
 		Node obj = mapNode[i]["obj"];
 		for (auto o = obj.begin(); o; o = o++)
 		{
-			Maple::OBJECT temp;
-			temp.l0 = o["l0"].GetValueString();
-			temp.l1 = o["l1"].GetValueString();
-			temp.l2 = o["l2"].GetValueString();
-			temp.oS = o["oS"].GetValueString();
-			temp.x = o["x"].GetValueInt();
-			temp.y = o["y"].GetValueInt();
-			temp.z = o["z"].GetValueInt();
-			temp.f = o["f"].GetValueInt();
-			temp.zM = o["zM"].GetValueInt();
-			std::string path = "Object/" + temp.oS + ".img";
-			std::string fileName = temp.l0 + "." + temp.l1 + "." + temp.l2 + ".0" + ".png";
-
-			TempObj* pTempObj = new TempObj(temp, new Asset(EMRenderType::eMR_Map, path + '/' + fileName, i));
-			
-			//SpriteManager->LoadResource(path.c_str());
-			pTempObj->SetPosition(temp.x, temp.y);
-			world->layer[i].obj.push_back(pTempObj);
+			world->ObjData(o, i);
 		}
 	}	
 
-	for (int i = 0; i < 8; i++)
-	{
-		for (auto& t : world->layer[i].tile)
-		{
-			if (!t->TileData.u.compare("enV0"))
-				t->SetPosition({ t->TileData.x - t->GetAssetSize().X / 2, t->TileData.y + t->GetAssetSize().Y / 2});
-			else if (!t->TileData.u.compare("enH0"))
-				t->SetPosition({ t->TileData.x + t->GetAssetSize().X / 2, t->TileData.y - t->GetAssetSize().Y / 2});
-			else if (!t->TileData.u.compare("edU"))
-				t->SetPosition({ t->TileData.x, t->TileData.y - t->GetAssetSize().Y / 2 });
-			else if (!t->TileData.u.compare("edD"))
-				t->SetPosition({ t->TileData.x, t->TileData.y + t->GetAssetSize().Y / 2 });
-			else if (!t->TileData.u.compare("slLU"))
-				t->SetPosition({ t->TileData.x - t->GetAssetSize().X / 2, t->TileData.y - t->GetAssetSize().Y / 2 });
-			else if (!t->TileData.u.compare("slRU"))
-				t->SetPosition({ t->TileData.x + t->GetAssetSize().X / 2, t->TileData.y - t->GetAssetSize().Y / 2 });
-			else
-				t->SetPosition({ t->TileData.x+ t->GetAssetSize().X / 2,t->TileData.y + t->GetAssetSize().Y / 2 });
-		}
-	}
-
 	Node portal = mapNode["portal"];
-
 	for (auto p = portal.begin(); p; p = p++)
 	{
-		Maple::PORTAL pot;
-
-		pot.pn = p["pn"].GetValueString();
-		pot.pt = p["pt"].GetValueInt();
-		pot.x = p["x"].GetValueInt();
-		pot.y = p["y"].GetValueInt();
-		pot.tm = p["tm"].GetValueInt();
-		pot.tn = p["tn"].GetValueString();
-
-		world->portal.push_back(pot);
+		world->PortalData(p);
 	}
 
 	ROAD->LoadData(&mapNode["foothold"]);
@@ -121,37 +60,9 @@ void Map::Init()
 	Node BackGround = mapNode["back"];
 	for (auto o = BackGround.begin(); o; o = o++)
 	{
-		Maple::BACK temp;
-		temp.no = o["no"].GetValueString();
-		temp.x = o["x"].GetValueInt();
-		temp.y = o["y"].GetValueInt();
-		temp.rx = o["rx"].GetValueInt();
-		temp.ry = o["ry"].GetValueInt();
-		temp.type = o["type"].GetValueInt();
-		temp.cx = o["cx"].GetValueInt();
-		temp.cy = o["cy"].GetValueInt();
-		temp.bS = o["bS"].GetValueString();
-		temp.a = o["a"].GetValueInt();
-		temp.front = o["front"].GetValueInt();
-		temp.ani = o["ani"].GetValueInt();
-		temp.f = o["f"].GetValueInt();
-		std::string path = "Back\\" + temp.bS + ".img\\" + temp.bS + ".img";
-		std::string fileName = "back." + temp.no + ".png";
-		
-		MBack* pBack;
-		if(temp.type == 3)
-			pBack = new MBack(temp, new Asset(EMRenderType::eMR_Map, path + '/' + fileName, Gdiplus::Rect(0,0,Constants::SCREEN_SIZE_X, Constants::SCREEN_SIZE_Y),0,true));
-		else
-			pBack = new MBack(temp, new Asset(EMRenderType::eMR_Map, path + '/' + fileName, 0));
-		pBack->SetPosition(pBack->GetSize().Width / 2, pBack->GetSize().Height / 2);
-
-		world->back.push_back(pBack);
+		world->BackData(o);
 	}
-	//pMob->SetPosition();
-	pMob->SetPosition(world->portal.begin()->x, world->portal.begin()->y);
-	pMob->Init();
 
-	pMob->Move();
 }
 
 void Map::Load(const char* fileName)
@@ -162,16 +73,11 @@ void Map::Load(const char* fileName)
 void Map::Update(float delta)
 {
 
-	if (GetAsyncKeyState(VK_DOWN))
-	{
-		pMob->SetPosition(world->portal.begin()->x, world->portal.begin()->y);
-		test = false;
-	}
 
-	if (GetAsyncKeyState(VK_DOWN))
-	{
-		test = true;
-	}
+	//if (GetAsyncKeyState(VK_DOWN))
+	//{
+	//	test = true;
+	//}
 
 	for (auto t : world->back)
 	{
@@ -191,25 +97,11 @@ void Map::Update(float delta)
 		}
 	}
 
-	//Gdiplus::Point pt = pMob->GetPosition();
-	//RoadLine* pLine = m_pRoad->GetLine(pt);
-	//if (pLine != nullptr)
-	//	pMob->SetPosition(Gdiplus::Point(pt.X, pLine->line1.Y));
-	//else
-	//	pMob->Offset(0, 0);
-
-	Gdiplus::Point pt = pMob->GetPosition();
-	View::viewPort.X = pt.X;
-	View::viewPort.Y = pt.Y;
-
-	pMob->Update(delta);
-
-	pt = pMob->GetPosition();
-
-//	if (test)
-	//	std::cout << "캐릭 x : " << pt.X << "캐릭 y : " << pt.Y << std::endl;
-
-
+	for (auto t : world->portal)
+	{
+		t->Update(delta);
+		break;
+	}
 }
 
 void Map::Release()

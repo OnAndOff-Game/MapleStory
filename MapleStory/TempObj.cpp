@@ -6,7 +6,7 @@ TempObj::TempObj() : mAsset(nullptr)
 {
 }
 
-TempObj::TempObj(const Maple::OBJECT& _objdata, Asset* _asset)
+TempObj::TempObj(const OBJECT& _objdata, Asset* _asset)
 {
 	ObjData = _objdata;
 	mAsset = _asset;

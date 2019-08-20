@@ -85,6 +85,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(ProjectDir)MapleStory</OutDir>
+    <TargetName>MapleStory</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -215,6 +217,7 @@
     <ClInclude Include="MobManager.h" />
     <ClInclude Include="MPhysics.h" />
     <ClInclude Include="MPlayer.h" />
+    <ClInclude Include="MPortal.h" />
     <ClInclude Include="MRoad.h" />
     <ClInclude Include="MSprite.h" />
     <ClInclude Include="MSpriteComponent.h" />
@@ -260,6 +263,7 @@
     <ClCompile Include="MobManager.cpp" />
     <ClCompile Include="MPhysics.cpp" />
     <ClCompile Include="MPlayer.cpp" />
+    <ClCompile Include="MPortal.cpp" />
     <ClCompile Include="MRoad.cpp" />
     <ClCompile Include="MSprite.cpp" />
     <ClCompile Include="MSpriteComponent.cpp" />

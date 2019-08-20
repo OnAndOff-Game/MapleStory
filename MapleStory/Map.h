@@ -1,5 +1,6 @@
 #pragma once
 #include "rapidxml.hpp"
+#include "MCharacter.h"
 
 using namespace rapidxml;
 using namespace Maple;
@@ -21,6 +22,8 @@ public:
 
 private:
 	std::string mapCode;
+
+	MCharacter* player;
 
 	World* world;
 	Mob* pMob;

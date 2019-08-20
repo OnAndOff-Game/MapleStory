@@ -1,8 +1,25 @@
 #pragma once
+struct BACK
+{
+	int x;
+	int y;
+	int rx;
+	int ry;
+	int type;
+	int cx;
+	int cy;
+	std::string bS;
+	std::string no;
+	int a;
+	int front;
+	int ani;
+	int f;
+};
+
 class MBack : public MObject
 {
 public:
-	MBack(const Maple::BACK& _backdata, Asset* _asset);
+	MBack(const BACK& _backdata, Asset* _asset);
 	~MBack();
 
 	void Init();
@@ -15,7 +32,7 @@ public:
 
 public:
 
-	Maple::BACK BackData;
+	BACK BackData;
 
 
 private:

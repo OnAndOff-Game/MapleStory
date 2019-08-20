@@ -180,6 +180,9 @@
     <ClInclude Include="MPhysics.h">
       <Filter>Component</Filter>
     </ClInclude>
+    <ClInclude Include="MPortal.h">
+      <Filter>Map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MapleStory.cpp">
@@ -289,6 +292,9 @@
     </ClCompile>
     <ClCompile Include="MPhysics.cpp">
       <Filter>Component</Filter>
+    </ClCompile>
+    <ClCompile Include="MPortal.cpp">
+      <Filter>Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
