@@ -6,17 +6,22 @@
 MPortal::MPortal(const PORTAL& _portaldata)
 {
 	PortalData = _portaldata;
-	
+
 	for (int i = 0; i < 8; i++)
 	{
 		std::string path = "Portal/";
 		path += "pv.";
 		path += (i + 48);
 		path += ".png";
-
-		mAsset[i] = new Asset(EMRenderType::eMR_Map, path);
+		IMG_DATA data;
+		Gdiplus::Image* img = SpriteManager->GetAssetImg(path);
+		data.origin.X = img->GetWidth() / 2;
+		data.origin.Y = img->GetHeight() -5 ;
+		data.z = 3;
+		mAsset[i] = new Asset(EMRenderType::eMR_Map,path,data);
 	}
 	curAni = 0;
+	curAniTime = 0;
 }
 
 MPortal::~MPortal()

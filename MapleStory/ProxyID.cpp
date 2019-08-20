@@ -19,6 +19,7 @@ public:
 		Proxies.resize(500);
 	}
 
+
 	~ProxyArray()
 	{
 		FreeProxy.size();

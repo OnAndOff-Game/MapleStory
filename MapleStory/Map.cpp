@@ -19,7 +19,7 @@ Map::Map(const char* fileName)
 	mapNode = Node(mapCode.c_str());
 
 
-	pMob = new Mob("Mob/131.img.xml");
+	//pMob = new Mob("Mob/131.img.xml");
 }
 
 Map::~Map()
@@ -50,10 +50,11 @@ void Map::Init()
 	}	
 
 	Node portal = mapNode["portal"];
-	for (auto p = portal.begin(); p; p = p++)
+	for (auto o = portal.begin(); o; o = o++)
 	{
-		world->PortalData(p);
+		world->PortalData(o);
 	}
+	
 
 	ROAD->LoadData(&mapNode["foothold"]);
 
@@ -73,11 +74,6 @@ void Map::Load(const char* fileName)
 void Map::Update(float delta)
 {
 
-
-	//if (GetAsyncKeyState(VK_DOWN))
-	//{
-	//	test = true;
-	//}
 
 	for (auto t : world->back)
 	{
@@ -100,7 +96,6 @@ void Map::Update(float delta)
 	for (auto t : world->portal)
 	{
 		t->Update(delta);
-		break;
 	}
 }
 

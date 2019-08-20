@@ -3,16 +3,6 @@
 
 void Maple::World::PortalData(Node o)
 {
-	//PORTAL temp;
-	//temp.x = o["x"].GetValueInt();
-	//temp.y = o["y"].GetValueInt();
-	//if (o["tm"].GetValueInt() == 999999999 ||
-	//	o["tm"].GetValueInt() == 100000000)
-	//	return;
-	//MPortal * pt = new MPortal(temp, new Asset(EMRenderType::eMR_Map, "Portal/pv.0.png", 1));
-	//pt->SetPosition(temp.x, temp.y - pt->GetAssetSize().Y / 2 + 10);
-	//portal.push_back(pt);
-	static int a = 0;
 	PORTAL pot;
 
 	pot.pn = o["pn"].GetValueString();
@@ -22,8 +12,11 @@ void Maple::World::PortalData(Node o)
 	pot.tm = o["tm"].GetValueInt();
 	pot.tn = o["tn"].GetValueString();
 
+	if (pot.tm == 999999999)
+		return;
+
 	MPortal* pPortal = new MPortal(pot);
-	pPortal->SetPosition(pot.x, pot.y - 80);
+	pPortal->SetPosition(pot.x, pot.y);
 	portal.push_back(pPortal);
 }
 

@@ -40,6 +40,9 @@
     <Filter Include="Scene">
       <UniqueIdentifier>{3d901e20-cd6f-4490-9911-9ab379ed1e74}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Skill">
+      <UniqueIdentifier>{98b59009-98c6-4c8b-9fc6-44bd42407362}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MapleStory.h">
@@ -144,9 +147,6 @@
     <ClInclude Include="TempObj.h">
       <Filter>Map</Filter>
     </ClInclude>
-    <ClInclude Include="MWData.h">
-      <Filter>Map</Filter>
-    </ClInclude>
     <ClInclude Include="MTile.h">
       <Filter>Map</Filter>
     </ClInclude>
@@ -182,6 +182,12 @@
     </ClInclude>
     <ClInclude Include="MPortal.h">
       <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="MWData.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ISkill.h">
+      <Filter>Game\Skill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -295,6 +301,9 @@
     </ClCompile>
     <ClCompile Include="MPortal.cpp">
       <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="ISkill.cpp">
+      <Filter>Game\Skill</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
