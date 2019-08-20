@@ -100,3 +100,16 @@ void Maple::World::TileData(Node o, int i)
 
 	layer[i].tile.push_back(pTile);
 }
+
+void Maple::World::Clear()
+{
+	for (int i = 0; i < 8; i++)
+	{
+		layer[i].info = INFO();
+		layer[i].tile.clear();
+		layer[i].obj.clear();
+	}
+	back.clear();
+	footHold.clear();
+	portal.clear();
+}

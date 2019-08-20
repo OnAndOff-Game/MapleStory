@@ -22,6 +22,17 @@ Map::Map(const char* fileName)
 	//pMob = new Mob("Mob/131.img.xml");
 }
 
+Map::Map(int mapCode)
+{
+	char temp[10];
+	this->mapCode = "Xml/Map1/";
+	this->mapCode += _itoa(mapCode,temp,10);
+	this->mapCode += ".img.xml";
+	mapNode = Node(this->mapCode.c_str());
+	world = new World();
+	
+}
+
 Map::~Map()
 {
 }
@@ -58,28 +69,63 @@ void Map::Init()
 
 	ROAD->LoadData(&mapNode["foothold"]);
 
-	Node BackGround = mapNode["back"];
-	for (auto o = BackGround.begin(); o; o = o++)
-	{
-		world->BackData(o);
-	}
+	//Node BackGround = mapNode["back"];
+	//for (auto o = BackGround.begin(); o; o = o++)
+	//{
+	//	world->BackData(o);
+	//}
 
 }
 
-void Map::Load(const char* fileName)
+void Map::Load(int mapCode)
 {
+	char temp[10];
+	this->mapCode = "Xml/Map1/";
+	this->mapCode += _itoa(mapCode, temp, 10);
+	this->mapCode += ".img.xml";
+	mapNode = Node(this->mapCode.c_str());
+	world->Clear();
 
+	for (int i = 0; i < 8; i++)
+	{
+		Node info = mapNode[i]["info"]["tS"];
+		if (!info.IsNull())
+		{
+			world->layer[i].info.tS = "Tile\\" + info.GetValueString() + ".img";
+		}
+
+		Node tile = mapNode[i]["tile"];
+
+		for (auto o = tile.begin(); o; o = o++)
+		{
+			world->TileData(o, i);
+		}
+		Node obj = mapNode[i]["obj"];
+		for (auto o = obj.begin(); o; o = o++)
+		{
+			world->ObjData(o, i);
+		}
+	}
+
+	Node portal = mapNode["portal"];
+	for (auto o = portal.begin(); o; o = o++)
+	{
+		world->PortalData(o);
+	}
+
+
+	ROAD->LoadData(&mapNode["foothold"]);
 }
 
 void Map::Update(float delta)
 {
 
 
-	for (auto t : world->back)
-	{
-		t->Update(delta);
-		break;
-	}
+	//for (auto t : world->back)
+	//{
+	//	t->Update(delta);
+	//	break;
+	//}
 
 	for (int i = 0; i < 8; i++)
 	{

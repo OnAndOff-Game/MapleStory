@@ -2,6 +2,7 @@
 #include "MSprite.h"
 #include "MSpriteComponent.h"
 #include "MPhysics.h"
+#include "ISkill.h"
 #include "Mob.h"
 
 Mob::Mob()
@@ -56,6 +57,7 @@ void Mob::Release()
 void Mob::Update(float _delta)
 {
 	m_pPhysics->SetImgData(m_pSprites->GetCurrentImgData());
+	m_pPhysics->SetVelocityX(0);
 
 	if (GetAsyncKeyState(VK_RIGHT))
 	{
@@ -68,10 +70,7 @@ void Mob::Update(float _delta)
 		m_pSprites->SetFlip(false);
 		m_pPhysics->SetVelocityX(-1);
 	}
-	else if (GetAsyncKeyState(VK_DOWN))
-	{
-		m_pPhysics->SetVelocity(0, 1);
-	}
+
 
 	for (auto it : m_vComponent)
 	{
@@ -210,7 +209,7 @@ void Mob::LoadData(const std::string& _filename)
 					if (!t["z"].IsNull())
 						imgdata.z = t["z"].GetValueInt();
 					else
-						imgdata.z = 0;
+						imgdata.z = 2;
 				}
 
 				ASSETMGR->SetAssetData(imgdata);

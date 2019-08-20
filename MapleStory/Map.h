@@ -13,9 +13,10 @@ class Map
 public:
 	Map();
 	Map(const char* fileName);
+	Map(int mapCode);
 	~Map();
 	void Init();
-	void Load(const char* fileName);
+	void Load(int mapCode);
 	void Update(float delta);
 	void Render(CDC* pDC);
 	void Release();

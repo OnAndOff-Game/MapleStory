@@ -7,7 +7,7 @@
 
 void GameScene::Init()
 {
-	map = new Map("xml/100000000.img.xml");
+	map = new Map(106010102);
 	map->Init();
 
 
@@ -20,8 +20,11 @@ void GameScene::Init()
 PointF target(800, 30);
 void GameScene::Update(float Delta)
 {
-	map->Update(Delta);
 	player->Update(Delta);
+	map->Update(Delta);
+
+	if (GetAsyncKeyState('A'))
+		map->Load(100000000);
 
 	View::Target = player->GetPosition();
 

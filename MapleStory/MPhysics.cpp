@@ -59,7 +59,7 @@ void MPhysics::Update(MObject* _obj, float _delta)
 
 	////fabsf
 	//int stab = 0;
-	float delta = _delta * 0.002f;
+	float delta = _delta * 0.004f;
 	Gdiplus::PointF pos(_obj->GetPosition().X, _obj->GetPosition().Y);
 	//
 	//

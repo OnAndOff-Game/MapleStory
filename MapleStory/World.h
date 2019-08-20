@@ -52,6 +52,7 @@ namespace Maple
 		void BackData(Node o);
 		void ObjData(Node o, int i);
 		void TileData(Node o, int i);
+		void Clear();
 
 		CPoint centerPos;
 		CPoint mapSize;

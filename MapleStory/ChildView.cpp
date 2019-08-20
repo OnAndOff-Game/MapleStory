@@ -57,7 +57,7 @@ void CChildView::OnPaint()
 
 	Bitmap BackBuffer(rc.Width(), rc.Height(), PixelFormat32bppARGB);
 	Graphics MemG(&BackBuffer);
-	Gdiplus::SolidBrush whiteBrush(Gdiplus::Color(0, 255, 255, 255));
+	Gdiplus::SolidBrush whiteBrush(Gdiplus::Color(255, 255, 255, 255));
 	MemG.FillRectangle(&whiteBrush, 0, 0, rc.Width(), rc.Height());
 	// Scene 렌더
 	SceneManager::GetInstance().RenderScene(&MemG);
