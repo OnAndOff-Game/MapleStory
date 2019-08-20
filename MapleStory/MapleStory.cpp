@@ -40,6 +40,9 @@ CMapleStoryApp::CMapleStoryApp() noexcept
 CMapleStoryApp theApp;
 DWORD CMapleStoryApp::PrevTick = 0;
 bool CMapleStoryApp::bRender = false;
+DWORD CMapleStoryApp::StaticTick = 0;
+int CMapleStoryApp::CallCount = 0;
+
 
 
 
@@ -118,7 +121,7 @@ class CAboutDlg : public CDialogEx
 public:
 	CAboutDlg() noexcept;
 
-// 대화 상자 데이터입니다.
+	// 대화 상자 데이터입니다.
 #ifdef AFX_DESIGN_TIME
 	enum { IDD = IDD_ABOUTBOX };
 #endif
@@ -164,7 +167,6 @@ UINT CMapleStoryApp::funcThread(LPVOID pParam)
 			if (CMapleStoryApp::bRender)
 			{
 				SceneManager::GetInstance().Update(Delta);
-				//std::cout << "ASD" << std::endl;
 				CChildView* view = MainFrm->GetView();
 
 				CRect rc;
@@ -179,6 +181,58 @@ UINT CMapleStoryApp::funcThread(LPVOID pParam)
 		Sleep(1000 / FPS);
 		PrevTick = tick;
 	}
+
+	//while (true)
+	//{
+	//	DWORD tick = GetTickCount64();
+	//	DWORD Delta = tick - PrevTick;
+	//	static DWORD AddDelta = 0;
+	//	PrevTick = tick;
+	//	StaticTick += Delta;
+	//	AddDelta += Delta;
+
+	//	static DWORD minDelta = 1000 / 60;
+	//	
+	//	if (CMainFrame * MainFrm = static_cast<CMainFrame*>(theApp.GetMainWnd()))
+	//	{
+	//		if (AddDelta < minDelta)
+	//		{
+	//			continue;
+	//		}
+
+	//		else
+	//		{
+	//			if (AddDelta > 100)
+	//				AddDelta = 0;
+	//			else
+	//				AddDelta = AddDelta - minDelta;
+
+	//			Delta = minDelta;
+	//		}
+
+	//		++CallCount;
+	//		std::cout << "CallCount : " << CallCount << std::endl;
+	//		
+	//		SceneManager::GetInstance().Update(Delta);
+	//		//std::cout << "ASD" << std::endl;
+	//		CChildView* view = MainFrm->GetView();
+
+	//		CRect rc;
+	//		view->GetClientRect(rc);
+	//		if (!rc.IsRectNull())
+	//			view->InvalidateRect(rc);
+
+	//		if (StaticTick > 1000)
+	//		{
+	//			CallCount = 0;
+	//			StaticTick = 0;
+	//		}
+	//	}
+
+	//	Sleep(0);
+	//}
+
+
 	return -1;
 }
 

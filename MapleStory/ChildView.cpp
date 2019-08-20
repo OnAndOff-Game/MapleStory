@@ -64,6 +64,8 @@ void CChildView::OnPaint()
 
 	BATCHRENDER->Draw(&MemG);
 
+	ROAD->Render(&MemG);
+
 	MainG.DrawImage(&BackBuffer, 0, 0, rc.Width(), rc.Height());
 
 	BATCHRENDER->DrawEnd();

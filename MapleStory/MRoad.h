@@ -12,6 +12,8 @@ public:
 	void Update(float _delta);
 	RoadLine* GetLine(Gdiplus::Point& _pt);
 	RoadLine* GetLine(int _num);
+
+	void Render(Gdiplus::Graphics* _mem);
 	
 	void Release();
 

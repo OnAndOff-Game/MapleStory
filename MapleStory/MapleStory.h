@@ -38,8 +38,8 @@ public:
 
 public:
 
-	DWORD AddDelta;
-	DWORD miniDelta;
+	static DWORD StaticTick;
+	static int CallCount;
 
 };
 
