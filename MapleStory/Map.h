@@ -20,12 +20,12 @@ public:
 	void Render(CDC* pDC);
 	void Release();
 
+	World* world;
 private:
 	std::string mapCode;
 
 	MCharacter* player;
 
-	World* world;
 	Mob* pMob;
 	Node mapNode;
 

@@ -17,4 +17,5 @@ public:
 
 private:
 	Map* map;
+	Mob* player;
 };

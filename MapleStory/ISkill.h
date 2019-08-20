@@ -7,6 +7,4 @@ public:
 	void Update(float _delta);
 
 private:
-
-	MSpriteComponent* m_pSprites;
 };
