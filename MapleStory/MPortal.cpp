@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Asset.h"
+#include "Mob.h"
 #include "MPortal.h"
 
 
@@ -47,6 +48,16 @@ void MPortal::Update(float _delta)
 		curAniTime = 0;
 	}
 	mAsset[curAni]->Update(this, _delta);
+}
+
+bool MPortal::PortalCollision(Gdiplus::Point& player)
+{
+	if (player.X - 10 < GetPosition().X &&
+		player.X + 10 > GetPosition().X &&
+		player.Y - 10 < GetPosition().Y &&
+		player.Y + 10 > GetPosition().Y)
+		return true;
+	return false;
 }
 
 Gdiplus::Point& MPortal::GetAssetSize()

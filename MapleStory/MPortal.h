@@ -21,6 +21,8 @@ public:
 	void Update(float _delta);
 	void Release();
 
+	bool PortalCollision(Gdiplus::Point& player);
+
 	Gdiplus::Point& GetAssetSize();
 	Gdiplus::Rect& GetSize();
 
