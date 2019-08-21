@@ -5,6 +5,7 @@
 #include "TempObj.h"
 #include "MRoad.h"
 #include "Mob.h"
+#include "MCharacter.h"
 #include "MPhysics.h"
 #include "Map.h"
 
@@ -39,8 +40,7 @@ Map::~Map()
 
 void Map::Init()
 {
-	Load(100030000);
-
+	Load(100000000);
 	//Node BackGround = mapNode["back"];
 	//for (auto o = BackGround.begin(); o; o = o++)
 	//{
@@ -135,7 +135,7 @@ void Map::Release()
 	delete	world;
 }
 
-void Map::PlayerInPortal(Mob* player)
+void Map::PlayerInPortal(MCharacter* player)
 {
 	for (auto t : world->portal)
 	{
@@ -143,7 +143,7 @@ void Map::PlayerInPortal(Mob* player)
 		{
 			std::cout << t->PortalData.tm << std::endl;
 			Load(t->PortalData.tm);
-			player->SetPosition(200, 0);
+			player->SetPosition(0, 0);
 			return;
 		}
 	}

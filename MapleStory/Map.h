@@ -7,6 +7,7 @@ using namespace Maple;
 using namespace Gdiplus;
 
 class MRoad;
+class MCharacter;
 
 class Map
 {
@@ -21,7 +22,7 @@ public:
 	void Render(CDC* pDC);
 	void Release();
 
-	void PlayerInPortal(Mob* player);
+	void PlayerInPortal(MCharacter* player);
 
 	World* world;
 private:

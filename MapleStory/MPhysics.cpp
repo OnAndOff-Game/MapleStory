@@ -49,7 +49,7 @@ void MPhysics::Init()
 void MPhysics::Update(MObject* _obj, float _delta)
 {
 	int stab = 0;
-	float delta = _delta * 0.0004f;
+	float delta = _delta * 0.0002f;
 
 	Gdiplus::PointF pos(_obj->GetPosition().X, _obj->GetPosition().Y);
 	Gdiplus::PointF crd;
@@ -102,7 +102,7 @@ void MPhysics::Update(MObject* _obj, float _delta)
 
 					else
 					{
-						std::cout << "¸ØÃã" << std::endl;
+						//std::cout << "¸ØÃã" << std::endl;
 
 						if (vx < 0)
 							pos.X += 1.0f;
@@ -128,7 +128,7 @@ void MPhysics::Update(MObject* _obj, float _delta)
 					else
 					{
 						pos = crd;
-						std::cout << "Äç" << std::endl;
+						//std::cout << "Äç" << std::endl;
 					}
 
 					vy = 0;
@@ -184,7 +184,7 @@ void MPhysics::Update(MObject* _obj, float _delta)
 
 						else
 						{
-							std::cout << "P stop" << std::endl;
+						//	std::cout << "P stop" << std::endl;
 
 							m_pRL = prv;
 							vy = 0;
@@ -250,7 +250,7 @@ void MPhysics::Update(MObject* _obj, float _delta)
 						else
 						{
 							m_pRL = nxt;
-							std::cout << "N stop" << std::endl;
+							//std::cout << "N stop" << std::endl;
 
 							vy = 0;
 							vx = 0;

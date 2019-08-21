@@ -8,14 +8,14 @@
 
 void GameScene::Init()
 {
-	map = new Map(106010101);
+	map = new Map(100000000);
 	map->Init();
 
 
 	player = new MCharacter("Mob/131.img.xml");
 	player->Init();
 	player->Move();
-	player->SetPosition(112, 206);
+	player->SetPosition(112, 216);
 }
 
 void GameScene::Update(float Delta)
