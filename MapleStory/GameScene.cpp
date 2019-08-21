@@ -1,23 +1,23 @@
 #include "pch.h"
 #include "Asset.h"
 #include "MPortal.h"
+#include "MCharacter.h"
 #include "Mob.h"
 #include "Map.h"
 #include "GameScene.h"
 
 void GameScene::Init()
 {
-	map = new Map(106010102);
+	map = new Map(100000000);//106010102);
 	map->Init();
 
 
-	player = new Mob("Mob/131.img.xml");
+	player = new MCharacter("Mob/131.img.xml");
 	player->Init();
 	player->Move();
 	player->SetPosition(112, 206);
 }
 
-PointF target(800, 30);
 void GameScene::Update(float Delta)
 {
 	player->Update(Delta);

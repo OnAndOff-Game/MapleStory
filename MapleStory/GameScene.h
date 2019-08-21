@@ -4,6 +4,7 @@ class SprMgr;
 class Asset;
 class Map;
 class Mob;
+class MCharacter;
 
 class GameScene : public Scene
 {
@@ -17,5 +18,5 @@ public:
 
 private:
 	Map* map;
-	Mob* player;
+	MCharacter* player;
 };

@@ -65,7 +65,7 @@ void Mob::Update(float _delta)
 		m_pPhysics->SetVelocityX(1);
 	}
 
-	else if (GetAsyncKeyState(VK_LEFT))
+	if (GetAsyncKeyState(VK_LEFT))
 	{
 		m_pSprites->SetFlip(false);
 		m_pPhysics->SetVelocityX(-1);

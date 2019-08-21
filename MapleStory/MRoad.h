@@ -20,6 +20,8 @@ public:
 public:
 	
 	std::vector<RoadLine>	m_vRoad;
+
+	bool bCollision;
 		
 };
 
