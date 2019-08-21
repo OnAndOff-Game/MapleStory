@@ -21,6 +21,8 @@ public:
 	void Render(CDC* pDC);
 	void Release();
 
+	void PlayerInPortal(Mob* player);
+
 	World* world;
 private:
 	std::string mapCode;

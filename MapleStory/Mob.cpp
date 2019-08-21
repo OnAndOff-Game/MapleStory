@@ -57,7 +57,7 @@ void Mob::Release()
 void Mob::Update(float _delta)
 {
 	m_pPhysics->SetImgData(m_pSprites->GetCurrentImgData());
-	m_pPhysics->SetVelocityX(0);
+	m_pPhysics->SetVelocity(0,0);
 
 	if (GetAsyncKeyState(VK_RIGHT))
 	{
@@ -69,6 +69,14 @@ void Mob::Update(float _delta)
 	{
 		m_pSprites->SetFlip(false);
 		m_pPhysics->SetVelocityX(-1);
+	}
+	if (GetAsyncKeyState(VK_DOWN))
+	{
+		m_pPhysics->SetVelocity(0,1);
+	}
+	else if (GetAsyncKeyState(VK_UP))
+	{
+		m_pPhysics->SetVelocity(0, -1);
 	}
 
 

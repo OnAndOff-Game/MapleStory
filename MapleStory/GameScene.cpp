@@ -8,7 +8,7 @@
 
 void GameScene::Init()
 {
-	map = new Map(100000000);//106010102);
+	map = new Map(106010101);
 	map->Init();
 
 
@@ -24,12 +24,13 @@ void GameScene::Update(float Delta)
 	map->Update(Delta);
 
 	if (GetAsyncKeyState('A'))
-		map->Load(100000000);
+		map->PlayerInPortal(player);
 
 	View::Target = player->GetPosition();
 
 	View::CameraFollow(5 * Delta);
 }
+
 
 void GameScene::Render(Gdiplus::Graphics* _memG)
 {

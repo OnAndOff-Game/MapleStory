@@ -3,7 +3,7 @@
 
 double const fall_speed = 200;
 double const gravity_acc = 2000;
-double const walk_speed = 125;
+double const walk_speed = 300;
 
 
 
