@@ -40,7 +40,7 @@ Map::~Map()
 
 void Map::Init()
 {
-	Load(100000000);
+	Load(106010102);
 	//Node BackGround = mapNode["back"];
 	//for (auto o = BackGround.begin(); o; o = o++)
 	//{

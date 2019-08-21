@@ -3,7 +3,7 @@
 
 double const fall_speed = 200;
 double const gravity_acc = 2000;
-double const walk_speed = 300;
+double const walk_speed = 120;
 
 
 
@@ -30,9 +30,17 @@ bool GetIntersectPoint(const Gdiplus::PointF& AP1, const Gdiplus::PointF& AP2,
 	return true;
 }
 
-MPhysics::MPhysics() : m_pRL(nullptr), m_pJumpRL(nullptr), m_pImgData(nullptr), bJumping(false)
+MPhysics::MPhysics() : m_pRL(nullptr), m_pJumpRL(nullptr), m_pImgData(nullptr), bJumping(false),
+fs(0), speed(0)
 {
-	nAcc = 0;
+	vx = 0;
+	vy = 1;
+	RoadNum = 0;
+}
+
+MPhysics::MPhysics(int _fs, int _speed) : m_pRL(nullptr), m_pJumpRL(nullptr), m_pImgData(nullptr), bJumping(false),
+fs(_fs), speed(_speed)
+{
 	vx = 0;
 	vy = 1;
 	RoadNum = 0;
@@ -44,12 +52,13 @@ MPhysics::~MPhysics()
 
 void MPhysics::Init()
 {
+	speed += walk_speed;
 }
 
 void MPhysics::Update(MObject* _obj, float _delta)
 {
 	int stab = 0;
-	float delta = _delta * 0.0002f;
+	float delta = _delta * 0.0004f;
 
 	Gdiplus::PointF pos(_obj->GetPosition().X, _obj->GetPosition().Y);
 	Gdiplus::PointF crd;
@@ -66,7 +75,7 @@ void MPhysics::Update(MObject* _obj, float _delta)
 
 		if (m_pRL == nullptr)
 		{
-			Gdiplus::PointF d(vx * walk_speed * delta, vy * fall_speed * delta);
+			Gdiplus::PointF d(vx * speed * delta, vy * fall_speed * delta);
 
 			Gdiplus::PointF posd = pos + d;
 
@@ -146,7 +155,7 @@ void MPhysics::Update(MObject* _obj, float _delta)
 
 		else
 		{
-			Gdiplus::PointF d(vx * walk_speed * delta, vy * fall_speed * delta);
+			Gdiplus::PointF d(vx * speed * delta, vy * fall_speed * delta);
 			Gdiplus::PointF posd = pos + d;
 			//	std::cout << "prv" << std::endl;
 					   
@@ -158,7 +167,7 @@ void MPhysics::Update(MObject* _obj, float _delta)
 				if (prv == nullptr)
 				{
 					vy = 1;
-					d.Y = vy * walk_speed * delta;
+					d.Y = vy * speed * delta;
 					m_pRL = nullptr;
 				}
 
@@ -169,14 +178,14 @@ void MPhysics::Update(MObject* _obj, float _delta)
 						if (prv->line2.Y < prv->line1.Y)
 						{
 							vy = 1;
-							d.Y = vy * walk_speed * delta;
+							d.Y = vy * speed * delta;
 							m_pRL = nullptr;
 						}
 
 						else if (posd.Y < prv->line1.Y && posd.Y > prv->line2.Y)
 						{
 							vy = 2;
-							d.Y = vy * walk_speed * delta;
+							d.Y = vy * speed * delta;
 							vx = 0;
 							pos.X += 1.0f;
 							m_pRL = nullptr;
@@ -221,7 +230,7 @@ void MPhysics::Update(MObject* _obj, float _delta)
 				if (nxt == nullptr)
 				{
 					vy = 1;
-					d.Y = vy * walk_speed * delta;
+					d.Y = vy * speed * delta;
 					m_pRL = nullptr;
 				}
 
@@ -234,14 +243,14 @@ void MPhysics::Update(MObject* _obj, float _delta)
 						if (nxt->line2.Y > nxt->line1.Y)
 						{
 							vy = 1;
-							d.Y = vy * walk_speed * delta;
+							d.Y = vy * speed * delta;
 							m_pRL = nullptr;
 						}
 
 						else if (posd.Y > nxt->line1.Y && posd.Y < nxt->line2.Y)
 						{
 							vy = 2;
-							d.Y = vy * walk_speed * delta;
+							d.Y = vy * speed * delta;
 							vx = 0;
 							pos.X -= 1.0f;
 							m_pRL = nullptr;

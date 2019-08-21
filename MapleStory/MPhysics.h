@@ -7,15 +7,18 @@ class MPhysics : public Component
 public:
 	
 	MPhysics();
+	MPhysics(int _fs, int _speed);
 	~MPhysics();
 
 	void Init();
 	void Update(MObject* _obj, float _delta);
 	void Release();
 
+
 	void SetJump(bool bJumping);
 	bool IsJump();
 
+	void SetInfo();
 	void SetImgData(IMG_DATA const& _imgdata);
 	void SetVelocity(float _vx, float _vy);
 	void SetVelocityX(float _vx);
@@ -24,6 +27,7 @@ public:
 
 	
 private:
+
 	RoadLine const* m_pRL;
 	RoadLine const* m_pJumpRL;
 	IMG_DATA const* m_pImgData;
@@ -32,7 +36,8 @@ private:
 	bool bJumping;
 	
 
-	int nJpRoad;
-	int nAcc;
+
+	int fs;
+	int speed;
 };
 

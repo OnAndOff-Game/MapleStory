@@ -35,9 +35,12 @@ public:
 	bool GetFalling() { return bFalling; }
 	void SetFalling(bool _bFalling) {bFalling = _bFalling;}
 
+	void LoadData(const std::string& _filename);
+
 private:
 
-	void LoadData(const std::string& _filename);
+
+	void LoadInfo(Node _node);
 
 private:
 
@@ -54,7 +57,7 @@ private:
 	
 	int m_nSkillCnt;
 	int m_nAtkCnt;
-	const MobInfo* m_pMobInfo;
+	MobInfo m_MobInfo;
 
 	std::vector<Component*> m_vComponent;
 	   

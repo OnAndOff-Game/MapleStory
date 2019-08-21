@@ -109,9 +109,12 @@ void MSpriteComponent::SetCurrentAnim(EMAnimType _type)
 {
 	m_pSprite = m_mSprites.find(_type)->second;
 
+	if (m_pSprite == nullptr)
+		m_pSprite = m_mSprites.begin()->second;
+
 	m_nFrame = 0;
 }
-
+ 
 void MSpriteComponent::SetCurrentAnim(EMAnimType _type, int _cnt)
 {
 	auto anim = m_mSprites.equal_range(_type);

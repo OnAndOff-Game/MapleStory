@@ -5,7 +5,8 @@
 #include "ISkill.h"
 #include "Mob.h"
 
-Mob::Mob()
+Mob::Mob() : m_pPhysics(nullptr),
+m_nSkillCnt(0), m_nAtkCnt(0), bFalling(true)
 {
 }
 
@@ -26,7 +27,10 @@ void Mob::Init()
 
 	m_pSprites->SetLooping(true);
 
-	m_pPhysics = new MPhysics;
+	m_pPhysics = new MPhysics(m_MobInfo.fs, m_MobInfo.speed);
+
+	m_pPhysics->Init();
+
 }
 
 void Mob::Release()
@@ -57,7 +61,7 @@ void Mob::Release()
 void Mob::Update(float _delta)
 {
 	m_pPhysics->SetImgData(m_pSprites->GetCurrentImgData());
-	m_pPhysics->SetVelocity(0,0);
+	m_pPhysics->SetVelocityX(0);
 
 	if (GetAsyncKeyState(VK_RIGHT))
 	{
@@ -70,13 +74,14 @@ void Mob::Update(float _delta)
 		m_pSprites->SetFlip(false);
 		m_pPhysics->SetVelocityX(-1);
 	}
-	if (GetAsyncKeyState(VK_DOWN))
+
+	if (GetAsyncKeyState(VK_LCONTROL))
 	{
-		m_pPhysics->SetVelocity(0,1);
-	}
-	else if (GetAsyncKeyState(VK_UP))
-	{
-		m_pPhysics->SetVelocity(0, -1);
+		if (m_pPhysics->IsJump())
+		{
+			m_pPhysics->SetVelocityY(-1.5);
+			m_pPhysics->SetJump(true);
+		}
 	}
 
 
@@ -136,7 +141,12 @@ void Mob::LoadData(const std::string& _filename)
 	if(SPRMGR->GetSprDataCnt(sprid) == 0)
 	for (auto o = m_Paser.begin(); o; o = o++) //anim name
 	{
-		if (strcmp(o.GetName(), "info"))
+		if (!strcmp(o.GetName(), "info"))
+		{
+			LoadInfo(o);
+		}
+		
+		else
 		{
 			SPRDATA sprdata;
 			int nCnt = 0;
@@ -148,11 +158,10 @@ void Mob::LoadData(const std::string& _filename)
 
 			for (auto t = m_Paser[o.GetName()].begin(); t; t = t++) // num
 			{
-				o.GetName();
 				std::string file;
 
 				IMG_DATA imgdata;
-
+							
 				file = sprname + '/' + sprdata.name + '.' + t.GetName() + ".png";
 
 				imgdata.filename = file;
@@ -281,4 +290,25 @@ void Mob::LoadData(const std::string& _filename)
 	m_pSprites = new MSpriteComponent(sprid, EMRenderType::eMR_Obj);
 	
 	//m_vComponent.push_back(pSC);
+}
+
+void Mob::LoadInfo(Node _node)
+{
+	m_MobInfo.level			= _node["level"].GetValueInt();
+	m_MobInfo.bodyAttack	= _node["bodyAttack"].GetValueInt();
+	m_MobInfo.maxHp			= _node["maxHP"].GetValueInt();
+	m_MobInfo.maxMp			= _node["maxMP"].GetValueInt();
+	m_MobInfo.speed			= _node["speed"].GetValueInt();
+	m_MobInfo.PADamge		= _node["PADamage"].GetValueInt();
+	m_MobInfo.PDDamge		= _node["PDDamage"].GetValueInt();
+	m_MobInfo.PDRate		= _node["PDRate"].GetValueInt();
+	m_MobInfo.MADamge		= _node["MADamage"].GetValueInt();
+	m_MobInfo.MDDamge		= _node["MDDamage"].GetValueInt();
+	m_MobInfo.MDRate		= _node["MDRate"].GetValueInt();
+	m_MobInfo.acc			= _node["acc"].GetValueInt();
+	m_MobInfo.eva			= _node["eva"].GetValueInt();
+	m_MobInfo.pushed		= _node["pushed"].GetValueInt();
+	m_MobInfo.fs			= _node["fs"].GetValueInt();
+	m_MobInfo.exp			= _node["exp"].GetValueInt();
+	m_MobInfo.category		= _node["category"].GetValueInt();
 }

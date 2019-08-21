@@ -5,7 +5,8 @@
 #include "ISkill.h"
 #include "MCharacter.h"
 
-MCharacter::MCharacter()
+MCharacter::MCharacter() :m_pPhysics(nullptr),
+m_nSkillCnt(0), m_nAtkCnt(0), bFalling(true)
 {
 }
 
@@ -27,6 +28,7 @@ void MCharacter::Init()
 	m_pSprites->SetLooping(true);
 
 	m_pPhysics = new MPhysics;
+	m_pPhysics->Init();
 }
 
 void MCharacter::Release()
@@ -180,9 +182,6 @@ void MCharacter::LoadData(const std::string& _filename)
 
 								imgdata.link = sprname + '/' + sprdata.name + '.' + templink + ".png";
 							}
-
-							//if (!t["_outlink"].IsNull())
-							//	imgdata.origin = t["origin"].GetValuePoint();
 						}
 
 						if (!t["origin"].IsNull())
