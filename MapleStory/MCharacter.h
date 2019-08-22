@@ -24,6 +24,7 @@ public:
 	Gdiplus::Rect const& GetColRc();
 
 	void HitDamage(int _demage);
+	void SetLevitation();
 
 	void Move();
 	void Jump();
