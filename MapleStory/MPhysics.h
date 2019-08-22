@@ -17,6 +17,7 @@ public:
 
 	void SetJump(bool bJumping);
 	bool IsJump();
+	bool IsFloor();
 
 	void SetInfo();
 	void SetImgData(IMG_DATA const& _imgdata);

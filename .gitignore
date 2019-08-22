@@ -16,3 +16,12 @@
 /x64/Release
 *.db
 *.opendb
+*.tlog
+*.obj
+*.res
+*.pch
+*.idb
+*.pdb
+*.log
+*.exe
+*.ilk

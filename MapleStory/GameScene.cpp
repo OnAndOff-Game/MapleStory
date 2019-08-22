@@ -38,6 +38,7 @@ void GameScene::Update(float Delta)
 	OBJMGR->Update(Delta);
 	map->Update(Delta);
 
+	// Æ÷Å» ÀÌµ¿
 	if (GetAsyncKeyState('A'))
 		map->PlayerInPortal(player);
 

@@ -18,8 +18,8 @@ public:
 
 
 private:
-
 	Maple::LADDER_ROPE m_stLRData;
+
 
 
 };

@@ -22,6 +22,8 @@ public:
 	void HandleInput(EMAnimType _atype);
 	void SetComponent(Component* _pComp);
 
+	void Revision();
+
 	Gdiplus::Rect const& GetColRc();
 
 	void HitDamage(int _damage);

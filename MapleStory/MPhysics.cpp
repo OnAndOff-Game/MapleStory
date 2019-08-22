@@ -327,6 +327,17 @@ bool MPhysics::IsJump()
 		return true;
 }
 
+bool MPhysics::IsFloor()
+{
+	if (m_pRL == nullptr)
+		return false;
+	if (m_pRL->group != 0)
+	{
+		return true;
+	}
+	return false;
+}
+
 void MPhysics::SetImgData(IMG_DATA const& _imgdata)
 {
 	m_pImgData = &_imgdata;
