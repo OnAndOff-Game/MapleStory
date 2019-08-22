@@ -57,6 +57,13 @@ void ObjectMgr::Update(float _delta)
 		if (it.second->m_eObjType == EMObjType::eMO_Player)
 		{
 			MCharacter* pPlayer = static_cast<MCharacter*>(it.second);
+		
+			if (!pPlayer->IsCollision())
+			{
+				it.second->Update(_delta);
+				continue;
+			}
+		
 			Gdiplus::Rect const* prc = &pPlayer->GetColRc();
 
 			for (auto& t : m_mObject)
@@ -70,7 +77,10 @@ void ObjectMgr::Update(float _delta)
 					if (AABBIntersectionSize(*prc, *mrc))
 					{
 						//player->hitdamage
-						std::cout << "¸÷ÇÑÅ× ¸ÂÀ½ : " << mrc->X << "   " << mrc->Y<< std::endl;
+						pPlayer->HitDamage(pMob->GetPushed());
+
+						break;
+	
 						//continue;
 					}
 				}
@@ -129,5 +139,6 @@ void ObjectMgr::Reset()
 
 	m_mObject.clear();
 
-	m_mObject.insert(std::make_pair(pCh->m_ProxyID.GetProxyID(), pCh));
+	if (pCh != nullptr)
+		m_mObject.insert(std::make_pair(pCh->m_ProxyID.GetProxyID(), pCh));
 }

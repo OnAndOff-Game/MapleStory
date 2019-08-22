@@ -4,6 +4,7 @@
 #include "MPhysics.h"
 #include "ISkill.h"
 #include "StandingState.h"
+#include "MDamageFont.h"
 #include "MCharacter.h"
 
 MCharacter::MCharacter() :m_pPhysics(nullptr),
@@ -34,6 +35,8 @@ void MCharacter::Init()
 	m_pPhysics->Init();
 
 	m_pState = new StandingState();
+
+	m_pDF = new MDamageFont();
 }
 
 void MCharacter::Release()
@@ -114,8 +117,18 @@ void MCharacter::Update(float _delta)
 		it->Update(this, _delta);
 	}
 
+	m_dwHitTick += _delta;
+
+	if (m_dwHitTick > 2000)
+	{
+		m_bCollision = true;
+		m_bHit = false;
+		m_dwHitTick = 0;
+	}
+
 	m_pPhysics->Update(this, _delta);
 	m_pSprites->Update(this, _delta);
+	m_pDF->Update(_delta);
 }
 
 void MCharacter::GetLadderRope(std::list<Maple::LADDER_ROPE>& _ladderrope)
@@ -152,15 +165,32 @@ Gdiplus::Rect const& MCharacter::GetColRc()
 	return m_rcCollision;
 }
 
-void MCharacter::HitDamage(int _demage)
+void MCharacter::HitDamage(int _damage)
 {
 	m_bHit = true;
 	m_bCollision = false;
-	m_dwHitTick = GetTickCount64();
+	m_dwHitTick = 0;
 
+	IMG_DATA const* pTemp = &m_pSprites->GetCurrentImgData();
 	//damage font(_demage)
+	Gdiplus::Point pt = GetPosition();
 
-	m_nHp -= _demage;
+	pt.X -= pTemp->imgsize.X / 2;
+	pt.Y -= pTemp->imgsize.Y + 20;
+
+	m_pDF->SetDamage(_damage, pt);
+
+	m_nHp -= _damage;
+}
+
+void MCharacter::SetLevitation()
+{
+	m_pPhysics->SetLevitation();
+}
+
+bool MCharacter::IsCollision()
+{
+	return m_bCollision;
 }
 
 void MCharacter::HandleInput(EMAnimType _atype)

@@ -3,6 +3,7 @@
 class MSpriteComponent;
 class MPhysics;
 class MState;
+class MDamageFont;
 //struct LADDER_ROPE;
 
 class MCharacter : public MObject
@@ -23,8 +24,10 @@ public:
 
 	Gdiplus::Rect const& GetColRc();
 
-	void HitDamage(int _demage);
+	void HitDamage(int _damage);
 	void SetLevitation();
+
+	bool IsCollision();
 
 	void Move();
 	void Jump();
@@ -52,6 +55,7 @@ private:
 
 	MSpriteComponent* m_pSprites;
 	MPhysics* m_pPhysics;
+	MDamageFont* m_pDF;
 
 	std::list<Maple::LADDER_ROPE>* m_pLdRope;
 
