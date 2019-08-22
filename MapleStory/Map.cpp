@@ -40,7 +40,8 @@ Map::~Map()
 
 void Map::Init()
 {
-	Load(106010102);
+	Load(100000000);
+
 	//Node BackGround = mapNode["back"];
 	//for (auto o = BackGround.begin(); o; o = o++)
 	//{
@@ -57,6 +58,11 @@ void Map::Load(int mapCode)
 	mapNode = Node(this->mapCode.c_str());
 	world->Clear();
 	ROAD->GetInstance()->Release();
+
+	Node info = mapNode["info"];
+	world->layer[0].info.bgm = info["bgm"].GetValueString();
+	std::string soundPath = "Sound/" + world->layer[0].info.bgm + ".mp3";
+	SoundManager->LoadSound(soundPath);
 
 	for (int i = 0; i < 8; i++)
 	{
@@ -85,8 +91,27 @@ void Map::Load(int mapCode)
 		world->PortalData(o);
 	}
 
+	Node life = mapNode["life"];
+	for (auto o = life.begin(); o; o = o++)
+	{
+		world->LifeData(o);
+	}
+
+	Node ladderRope = mapNode["ladderRope"];
+	for (auto o = ladderRope.begin(); o; o = o++)
+	{
+		world->LadderData(o);
+	}
+
+
+	//Node BackGround = mapNode["back"];
+	//for (auto o = BackGround.begin(); o; o = o++)
+	//{
+	//	world->BackData(o);
+	//}
 
 	ROAD->LoadData(&mapNode["foothold"]);
+	SoundManager->PlaySound(0);
 }
 
 void Map::Update(float delta)
@@ -112,6 +137,11 @@ void Map::Update(float delta)
 	}
 
 	for (auto t : world->portal)
+	{
+		t->Update(delta);
+	}
+
+	for (auto t : world->life)
 	{
 		t->Update(delta);
 	}
@@ -141,9 +171,14 @@ void Map::PlayerInPortal(MCharacter* player)
 	{
 		if (t->PortalCollision(player->GetPosition()))
 		{
-			std::cout << t->PortalData.tm << std::endl;
+			std::string tn = t->PortalData.tn;
 			Load(t->PortalData.tm);
-			player->SetPosition(0, 0);
+			for (auto t : world->portal)
+			{
+				if(!t->PortalData.pn.compare(tn))
+				player->SetPosition(t->PortalData.x, t->PortalData.y);
+			}
+			SoundManager->PlaySound(2);
 			return;
 		}
 	}

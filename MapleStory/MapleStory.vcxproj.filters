@@ -222,6 +222,9 @@
     <ClInclude Include="DieState.h">
       <Filter>State</Filter>
     </ClInclude>
+    <ClInclude Include="MLife.h">
+      <Filter>Map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MapleStory.cpp">
@@ -367,6 +370,9 @@
     </ClCompile>
     <ClCompile Include="DieState.cpp">
       <Filter>State</Filter>
+    </ClCompile>
+    <ClCompile Include="MLife.cpp">
+      <Filter>Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -57,7 +57,7 @@ void CChildView::OnPaint()
 
 	Bitmap BackBuffer(rc.Width(), rc.Height(), PixelFormat32bppARGB);
 	Graphics MemG(&BackBuffer);
-	Gdiplus::SolidBrush whiteBrush(Gdiplus::Color(255, 255, 255, 255));
+	Gdiplus::SolidBrush whiteBrush(Gdiplus::Color(255, 51, 102, 204));
 	MemG.FillRectangle(&whiteBrush, 0, 0, rc.Width(), rc.Height());
 	// Scene 렌더
 	SceneManager::GetInstance().RenderScene(&MemG);
@@ -88,6 +88,8 @@ int CChildView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CWnd::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
+	srand((unsigned int)time(NULL));
+	SoundManager->InitSound();
 	SceneManager::GetInstance().LoadScene("GameScene");
 	AfxBeginThread(&CMapleStoryApp::funcThread, NULL);
 	// TODO:  여기에 특수화된 작성 코드를 추가합니다.

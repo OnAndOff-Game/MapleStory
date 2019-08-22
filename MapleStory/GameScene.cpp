@@ -21,13 +21,13 @@ void GameScene::Init()
 	pMob->Init();
 	pMob->Skill(0);
 
-	pMob->SetPosition(112, 216);
+	//pMob->SetPosition(112, 216);
 
 	pMob2 = new Mob("Mob/2220100.img.xml");
 	pMob2->Init();
 	pMob2->Dead();
 
-	pMob2->SetPosition(112, 216);
+	//pMob2->SetPosition(112, 216);
 	
 }
 

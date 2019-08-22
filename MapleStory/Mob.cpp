@@ -31,7 +31,7 @@ void Mob::Init()
 	m_pPhysics = new MPhysics(m_MobInfo.fs, m_MobInfo.speed);
 
 	m_pPhysics->Init();
-
+	m_MoveTime = 1000;
 }
 
 void Mob::Release()
@@ -62,34 +62,18 @@ void Mob::Release()
 void Mob::Update(float _delta)
 {
 	m_pPhysics->SetImgData(m_pSprites->GetCurrentImgData());
-	m_pPhysics->SetVelocityX(0);
 
-	if (GetAsyncKeyState(VK_RIGHT))
+	m_MoveTime += _delta;
+	if (m_MoveTime > 1000)
 	{
+		m_Direction = rand() % 3 - 1;
+		m_MoveTime = 0;
+	}
+	m_pPhysics->SetVelocityX(m_Direction);
+	if (m_Direction == 1)
 		m_pSprites->SetFlip(true);
-		m_pPhysics->SetVelocityX(1);
-	}
-
-	if (GetAsyncKeyState(VK_LEFT))
-	{
+	else if (m_Direction == -1)
 		m_pSprites->SetFlip(false);
-		m_pPhysics->SetVelocityX(-1);
-	}
-
-	if (GetAsyncKeyState(VK_LCONTROL))
-	{
-		if (m_pPhysics->IsJump())
-		{
-			m_pPhysics->SetVelocityY(-1.5);
-			m_pPhysics->SetJump(true);
-		}
-	}
-
-	if (m_pState != nullptr)
-	{
-		m_pState->Update(*this);
-	}
-
 
 	for (auto it : m_vComponent)
 	{
@@ -310,6 +294,11 @@ void Mob::LoadData(const std::string& _filename)
 	m_pSprites = new MSpriteComponent(sprid, EMRenderType::eMR_Obj);
 	
 	//m_vComponent.push_back(pSC);
+}
+
+void Mob::SetDirection(int dir)
+{
+	m_Direction = dir;
 }
 
 void Mob::LoadInfo(Node _node)

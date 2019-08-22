@@ -98,6 +98,7 @@ void MCharacter::Update(float _delta)
 			HandleInput(EMAnimType::eMA_Jumping);
 			m_pPhysics->SetVelocityY(-1.5);
 			m_pPhysics->SetJump(true);
+			SoundManager->PlaySound(1);
 		}
 	}
 
@@ -106,7 +107,6 @@ void MCharacter::Update(float _delta)
 		HandleInput(EMAnimType::eMA_Standing);
 	}
 	
-	   
 	for (auto it : m_vComponent)
 	{
 		it->Update(this, _delta);
