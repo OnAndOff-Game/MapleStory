@@ -2,6 +2,7 @@
 
 class MSpriteComponent;
 class MPhysics;
+class MState;
 
 class Mob : public MObject
 {
@@ -14,6 +15,7 @@ public:
 	void Release();
 
 	void Update(float _delta);
+	void HandleInput(EMAnimType _atype);
 	void Render(Gdiplus::Graphics* _memG);
 	void SetComponent(Component* _pComp);
 
@@ -29,8 +31,8 @@ public:
 	void Jump();
 	void Stand();
 	void Dead();
-	void Skill();
-	void Attack();
+	void Skill(int _Cnt);
+	void Attack(int _Cnt);
 	
 	bool GetFalling() { return bFalling; }
 	void SetFalling(bool _bFalling) {bFalling = _bFalling;}
@@ -63,6 +65,11 @@ private:
 	   
 	MSpriteComponent* m_pSprites;
 	MPhysics* m_pPhysics;
+
+	//State Patern
+	MState* m_pState;
+
+
 //	MSpriteComponent;
 	//MInput;
 //	Skill;

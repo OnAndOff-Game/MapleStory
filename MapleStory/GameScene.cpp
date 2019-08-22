@@ -19,13 +19,13 @@ void GameScene::Init()
 
 	pMob = new Mob("Mob/5130101.img.xml");
 	pMob->Init();
-	pMob->Move();
+	pMob->Skill(0);
 
 	pMob->SetPosition(112, 216);
 
 	pMob2 = new Mob("Mob/2220100.img.xml");
 	pMob2->Init();
-	pMob2->Move();
+	pMob2->Dead();
 
 	pMob2->SetPosition(112, 216);
 	
@@ -34,8 +34,8 @@ void GameScene::Init()
 void GameScene::Update(float Delta)
 {
 	player->Update(Delta);
-	pMob->Update(Delta);
-	pMob2->Update(Delta);
+	//pMob->Update(Delta);
+	//pMob2->Update(Delta);
 	map->Update(Delta);
 
 	if (GetAsyncKeyState('A'))

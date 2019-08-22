@@ -3,15 +3,16 @@
 #include "MSpriteComponent.h"
 #include "MPhysics.h"
 #include "ISkill.h"
+#include "MState.h"
 #include "Mob.h"
 
-Mob::Mob() : m_pPhysics(nullptr),
+Mob::Mob() : m_pPhysics(nullptr), m_pState(nullptr),
 m_nSkillCnt(0), m_nAtkCnt(0), bFalling(true)
 {
 }
 
 Mob::Mob(const std::string& _filename) : m_strName(_filename), m_pPhysics(nullptr),
- m_nSkillCnt(0), m_nAtkCnt(0), bFalling(true)
+m_pState(nullptr), m_nSkillCnt(0), m_nAtkCnt(0), bFalling(true)
 {
 	LoadData(_filename);
 }
@@ -84,6 +85,11 @@ void Mob::Update(float _delta)
 		}
 	}
 
+	if (m_pState != nullptr)
+	{
+		m_pState->Update(*this);
+	}
+
 
 	for (auto it : m_vComponent)
 	{
@@ -91,7 +97,13 @@ void Mob::Update(float _delta)
 	}
 
 	m_pPhysics->Update(this, _delta);
+
 	m_pSprites->Update(this, _delta);
+}
+
+void Mob::HandleInput(EMAnimType _atype)
+{
+	MState* state = m_pState->HandleInput(*this, _atype);
 }
 
 void Mob::SetComponent(Component* _pComp)
@@ -108,7 +120,7 @@ void Mob::Move()
 
 void Mob::Jump()
 {
-
+	m_pSprites->SetCurrentAnim(EMAnimType::eMA_Jumping);
 }
 
 void Mob::Stand()
@@ -121,12 +133,20 @@ void Mob::Dead()
 	m_pSprites->SetCurrentAnim(EMAnimType::eMA_Die);
 }
 
-void Mob::Skill()
+void Mob::Skill(int _Cnt)
 {
+	if (m_nSkillCnt < _Cnt)
+		return;
+
+	m_pSprites->SetCurrentAnim(EMAnimType::eMA_Skill, _Cnt);
 }
 
-void Mob::Attack()
+void Mob::Attack(int _Cnt)
 {
+	if (m_nAtkCnt < _Cnt)
+		return;
+
+	m_pSprites->SetCurrentAnim(EMAnimType::eMA_Skill, _Cnt);
 }
 
 void Mob::LoadData(const std::string& _filename)

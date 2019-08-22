@@ -2,6 +2,7 @@
 
 class MSpriteComponent;
 class MPhysics;
+class MState;
 
 class MCharacter : public MObject
 {
@@ -16,18 +17,20 @@ public:
 	void Release();
 
 
-
+	void HandleInput(EMAnimType _atype);
 	void SetComponent(Component* _pComp);
-
-	void Hit(int _damage);
-
+	
 
 	void Move();
 	void Jump();
-	void Stand();
-	void Dead();
+	bool Stand();
+	void Hit();
+	void Die();
 	void Skill();
 	void Attack();
+	void Prone();
+	void Ladder();
+	void Rope();
 
 	void LoadData(const std::string& _filename);
 
@@ -56,5 +59,8 @@ private:
 
 	MSpriteComponent* m_pSprites;
 	MPhysics* m_pPhysics;
+
+
+	MState* m_pState;
 };
 

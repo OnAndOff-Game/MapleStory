@@ -26,7 +26,7 @@ void BatchRender::BatchDraw(EMRenderType _type, Gdiplus::Image* _img, const Gdip
 		BatchUI.insert(element);
 }
 
-void BatchRender::BatchDraw(EMRenderType _type, Gdiplus::Image* _img, const Gdiplus::Rect& _rect, int _z, float _alpha, bool _flip)
+void BatchRender::BatchDraw(EMRenderType _type, Gdiplus::Image* _img, const Gdiplus::Rect& _rect, const Gdiplus::Point& _origin, int _z, float _alpha, bool _flip)
 {
 	if (!bDraw)
 		Clear();
@@ -34,6 +34,7 @@ void BatchRender::BatchDraw(EMRenderType _type, Gdiplus::Image* _img, const Gdip
 	BatchElement element;
 
 	_rect.GetLocation(&element.Pos);
+	element.Origin = _origin;
 	element.SizeX = _rect.Width;
 	element.SizeY = _rect.Height;
 	element.alpha = _alpha;
@@ -107,12 +108,14 @@ void BatchRender::Render(Gdiplus::Graphics* _view, const BatchElement& _element)
 		if (_element.bFlip)
 			bm.RotateFlip(Rotate180FlipY);
 
-		_view->DrawImage(&bm, Gdiplus::Rect(_element.Pos.X, _element.Pos.Y, _element.SizeX, _element.SizeY));
+
+		_view->DrawImage(&bm, Gdiplus::Rect(_element.Pos.X -(_element.img->GetWidth() - _element.Origin.X), _element.Pos.Y - _element.Origin.Y, _element.SizeX, _element.SizeY));
+
 	}
 
 	else
 	{
-		_view->DrawImage(_element.img, Gdiplus::Rect(_element.Pos.X, _element.Pos.Y, _element.SizeX, _element.SizeY));
+		_view->DrawImage(_element.img, Gdiplus::Rect(_element.Pos.X - _element.Origin.X, _element.Pos.Y - _element.Origin.Y, _element.SizeX, _element.SizeY));
 	}
 
 //	if(Delta != 0)

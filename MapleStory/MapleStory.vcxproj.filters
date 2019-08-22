@@ -43,6 +43,9 @@
     <Filter Include="Game\Skill">
       <UniqueIdentifier>{98b59009-98c6-4c8b-9fc6-44bd42407362}</UniqueIdentifier>
     </Filter>
+    <Filter Include="State">
+      <UniqueIdentifier>{adb3921a-f20a-4510-a461-0b35d6f3105f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MapleStory.h">
@@ -189,6 +192,36 @@
     <ClInclude Include="ISkill.h">
       <Filter>Game\Skill</Filter>
     </ClInclude>
+    <ClInclude Include="StandingState.h">
+      <Filter>State</Filter>
+    </ClInclude>
+    <ClInclude Include="MState.h">
+      <Filter>State</Filter>
+    </ClInclude>
+    <ClInclude Include="MovingState.h">
+      <Filter>State</Filter>
+    </ClInclude>
+    <ClInclude Include="AtkState.h">
+      <Filter>State</Filter>
+    </ClInclude>
+    <ClInclude Include="JumpingState.h">
+      <Filter>State</Filter>
+    </ClInclude>
+    <ClInclude Include="RopeState.h">
+      <Filter>State</Filter>
+    </ClInclude>
+    <ClInclude Include="ProneState.h">
+      <Filter>State</Filter>
+    </ClInclude>
+    <ClInclude Include="LadderState.h">
+      <Filter>State</Filter>
+    </ClInclude>
+    <ClInclude Include="HitState.h">
+      <Filter>State</Filter>
+    </ClInclude>
+    <ClInclude Include="DieState.h">
+      <Filter>State</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MapleStory.cpp">
@@ -304,6 +337,36 @@
     </ClCompile>
     <ClCompile Include="ISkill.cpp">
       <Filter>Game\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="StandingState.cpp">
+      <Filter>State</Filter>
+    </ClCompile>
+    <ClCompile Include="MovingState.cpp">
+      <Filter>State</Filter>
+    </ClCompile>
+    <ClCompile Include="MState.cpp">
+      <Filter>State</Filter>
+    </ClCompile>
+    <ClCompile Include="AtkState.cpp">
+      <Filter>State</Filter>
+    </ClCompile>
+    <ClCompile Include="JumpingState.cpp">
+      <Filter>State</Filter>
+    </ClCompile>
+    <ClCompile Include="RopeState.cpp">
+      <Filter>State</Filter>
+    </ClCompile>
+    <ClCompile Include="ProneState.cpp">
+      <Filter>State</Filter>
+    </ClCompile>
+    <ClCompile Include="LadderState.cpp">
+      <Filter>State</Filter>
+    </ClCompile>
+    <ClCompile Include="HitState.cpp">
+      <Filter>State</Filter>
+    </ClCompile>
+    <ClCompile Include="DieState.cpp">
+      <Filter>State</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -3,6 +3,7 @@
 #include "MSpriteComponent.h"
 #include "MPhysics.h"
 #include "ISkill.h"
+#include "StandingState.h"
 #include "MCharacter.h"
 
 MCharacter::MCharacter() :m_pPhysics(nullptr),
@@ -29,6 +30,8 @@ void MCharacter::Init()
 
 	m_pPhysics = new MPhysics;
 	m_pPhysics->Init();
+
+	m_pState = new StandingState();
 }
 
 void MCharacter::Release()
@@ -61,28 +64,49 @@ void MCharacter::Update(float _delta)
 	m_pPhysics->SetImgData(m_pSprites->GetCurrentImgData());
 	m_pPhysics->SetVelocityX(0);
 
-	if (GetAsyncKeyState(VK_RIGHT))
+	if (GetAsyncKeyState(VK_DOWN))
 	{
+		HandleInput(EMAnimType::eMA_Prone);
+		m_pSprites->SetFlip(false);
+	}	
+	else if (KEY_DOWN(VK_RIGHT))
+	{
+		if (m_pPhysics->IsJump())
+		{
+			HandleInput(EMAnimType::eMA_Moving);
+		}
+
 		m_pSprites->SetFlip(true);
 		m_pPhysics->SetVelocityX(1);
 	}
 
-	if (GetAsyncKeyState(VK_LEFT))
+	else if (GetAsyncKeyState(VK_LEFT))
 	{
+		if (m_pPhysics->IsJump())
+		{
+			HandleInput(EMAnimType::eMA_Moving);
+		}
 		m_pSprites->SetFlip(false);
 		m_pPhysics->SetVelocityX(-1);
 	}
 
-	if (GetAsyncKeyState(VK_LCONTROL))
+
+	else if (GetAsyncKeyState(VK_LCONTROL))
 	{
 		if (m_pPhysics->IsJump())
 		{
+			HandleInput(EMAnimType::eMA_Jumping);
 			m_pPhysics->SetVelocityY(-1.5);
 			m_pPhysics->SetJump(true);
 		}
 	}
 
-
+	else
+	{
+		HandleInput(EMAnimType::eMA_Standing);
+	}
+	
+	   
 	for (auto it : m_vComponent)
 	{
 		it->Update(this, _delta);
@@ -90,6 +114,18 @@ void MCharacter::Update(float _delta)
 
 	m_pPhysics->Update(this, _delta);
 	m_pSprites->Update(this, _delta);
+}
+
+void MCharacter::HandleInput(EMAnimType _atype)
+{
+	MState* pState = m_pState->HandleInput(*this, _atype);
+
+	if (pState != nullptr)
+	{
+		std::cout << "»ý¼º : " << _atype << std::endl;
+		delete m_pState;
+		m_pState = pState;
+	}
 }
 
 void MCharacter::SetComponent(Component* _pComp)
@@ -102,19 +138,33 @@ void MCharacter::Move()
 {
 	//spr->anim("move")
 	m_pSprites->SetCurrentAnim(EMAnimType::eMA_Moving);
+	m_pSprites->SetLooping(true);
 }
 
 void MCharacter::Jump()
 {
-
+	m_pSprites->SetCurrentAnim(EMAnimType::eMA_Jumping);
 }
 
-void MCharacter::Stand()
+bool MCharacter::Stand()
 {
-	m_pSprites->SetCurrentAnim(EMAnimType::eMA_Standing);
+	if (m_pPhysics->IsJump())
+	{
+		m_pSprites->SetCurrentAnim(EMAnimType::eMA_Standing);
+		m_pSprites->SetLooping(true);
+		return true;
+	}
+
+	else
+		return false;
 }
 
-void MCharacter::Dead()
+void MCharacter::Hit()
+{
+	m_pSprites->SetCurrentAnim(EMAnimType::eMA_Hit);
+}
+
+void MCharacter::Die()
 {
 	m_pSprites->SetCurrentAnim(EMAnimType::eMA_Die);
 }
@@ -125,6 +175,21 @@ void MCharacter::Skill()
 
 void MCharacter::Attack()
 {
+}
+
+void MCharacter::Prone()
+{
+	m_pSprites->SetCurrentAnim(EMAnimType::eMA_Prone);
+}
+
+void MCharacter::Ladder()
+{
+	m_pSprites->SetCurrentAnim(EMAnimType::eMA_Ladder);
+}
+
+void MCharacter::Rope()
+{
+	m_pSprites->SetCurrentAnim(EMAnimType::eMA_Rope);
 }
 
 void MCharacter::LoadData(const std::string& _filename)
@@ -251,6 +316,11 @@ void MCharacter::LoadData(const std::string& _filename)
 				{
 					sprdata.type = EMAnimType::eMA_Attack;
 					m_nAtkCnt++;
+				}
+
+				else if (!sprdata.name.find("prone"))
+				{
+					sprdata.type = EMAnimType::eMA_Prone;
 				}
 
 				else if (!sprdata.name.find("hit"))
