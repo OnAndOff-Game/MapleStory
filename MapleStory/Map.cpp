@@ -165,8 +165,13 @@ void Map::PlayerInPortal(MCharacter* player)
 	{
 		if (t->PortalCollision(player->GetPosition()))
 		{
+			std::string tn = t->PortalData.tn;
 			Load(t->PortalData.tm);
-			player->SetPosition(200, 0);
+			for (auto t : world->portal)
+			{
+				if(!t->PortalData.pn.compare(tn))
+				player->SetPosition(t->PortalData.x, t->PortalData.y);
+			}
 			SoundManager->PlaySound(2);
 			return;
 		}

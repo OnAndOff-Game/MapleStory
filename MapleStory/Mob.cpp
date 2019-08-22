@@ -30,7 +30,7 @@ void Mob::Init()
 	m_pPhysics = new MPhysics(m_MobInfo.fs, m_MobInfo.speed);
 
 	m_pPhysics->Init();
-
+	m_MoveTime = 1000;
 }
 
 void Mob::Release()
