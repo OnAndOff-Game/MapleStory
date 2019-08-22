@@ -73,6 +73,8 @@ void Map::Load(int mapCode)
 	Node miniMap = mapNode["miniMap"];
 	world->centerPos.x = miniMap["centerX"].GetValueInt();
 	world->centerPos.y = miniMap["centerY"].GetValueInt();
+	world->mapSize.x = miniMap["width"].GetValueInt();
+	world->mapSize.y = miniMap["height"].GetValueInt();
 
 	for (int i = 0; i < 8; i++)
 	{
@@ -185,9 +187,9 @@ void Map::PlayerInPortal(MCharacter* player)
 			{
 				if (!t->PortalData.pn.compare(tn))
 				{
-					player->SetPosition(t->PortalData.x, t->PortalData.y);
-					View::viewPort.X = player->GetPosition().X;
-					View::viewPort.Y = player->GetPosition().Y;
+					player->SetPosition(t->PortalData.x, t->PortalData.y - 10);
+					//View::viewPort.X = player->GetPosition().X;
+					//View::viewPort.Y = player->GetPosition().Y;
 				}
 			}
 			SoundManager->PlaySound(2);

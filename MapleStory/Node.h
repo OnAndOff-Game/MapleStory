@@ -11,7 +11,7 @@ public:
 	Node(const Node& n);
 	Node(rapidxml::xml_node<char>* n);
 	Node(const char* fileName);
-	~Node() {  }
+	~Node() { }
 
 	std::string GetValueString();
 	int GetValueInt();
@@ -22,6 +22,7 @@ public:
 
 	void ChildList();
 
+	void Release();
 
 	Node begin() const;
 	Node end() const;

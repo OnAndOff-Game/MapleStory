@@ -67,6 +67,13 @@ void Node::ChildList()
 	}
 }
 
+void Node::Release()
+{
+	delete node;
+	delete xmlDoc;
+	delete xmlFile;
+}
+
 
 Node Node::begin() const
 {
