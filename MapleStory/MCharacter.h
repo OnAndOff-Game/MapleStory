@@ -80,5 +80,8 @@ private:
 
 	int m_nSkillCnt;
 	int m_nAtkCnt;
+
+
+	bool bFlag;
 };
 

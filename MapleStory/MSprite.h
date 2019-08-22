@@ -11,6 +11,7 @@ public:
 	void Init();
 	void Update(MObject* _obj, float _delta);
 	void Release();
+	void AssetReset();
 
 	EMAnimType GetAnimType();
 	std::string& GetName();
@@ -24,6 +25,8 @@ public:
 	//void SetAnim(const std::string& _anim);
 	void SetAsset(Asset* _asset);
 	void SetFlip(bool _flip);
+	void SetAlpha(float _alpha);
+	void SetRed(float _red);
 
 	void LoadData(const std::string& _name);
 

@@ -26,7 +26,7 @@ void MSprite::Init()
 	{
 		filename =	m_SprData.path + '/' + m_SprData.name + '.';
 		
-		filename += (i + 48);
+		filename += std::to_string(i);
 		filename += ".png";
 
 		LPIMG_DATA pImgdata = ASSETMGR->GetAssetData(filename);
@@ -45,12 +45,20 @@ void MSprite::Release()
 {
 	m_vImgData.clear();
 	
-	for (auto it : m_vAsset)
+	for (auto &it : m_vAsset)
 	{
 		delete it;
 	}
 	
 	m_vAsset.clear();
+}
+
+void MSprite::AssetReset()
+{
+	for (auto &it : m_vAsset)
+	{
+		it->Init();
+	}
 }
 
 EMAnimType MSprite::GetAnimType()
@@ -105,4 +113,14 @@ void MSprite::SetAsset(Asset* _asset)
 void MSprite::SetFlip(bool _flip)
 {
 	m_vAsset[m_nFrame]->SetFlip(_flip);
+}
+
+void MSprite::SetAlpha(float _alpha)
+{
+	m_vAsset[m_nFrame]->SetAlpha(_alpha);
+}
+
+void MSprite::SetRed(float _red)
+{
+	m_vAsset[m_nFrame]->SetRed(_red);
 }

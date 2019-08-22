@@ -26,6 +26,9 @@ public:
 	void SetCurrentAnim(EMAnimType _type);
 	void SetCurrentAnim(EMAnimType _type, int _cnt);
 	void SetSpriteAnim(MSprite* _Sprite);
+	void SetAlpha(float _alpha);
+	void SetRed(float _red);
+
 	
 	IMG_DATA const& GetCurrentImgData();
 	//

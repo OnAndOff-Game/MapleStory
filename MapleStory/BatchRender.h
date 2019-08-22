@@ -27,7 +27,7 @@ class BatchRender : public Singleton<BatchRender>
 public:
 
 	void BatchDraw(EMRenderType _type, Gdiplus::Image* _img, const Gdiplus::Point& _pos, int _z, float _alpha = 1.0f, bool _flip = false);
-	void BatchDraw(EMRenderType _type, Gdiplus::Image* _img, const Gdiplus::Rect& _rect, const Gdiplus::Point& _origin, int _z, float _alpha = 1.0f, bool _flip = false);
+	void BatchDraw(EMRenderType _type, Gdiplus::Image* _img, const Gdiplus::Rect& _rect, const Gdiplus::Point& _origin, int _z, float _alpha = 1.0f, float _red = 1.0f, bool _flip = false);
 
 
 	void Draw(Gdiplus::Graphics* _view);

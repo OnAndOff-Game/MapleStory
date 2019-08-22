@@ -17,6 +17,7 @@ public:
 	//IMG_DATA const*	GetAssetData() const ;
 
 	void SetAlpha(float _alpha);
+	void SetRed(float _r);
 	void SetAlphablending();
 
 	void SetFlip(bool _flip) { bFlip = _flip; }
@@ -41,6 +42,7 @@ private:
 	bool bBillBoard;
 	int z;
 	float Alpha;
+	float Red;
 	bool bFlip;
 	bool bRender;
 	Gdiplus::Rect rect;

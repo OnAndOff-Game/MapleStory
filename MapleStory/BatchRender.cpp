@@ -26,7 +26,7 @@ void BatchRender::BatchDraw(EMRenderType _type, Gdiplus::Image* _img, const Gdip
 		BatchUI.insert(element);
 }
 
-void BatchRender::BatchDraw(EMRenderType _type, Gdiplus::Image* _img, const Gdiplus::Rect& _rect, const Gdiplus::Point& _origin, int _z, float _alpha, bool _flip)
+void BatchRender::BatchDraw(EMRenderType _type, Gdiplus::Image* _img, const Gdiplus::Rect& _rect, const Gdiplus::Point& _origin, int _z, float _alpha, float _red, bool _flip)
 {
 	if (!bDraw)
 		Clear();
@@ -38,6 +38,7 @@ void BatchRender::BatchDraw(EMRenderType _type, Gdiplus::Image* _img, const Gdip
 	element.SizeX = _rect.Width;
 	element.SizeY = _rect.Height;
 	element.alpha = _alpha;
+	element.red = _red;
 	element.bFlip = _flip;
 	element.z = _z;
 	element.img = _img;
@@ -87,17 +88,17 @@ void BatchRender::Render(Gdiplus::Graphics* _view, const BatchElement& _element)
 	DWORD Tick = GetTickCount64();
 	DWORD Delta = Tick - PreTick;
 	
-	if (_element.alpha < 1.0f || _element.bFlip)
+	if (_element.alpha < 1.0f || _element.bFlip || _element.red > 1.0f)
 	{
 		Bitmap bm(_element.img->GetWidth(), _element.img->GetHeight(), PixelFormat32bppARGB);
 		Gdiplus::Graphics memG(&bm);
 
 		Gdiplus::Rect rc(0, 0, _element.img->GetWidth(), _element.img->GetHeight());
-		ColorMatrix colorMatrix = { 1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-					   0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-					   0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-					   0.0f, 0.0f, 0.0f, _element.alpha, 0.0f,
-					   0.0f, 0.0f, 0.0f, 0.0f, 1.0f };
+		ColorMatrix colorMatrix = { _element.red, 0.0f, 0.0f, 0.0f, 0.0f,
+									0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+									0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+									 0.0f, 0.0f, 0.0f, _element.alpha, 0.0f,
+									 0.0f, 0.0f, 0.0f, 0.0f, 1.0f };
 		
 		ImageAttributes imageAtt;
 		imageAtt.SetColorMatrix(&colorMatrix, ColorMatrixFlagsDefault, ColorAdjustTypeBitmap);
@@ -106,10 +107,16 @@ void BatchRender::Render(Gdiplus::Graphics* _view, const BatchElement& _element)
 			&imageAtt, 0, nullptr);
 			   
 		if (_element.bFlip)
+		{
 			bm.RotateFlip(Rotate180FlipY);
 
+			_view->DrawImage(&bm, Gdiplus::Rect(_element.Pos.X - (_element.img->GetWidth() - _element.Origin.X), _element.Pos.Y - _element.Origin.Y, _element.SizeX, _element.SizeY));
+		}
 
-		_view->DrawImage(&bm, Gdiplus::Rect(_element.Pos.X -(_element.img->GetWidth() - _element.Origin.X), _element.Pos.Y - _element.Origin.Y, _element.SizeX, _element.SizeY));
+		else
+		{
+			_view->DrawImage(&bm, Gdiplus::Rect(_element.Pos.X - _element.Origin.X, _element.Pos.Y - _element.Origin.Y, _element.SizeX, _element.SizeY));
+		}
 
 	}
 

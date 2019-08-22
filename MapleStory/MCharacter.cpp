@@ -8,7 +8,7 @@
 #include "MCharacter.h"
 
 MCharacter::MCharacter() :m_pPhysics(nullptr),
-m_nSkillCnt(0), m_nAtkCnt(0), bFalling(true), m_bCollision(true), m_bHit(false)
+m_nSkillCnt(0), m_nAtkCnt(0), bFalling(true), m_bCollision(true), m_bHit(false), bFlag(false)
 {
 	m_eObjType = EMObjType::eMO_Player;
 }
@@ -91,7 +91,7 @@ void MCharacter::Update(float _delta)
 				m_pPhysics->SetVelocityY(1);
 			}
 		}
-	}	
+	}
 	else if (KEY_DOWN(VK_RIGHT))
 	{
 		if (m_pPhysics->IsJump())
@@ -112,18 +112,47 @@ void MCharacter::Update(float _delta)
 		m_pSprites->SetFlip(false);
 		m_pPhysics->SetVelocityX(-1);
 	}
+
+	else if(GetAsyncKeyState('W'))
+	{
+		Skill();
+		//HandleInput(EMAnimType::eMA_Skill);
+	}
+
 	else
 	{
 		HandleInput(EMAnimType::eMA_Standing);
 	}
 
-	
+
 	for (auto it : m_vComponent)
 	{
 		it->Update(this, _delta);
 	}
 
 	m_dwHitTick += _delta;
+
+	if (m_bCollision == false)
+	{
+		int temp = m_dwHitTick / 100;
+
+		if (temp % 2 == 0)
+		{
+			m_pSprites->SetRed(10.0f);
+		}
+
+		else
+		{
+			m_pSprites->SetRed(1.0f);
+		}
+	}
+
+	else
+	{
+		m_pSprites->SetRed(1.0f);
+	}
+
+
 
 	if (m_dwHitTick > 2000)
 	{
@@ -259,6 +288,7 @@ void MCharacter::Die()
 
 void MCharacter::Skill()
 {
+	m_pSprites->SetCurrentAnim(EMAnimType::eMA_Skill);
 }
 
 void MCharacter::Attack()
@@ -301,9 +331,10 @@ void MCharacter::LoadData(const std::string& _filename)
 				sprdata.name = o.GetName();
 				//int a = sprdata.name.find("skill");
 				//sprdata.name.compare("Attack");
-
+				int n = 0;
 				for (auto t = m_Paser[o.GetName()].begin(); t; t = t++) // num
 				{
+					n++;
 					o.GetName();
 					std::string file;
 
@@ -318,60 +349,57 @@ void MCharacter::LoadData(const std::string& _filename)
 					//if(t.GetValuePoint() ==
 
 					//t.GetValueInt();
-
-					for (auto f = m_Paser[o.GetName()][t.GetName()].begin(); f; f = f++) // element
+					if (imgdata.imgsize.X * imgdata.imgsize.Y == 1)
 					{
-						if (imgdata.imgsize.X * imgdata.imgsize.Y == 1)
+						std::string templink;
+						if (!t["_inlink"].IsNull())
 						{
-							std::string templink;
-							if (!t["_inlink"].IsNull())
-							{
-								char from = '/';
-								char to = '.';
+							char from = '/';
+							char to = '.';
 
-								templink = t["_inlink"].GetValueString();
+							templink = t["_inlink"].GetValueString();
 
-								std::replace(templink.begin(), templink.end(), from, to);
+							std::replace(templink.begin(), templink.end(), from, to);
 
-								imgdata.link = sprname + '/' + sprdata.name + '.' + templink + ".png";
-							}
+							imgdata.link = sprname + '/' + sprdata.name + '.' + templink + ".png";
 						}
-
-						if (!t["origin"].IsNull())
-							imgdata.origin = t["origin"].GetValuePoint();
-						else
-						{
-							imgdata.origin.X = imgdata.imgsize.X / 2;
-							imgdata.origin.Y = imgdata.imgsize.Y / 2;
-						}
-
-						if (!t["lt"].IsNull())
-							imgdata.lt = t["lt"].GetValuePoint();
-
-						if (!t["rb"].IsNull())
-							imgdata.rb = t["rb"].GetValuePoint();
-
-						if (!t["head"].IsNull())
-							imgdata.head = t["head"].GetValuePoint();
-
-						if (!t["delay"].IsNull())
-							imgdata.delay = t["delay"].GetValueInt();
-
-						if (!t["a0"].IsNull())
-							imgdata.a0 = t["a0"].GetValueInt();
-						else
-							imgdata.a0 = 0;
-
-						if (!t["a1"].IsNull())
-							imgdata.a1 = t["a1"].GetValueInt();
-						else
-							imgdata.a1 = 0;
-
-						if (!t["z"].IsNull())
-							imgdata.z = t["z"].GetValueInt();
-						else
-							imgdata.z = 2;
 					}
+
+					if (!t["origin"].IsNull())
+						imgdata.origin = t["origin"].GetValuePoint();
+					else
+					{
+						imgdata.origin.X = imgdata.imgsize.X / 2;
+						imgdata.origin.Y = imgdata.imgsize.Y;
+					}
+
+					if (!t["lt"].IsNull())
+						imgdata.lt = t["lt"].GetValuePoint();
+
+					if (!t["rb"].IsNull())
+						imgdata.rb = t["rb"].GetValuePoint();
+
+					if (!t["head"].IsNull())
+						imgdata.head = t["head"].GetValuePoint();
+
+					if (!t["delay"].IsNull())
+						imgdata.delay = t["delay"].GetValueInt();
+
+					if (!t["a0"].IsNull())
+						imgdata.a0 = t["a0"].GetValueInt();
+					else
+						imgdata.a0 = 0;
+
+					if (!t["a1"].IsNull())
+						imgdata.a1 = t["a1"].GetValueInt();
+					else
+						imgdata.a1 = 0;
+
+					if (!t["z"].IsNull())
+						imgdata.z = t["z"].GetValueInt();
+					else
+						imgdata.z = 2;
+
 
 					ASSETMGR->SetAssetData(imgdata);
 					nCnt++;
