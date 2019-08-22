@@ -97,6 +97,12 @@ void Map::Load(int mapCode)
 		world->LifeData(o);
 	}
 
+	Node ladderRope = mapNode["ladderRope"];
+	for (auto o = ladderRope.begin(); o; o = o++)
+	{
+		world->LadderData(o);
+	}
+
 
 	//Node BackGround = mapNode["back"];
 	//for (auto o = BackGround.begin(); o; o = o++)

@@ -59,6 +59,7 @@ namespace Maple
 		std::list<FOOTHOLD> footHold;
 		std::list<MPortal*> portal;
 		std::list<MLife*> life;
+		std::list<LADDER_ROPE> ladderRope;
 		
 		void PortalData(Node o);
 		void BackData(Node o);

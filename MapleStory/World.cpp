@@ -101,6 +101,19 @@ void Maple::World::TileData(Node o, int i)
 	layer[i].tile.push_back(pTile);
 }
 
+void Maple::World::LadderData(Node o)
+{
+	LADDER_ROPE temp;
+	temp.l = o["l"].GetValueInt();
+	temp.uf = o["uf"].GetValueInt();
+	temp.x = o["x"].GetValueInt();
+	temp.y1 = o["y1"].GetValueInt();
+	temp.y2 = o["y2"].GetValueInt();
+	temp.page = o["page"].GetValueInt();
+
+	ladderRope.push_back(temp);
+}
+
 void Maple::World::LifeData(Node o)
 {
 	LIFE temp;
@@ -136,4 +149,5 @@ void Maple::World::Clear()
 	footHold.clear();
 	portal.clear();
 	life.clear();
+	ladderRope.clear();
 }
