@@ -81,6 +81,8 @@
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(ProjectDir)include;$(IncludePath)</IncludePath>
     <LibraryPath>$(LibraryPath)</LibraryPath>
+    <OutDir>$(ProjectDir)MapleStory</OutDir>
+    <TargetName>MapleStory</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -130,6 +132,7 @@
       </StackCommitSize>
       <AdditionalLibraryDirectories>$(ProjectDir)library;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>fmod_vc.lib;</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -207,6 +210,7 @@
     <ClInclude Include="Component.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="DieState.h" />
+    <ClInclude Include="FlashJumpSkill.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameScene.h" />
@@ -267,6 +271,7 @@
     <ClCompile Include="ChildView.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="DieState.cpp" />
+    <ClCompile Include="FlashJumpSkill.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="HitState.cpp" />

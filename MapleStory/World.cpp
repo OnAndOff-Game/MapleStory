@@ -123,7 +123,7 @@ void Maple::World::LifeData(Node o)
 	temp.type = o["type"].GetValueString();
 	if (!temp.type.compare("n")) return;
 	////temp.id = o["id"].GetValueInt();
-	temp.id = "2220100";
+	temp.id = "3230100";
 	temp.x = o["x"].GetValueInt();
 	temp.y = o["y"].GetValueInt();
 	////temp.mobTime = o["mobTime"].GetValueInt();

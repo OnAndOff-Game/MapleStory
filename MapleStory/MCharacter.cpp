@@ -66,10 +66,28 @@ void MCharacter::Update(float _delta)
 	m_pPhysics->SetImgData(m_pSprites->GetCurrentImgData());
 	m_pPhysics->SetVelocityX(0);
 
+	if (GetAsyncKeyState(VK_LCONTROL))
+	{
+		if (m_pPhysics->IsJump())
+		{
+			HandleInput(EMAnimType::eMA_Jumping);
+			m_pPhysics->SetVelocityY(-1.5);
+			m_pPhysics->SetJump(true);
+			SoundManager->PlaySound(1);
+		}
+	}
+
 	if (GetAsyncKeyState(VK_DOWN))
 	{
 		HandleInput(EMAnimType::eMA_Prone);
 		m_pSprites->SetFlip(false);
+		if (m_pPhysics->IsFloor())
+		{
+			if (KEY_DOWN(VK_LCONTROL))
+			{
+				m_pPhysics->SetVelocityY(1);
+			}
+		}
 	}	
 	else if (KEY_DOWN(VK_RIGHT))
 	{
@@ -91,23 +109,11 @@ void MCharacter::Update(float _delta)
 		m_pSprites->SetFlip(false);
 		m_pPhysics->SetVelocityX(-1);
 	}
-
-
-	else if (GetAsyncKeyState(VK_LCONTROL))
-	{
-		if (m_pPhysics->IsJump())
-		{
-			HandleInput(EMAnimType::eMA_Jumping);
-			m_pPhysics->SetVelocityY(-1.5);
-			m_pPhysics->SetJump(true);
-			SoundManager->PlaySound(1);
-		}
-	}
-
 	else
 	{
 		HandleInput(EMAnimType::eMA_Standing);
 	}
+
 	
 	for (auto it : m_vComponent)
 	{
@@ -168,6 +174,11 @@ void MCharacter::SetComponent(Component* _pComp)
 {
 	if (_pComp != nullptr)
 		m_vComponent.push_back(_pComp);
+}
+
+void MCharacter::Revision()
+{
+	m_pPhysics->SetJump(true);
 }
 
 void MCharacter::Move()
