@@ -26,7 +26,7 @@ public:
 
 	World* world;
 private:
-	std::string mapCode;
+	int mapCode;
 
 	MCharacter* player;
 

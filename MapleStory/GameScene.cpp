@@ -42,8 +42,13 @@ void GameScene::Update(float Delta)
 		map->PlayerInPortal(player);
 
 	View::Target = player->GetPosition();
-
+	int overX =  View::Target.X - Constants::SCREEN_SIZE_X / 2 + map->world->centerPos.x - 40;
+	if (overX <= -20)
+	{
+		View::Target.X -= overX;
+	}
 	View::CameraFollow(5 * Delta);
+
 }
 
 

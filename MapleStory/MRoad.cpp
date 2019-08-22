@@ -115,7 +115,6 @@ void MRoad::Render(Gdiplus::Graphics* _mem)
 				it.line2.X - View::viewPort.X + Constants::SCREEN_SIZE_X / 2, it.line2.Y - View::viewPort.Y + Constants::SCREEN_SIZE_Y / 2);
 		}
 	}
-
 }
 
 void MRoad::Release()
