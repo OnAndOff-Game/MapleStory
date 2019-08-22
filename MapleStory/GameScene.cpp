@@ -16,26 +16,16 @@ void GameScene::Init()
 	player->Init();
 	player->Move();
 	player->SetPosition(112, 216);
-
-	pMob = new Mob("Mob/5130101.img.xml");
-	pMob->Init();
-	pMob->Skill(0);
-
-	//pMob->SetPosition(112, 216);
-
-	pMob2 = new Mob("Mob/2220100.img.xml");
-	pMob2->Init();
-	pMob2->Dead();
-
-	//pMob2->SetPosition(112, 216);
 	
+	OBJMGR->SetObject(player->m_ProxyID.GetProxyID(), player);
 }
 
 void GameScene::Update(float Delta)
 {
-	player->Update(Delta);
+	//player->Update(Delta);
 	//pMob->Update(Delta);
 	//pMob2->Update(Delta);
+	OBJMGR->Update(Delta);
 	map->Update(Delta);
 
 	if (GetAsyncKeyState('A'))

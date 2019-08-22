@@ -1,4 +1,6 @@
 #include "pch.h"
+#include "MCharacter.h"
+#include "Mob.h"
 #include "ObjectMgr.h"
 
 //void AssetMgr::SetAssetData(IMG_DATA& _data)
@@ -39,3 +41,68 @@
 //	return pImgData;
 //}
 
+ObjectMgr::ObjectMgr()
+{
+	m_mObject.clear();
+}
+
+ObjectMgr::~ObjectMgr()
+{
+}
+
+void ObjectMgr::Update(float _delta)
+{
+	for (auto& it : m_mObject)
+	{
+		//if (it.second->m_eObjType == EMObjType::eMO_Player)
+		//{
+		//	MCharacter* pPlayer = static_cast<MCharacter*>(it.second);
+		//	Gdiplus::Rect const* prc = &pPlayer->GetColRc();
+
+		//	for (auto& t : m_mObject)
+		//	{
+		//		if (t.second->m_eObjType == EMObjType::eMO_Mob)
+		//		{
+		//			Mob* pMob = static_cast<Mob*>(t.second);
+		//							   
+		//			Gdiplus::Rect const* mrc = &pMob->GetColRc();
+
+		//			if (AABBIntersectionSize(*prc, *mrc))
+		//			{
+		//				//player->hitdamage
+		//				std::cout << "¸÷ÇÑÅ× ¸ÂÀ½" << std::endl;
+		//				//continue;
+		//			}
+		//		}
+		//		
+		//		else if (t.second->m_eObjType == EMObjType::eMO_MSkill)
+		//		{
+
+		//		}
+
+		//		else if (t.second->m_eObjType == EMObjType::eMO_LbRp)
+		//		{
+
+		//		}
+		//	}
+		//}
+
+		//else if (it.second->m_eObjType == EMObjType::eMO_PSkill)
+		//{
+		//	for (auto& t : m_mObject)
+		//	{
+		//		if (t.second->m_eObjType == EMObjType::eMO_Mob)
+		//		{
+
+		//		}
+		//	}
+		//}
+
+		it.second->Update(_delta);
+	}
+}
+
+void ObjectMgr::SetObject(int _pryid, MObject* _obj)
+{
+	m_mObject.insert(std::make_pair(_pryid, _obj));
+}

@@ -1,17 +1,24 @@
 #pragma once
-class ObjectMgr
+
+class MObject;
+
+class ObjectMgr : public Singleton<ObjectMgr>
 {
 public:
 
+	ObjectMgr();
+	~ObjectMgr();
 
-	//void SetObject(MObject* _obj)
+	void Update(float _delta);
+	
+	void SetObject(int _pryid, MObject* _obj);
 
 	//LPIMG_DATA GetAssetData(const std::string& _assetname)
 
 private:
-
-
-	//std::map<int, MObject*> m_mObject;
+	
+	std::map<int, MObject*> m_mObject;
 
 };
 
+#define OBJMGR ObjectMgr::GetInstance()

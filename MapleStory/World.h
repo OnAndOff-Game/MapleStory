@@ -1,12 +1,12 @@
 #pragma once
 #include "Node.h"
-#include "Asset.h"
 #include "MTile.h"
 #include "MBack.h"
 #include "MPortal.h"
 #include "MLife.h"
 #include "TempObj.h"
 #include <list>
+class MLadRop;
 
 namespace Maple
 {
@@ -59,7 +59,7 @@ namespace Maple
 		std::list<FOOTHOLD> footHold;
 		std::list<MPortal*> portal;
 		std::list<MLife*> life;
-		std::list<LADDER_ROPE> ladderRope;
+		std::list<MLadRop*> ladderRope;
 		
 		void PortalData(Node o);
 		void BackData(Node o);

@@ -1,4 +1,6 @@
 #include "pch.h"
+#include "MLadRop.h"
+#include "Asset.h"
 #include "World.h"
 
 void Maple::World::PortalData(Node o)
@@ -111,7 +113,8 @@ void Maple::World::LadderData(Node o)
 	temp.y2 = o["y2"].GetValueInt();
 	temp.page = o["page"].GetValueInt();
 
-	ladderRope.push_back(temp);
+	MLadRop* pLR = new MLadRop(temp);
+	ladderRope.push_back(pLR);
 }
 
 void Maple::World::LifeData(Node o)
@@ -135,6 +138,7 @@ void Maple::World::LifeData(Node o)
 	pLife->Init();
 	pLife->Move();
 	life.push_back(pLife);
+	OBJMGR->SetObject(pLife->m_ProxyID.GetProxyID(), pLife);
 }
 
 void Maple::World::Clear()

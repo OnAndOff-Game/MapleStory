@@ -19,6 +19,4 @@ public:
 private:
 	Map* map;
 	MCharacter* player;
-	Mob* pMob;
-	Mob* pMob2;
 };

@@ -9,11 +9,13 @@
 Mob::Mob() : m_pPhysics(nullptr), m_pState(nullptr),
 m_nSkillCnt(0), m_nAtkCnt(0), bFalling(true)
 {
+	m_eObjType = EMObjType::eMO_Mob;
 }
 
 Mob::Mob(const std::string& _filename) : m_strName(_filename), m_pPhysics(nullptr),
 m_pState(nullptr), m_nSkillCnt(0), m_nAtkCnt(0), bFalling(true)
 {
+	m_eObjType = EMObjType::eMO_Mob;
 	LoadData(_filename);
 }
 
@@ -131,6 +133,34 @@ void Mob::Attack(int _Cnt)
 		return;
 
 	m_pSprites->SetCurrentAnim(EMAnimType::eMA_Skill, _Cnt);
+}
+
+Gdiplus::Rect const& Mob::GetColRc()
+{
+	// TODO: 여기에 반환 구문을 삽입합니다.
+
+	IMG_DATA const* imgdata = &m_pSprites->GetCurrentImgData();
+	
+	if (imgdata->lt.X == 0 && imgdata->lt.Y == 0)
+	{
+		if (imgdata->imgsize.X == imgdata->origin.X && imgdata->imgsize.Y == imgdata->origin.Y)
+		{
+			m_rcCollision.X = Transform.Translation.X;
+			m_rcCollision.Y = Transform.Translation.Y;
+			m_rcCollision.Width = imgdata->origin.X * 2;
+			m_rcCollision.Height = imgdata->origin.Y * 2;
+		}
+	}
+
+	else
+	{
+		m_rcCollision.X = Transform.Translation.X + imgdata->lt.X + imgdata->origin.X;
+		m_rcCollision.Y = Transform.Translation.X + imgdata->lt.Y + imgdata->origin.Y;
+		m_rcCollision.Width = imgdata->rb.X + imgdata->origin.X;
+		m_rcCollision.Height = imgdata->rb.Y + imgdata->origin.Y;
+	}
+
+	return m_rcCollision;
 }
 
 void Mob::LoadData(const std::string& _filename)

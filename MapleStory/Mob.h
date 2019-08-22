@@ -33,29 +33,40 @@ public:
 	void Dead();
 	void Skill(int _Cnt);
 	void Attack(int _Cnt);
-	
+
+
+	Gdiplus::Rect const& GetColRc();
+
 	bool GetFalling() { return bFalling; }
 	void SetFalling(bool _bFalling) {bFalling = _bFalling;}
 
 	void LoadData(const std::string& _filename);
 
 	void SetDirection(int dir);
+
+
+
 private:
-
-
+	
 	void LoadInfo(Node _node);
 
+public:
+
+	ProxyID m_ProxyID;
+
 private:
+
 	float m_MoveTime;
 	int m_Direction;
 
 	bool bFalling;
 
-	ProxyID m_ProxyID;
 
 	Node m_Paser;
 
 	std::string m_strName;
+
+	Gdiplus::Rect m_rcCollision;
 
 	int m_nHp;
 	int m_nMp;
@@ -63,6 +74,7 @@ private:
 	int m_nSkillCnt;
 	int m_nAtkCnt;
 	MobInfo m_MobInfo;
+
 
 	std::vector<Component*> m_vComponent;
 	   

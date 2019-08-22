@@ -3,6 +3,7 @@
 class MSpriteComponent;
 class MPhysics;
 class MState;
+//struct LADDER_ROPE;
 
 class MCharacter : public MObject
 {
@@ -16,10 +17,11 @@ public:
 	void Render(Gdiplus::Graphics* _memG);
 	void Release();
 
-
+	void GetLadderRope(std::list<Maple::LADDER_ROPE>& _ladderrope);
 	void HandleInput(EMAnimType _atype);
 	void SetComponent(Component* _pComp);
-	
+
+	Gdiplus::Rect const& GetColRc();
 
 	void Move();
 	void Jump();
@@ -34,7 +36,12 @@ public:
 
 	void LoadData(const std::string& _filename);
 
+public:
+
+	ProxyID m_ProxyID;
+
 private:
+	Gdiplus::Rect m_rcCollision;
 	
 	bool m_bDie;
 
@@ -42,7 +49,6 @@ private:
 	
 	bool bFalling;
 
-	ProxyID m_ProxyID;
 
 	Node m_Paser;
 
@@ -60,6 +66,7 @@ private:
 	MSpriteComponent* m_pSprites;
 	MPhysics* m_pPhysics;
 
+	std::list<Maple::LADDER_ROPE>* m_pLdRope;
 
 	MState* m_pState;
 };

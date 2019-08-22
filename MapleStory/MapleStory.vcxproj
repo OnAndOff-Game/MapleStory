@@ -222,6 +222,7 @@
     <ClInclude Include="MCharacter.h" />
     <ClInclude Include="MCollision.h" />
     <ClInclude Include="MInput.h" />
+    <ClInclude Include="MLadRop.h" />
     <ClInclude Include="MLife.h" />
     <ClInclude Include="Mob.h" />
     <ClInclude Include="MObject.h" />
@@ -280,6 +281,7 @@
     <ClCompile Include="MCharacter.cpp" />
     <ClCompile Include="MCollision.cpp" />
     <ClCompile Include="MInput.cpp" />
+    <ClCompile Include="MLadRop.cpp" />
     <ClCompile Include="MLife.cpp" />
     <ClCompile Include="Mob.cpp" />
     <ClCompile Include="MObject.cpp" />

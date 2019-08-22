@@ -21,5 +21,6 @@ public:
 public:
 
 	MTransform	Transform;
+	EMObjType	m_eObjType;
 };
 

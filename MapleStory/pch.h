@@ -46,6 +46,7 @@
 #include "SceneManager.h"
 #include "ResourceManager.h"
 #include "GameManager.h"
+#include "ObjectMgr.h"
 #include "SprMgr.h"
 #include "AssetMgr.h"
 #include "MRoad.h"

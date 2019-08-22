@@ -106,7 +106,9 @@ void Map::Load(int mapCode)
 	Node life = mapNode["life"];
 	for (auto o = life.begin(); o; o = o++)
 	{
-		world->LifeData(o);
+		std::string w = o["type"].GetValueString();
+		if(!o["type"].GetValueString().compare("m"))
+			world->LifeData(o);
 	}
 
 	Node ladderRope = mapNode["ladderRope"];
@@ -114,7 +116,6 @@ void Map::Load(int mapCode)
 	{
 		world->LadderData(o);
 	}
-
 
 	//Node BackGround = mapNode["back"];
 	//for (auto o = BackGround.begin(); o; o = o++)
@@ -151,10 +152,10 @@ void Map::Update(float delta)
 		t->Update(delta);
 	}
 
-	for (auto t : world->life)
-	{
-		t->Update(delta);
-	}
+	//for (auto t : world->life)
+	//{
+	//	t->Update(delta);
+	//}
 }
 
 void Map::Release()

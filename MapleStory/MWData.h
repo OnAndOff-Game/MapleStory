@@ -26,8 +26,10 @@ enum EMAnimType : int{
 	eMA_Cnt,
 };
 
-enum EMObjType : int{
+enum EMObjType : int {
+	eMO_Map,
 	eMO_Obj,
+	eMO_LbRp,
 	eMO_Player,
 	eMO_Mob,
 	eMO_PSkill,

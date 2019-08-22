@@ -8,6 +8,7 @@ MBack::MBack(const BACK& _backdata, Asset* _asset)
 {
 	BackData = _backdata;
 	mAsset = _asset;
+	m_eObjType = EMObjType::eMO_Map;
 }
 
 MBack::~MBack()

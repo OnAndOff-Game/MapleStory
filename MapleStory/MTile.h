@@ -1,5 +1,7 @@
 #pragma once
 
+class Asset;
+
 struct TILE
 {
 	int x;

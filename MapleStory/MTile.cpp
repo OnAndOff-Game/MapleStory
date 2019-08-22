@@ -5,10 +5,12 @@
 
 MTile::MTile() : mAsset(nullptr)
 {
+	m_eObjType = EMObjType::eMO_Map;
 }
 
 MTile::MTile(const TILE& _tiledata,Asset* _asset)
 {
+	m_eObjType = EMObjType::eMO_Map;
 	TileData = _tiledata;
 	mAsset = _asset;
 }

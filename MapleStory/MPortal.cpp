@@ -6,6 +6,7 @@
 
 MPortal::MPortal(const PORTAL& _portaldata)
 {
+	m_eObjType = EMObjType::eMO_Obj;
 	PortalData = _portaldata;
 
 	for (int i = 0; i < 8; i++)
