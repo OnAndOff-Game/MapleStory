@@ -191,8 +191,8 @@ Gdiplus::Rect const& MCharacter::GetColRc()
 	else
 	{
 
-		m_rcCollision.X = Transform.Translation.X + imgdata->lt.X + imgdata->origin.X;
-		m_rcCollision.Y = Transform.Translation.Y + imgdata->lt.Y + imgdata->origin.Y;
+		m_rcCollision.X = Transform.Translation.X + imgdata->lt.X;
+		m_rcCollision.Y = Transform.Translation.Y + imgdata->lt.Y;
 		m_rcCollision.Width = imgdata->rb.X + imgdata->origin.X;
 		m_rcCollision.Height = imgdata->rb.Y + imgdata->origin.Y;
 	}
@@ -234,7 +234,6 @@ void MCharacter::HandleInput(EMAnimType _atype)
 
 	if (pState != nullptr)
 	{
-		std::cout << "»ý¼º : " << _atype << std::endl;
 		delete m_pState;
 		m_pState = pState;
 	}

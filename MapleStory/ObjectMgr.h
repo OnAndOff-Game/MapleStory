@@ -1,5 +1,6 @@
 #pragma once
 
+
 class MObject;
 
 class ObjectMgr : public Singleton<ObjectMgr>
