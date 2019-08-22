@@ -14,7 +14,10 @@ enum EMAnimType : int{
 	eMA_Static,
 	eMA_Standing,
 	eMA_Moving,
+	eMA_Prone,
 	eMA_Jumping,
+	eMA_Ladder,
+	eMA_Rope,
 	eMA_Hit,
 	eMA_Die,
 	eMA_Attack,
@@ -36,6 +39,7 @@ enum EMObjType : int{
 struct BatchElement
 {
 	Gdiplus::Point Pos;
+	Gdiplus::Point Origin;
 	int SizeX;
 	int SizeY;
 	Gdiplus::Image* img;

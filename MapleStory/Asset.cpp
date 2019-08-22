@@ -77,21 +77,21 @@ void Asset::Update(MObject* _obj, float _delta)
 	{
 		if (!bBillBoard)
 		{
-			rect.X = _obj->Transform.Translation.X - View::viewPort.X + Constants::SCREEN_SIZE_X / 2 - CustomPos.X;
-			rect.Y = _obj->Transform.Translation.Y - View::viewPort.Y + Constants::SCREEN_SIZE_Y / 2 - CustomPos.Y;
+			rect.X = _obj->Transform.Translation.X - View::viewPort.X + Constants::SCREEN_SIZE_X / 2;
+			rect.Y = _obj->Transform.Translation.Y - View::viewPort.Y + Constants::SCREEN_SIZE_Y / 2;
 		}
 
 		else
 		{
-			rect.X = _obj->Transform.Translation.X - CustomPos.X;
-			rect.Y = _obj->Transform.Translation.Y - CustomPos.Y;
+			rect.X = _obj->Transform.Translation.X;
+			rect.Y = _obj->Transform.Translation.Y;
 		}
 
 		if (rect.X - rect.Width < Constants::SCREEN_SIZE_X  &&
 			rect.X + rect.Width > 0 &&
 			rect.Y - rect.Height< Constants::SCREEN_SIZE_Y &&
 			rect.Y + rect.Height > 0)
-			BATCHRENDER->BatchDraw(m_eType, m_pImg, rect, z, Alpha, bFlip);
+			BATCHRENDER->BatchDraw(m_eType, m_pImg, rect, CustomPos, z, Alpha, bFlip);
 
 	}
 }

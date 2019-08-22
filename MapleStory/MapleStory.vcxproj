@@ -199,16 +199,21 @@
   <ItemGroup>
     <ClInclude Include="Asset.h" />
     <ClInclude Include="AssetMgr.h" />
+    <ClInclude Include="AtkState.h" />
     <ClInclude Include="BaseScene.h" />
     <ClInclude Include="BatchRender.h" />
     <ClInclude Include="ChildView.h" />
     <ClInclude Include="common.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Constants.h" />
+    <ClInclude Include="DieState.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameScene.h" />
+    <ClInclude Include="HitState.h" />
     <ClInclude Include="ISkill.h" />
+    <ClInclude Include="JumpingState.h" />
+    <ClInclude Include="LadderState.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="MainScene.h" />
     <ClInclude Include="Map.h" />
@@ -221,17 +226,20 @@
     <ClInclude Include="Mob.h" />
     <ClInclude Include="MObject.h" />
     <ClInclude Include="MobManager.h" />
+    <ClInclude Include="MovingState.h" />
     <ClInclude Include="MPhysics.h" />
     <ClInclude Include="MPlayer.h" />
     <ClInclude Include="MPortal.h" />
     <ClInclude Include="MRoad.h" />
     <ClInclude Include="MSprite.h" />
     <ClInclude Include="MSpriteComponent.h" />
+    <ClInclude Include="MState.h" />
     <ClInclude Include="MTile.h" />
     <ClInclude Include="MWData.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="ObjectMgr.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="ProneState.h" />
     <ClInclude Include="ProxyID.h" />
     <ClInclude Include="rapidxml.hpp" />
     <ClInclude Include="rapidxml_iterators.hpp" />
@@ -239,9 +247,11 @@
     <ClInclude Include="rapidxml_utils.hpp" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="RopeState.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="SprMgr.h" />
+    <ClInclude Include="StandingState.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TempObj.h" />
     <ClInclude Include="View.h" />
@@ -250,13 +260,18 @@
   <ItemGroup>
     <ClCompile Include="Asset.cpp" />
     <ClCompile Include="AssetMgr.cpp" />
+    <ClCompile Include="AtkState.cpp" />
     <ClCompile Include="BaseScene.cpp" />
     <ClCompile Include="BatchRender.cpp" />
     <ClCompile Include="ChildView.cpp" />
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="DieState.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="HitState.cpp" />
     <ClCompile Include="ISkill.cpp" />
+    <ClCompile Include="JumpingState.cpp" />
+    <ClCompile Include="LadderState.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="MainScene.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -269,12 +284,14 @@
     <ClCompile Include="Mob.cpp" />
     <ClCompile Include="MObject.cpp" />
     <ClCompile Include="MobManager.cpp" />
+    <ClCompile Include="MovingState.cpp" />
     <ClCompile Include="MPhysics.cpp" />
     <ClCompile Include="MPlayer.cpp" />
     <ClCompile Include="MPortal.cpp" />
     <ClCompile Include="MRoad.cpp" />
     <ClCompile Include="MSprite.cpp" />
     <ClCompile Include="MSpriteComponent.cpp" />
+    <ClCompile Include="MState.cpp" />
     <ClCompile Include="MTile.cpp" />
     <ClCompile Include="MWData.cpp" />
     <ClCompile Include="Node.cpp" />
@@ -285,10 +302,13 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="ProneState.cpp" />
     <ClCompile Include="ProxyID.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="RopeState.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SprMgr.cpp" />
+    <ClCompile Include="StandingState.cpp" />
     <ClCompile Include="TempObj.cpp" />
     <ClCompile Include="View.cpp" />
     <ClCompile Include="World.cpp" />

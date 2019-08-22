@@ -17,15 +17,15 @@ void GameScene::Init()
 	player->Move();
 	player->SetPosition(112, 216);
 
-	//pMob = new Mob("Mob/5130101.img.xml");
-	//pMob->Init();
-	//pMob->Move();
+	pMob = new Mob("Mob/5130101.img.xml");
+	pMob->Init();
+	pMob->Skill(0);
 
 	//pMob->SetPosition(112, 216);
 
-	//pMob2 = new Mob("Mob/2220100.img.xml");
-	//pMob2->Init();
-	//pMob2->Move();
+	pMob2 = new Mob("Mob/2220100.img.xml");
+	pMob2->Init();
+	pMob2->Dead();
 
 	//pMob2->SetPosition(112, 216);
 	

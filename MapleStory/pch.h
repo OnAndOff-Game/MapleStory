@@ -37,6 +37,7 @@
 #include "BatchRender.h"
 
 #include "MObject.h"
+#include "MState.h"
 #include "BaseScene.h"
 
 #include "World.h"
