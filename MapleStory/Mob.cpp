@@ -155,7 +155,7 @@ Gdiplus::Rect const& Mob::GetColRc()
 	else
 	{
 		m_rcCollision.X = Transform.Translation.X + imgdata->lt.X + imgdata->origin.X;
-		m_rcCollision.Y = Transform.Translation.X + imgdata->lt.Y + imgdata->origin.Y;
+		m_rcCollision.Y = Transform.Translation.Y + imgdata->lt.Y + imgdata->origin.Y;
 		m_rcCollision.Width = imgdata->rb.X + imgdata->origin.X;
 		m_rcCollision.Height = imgdata->rb.Y + imgdata->origin.Y;
 	}

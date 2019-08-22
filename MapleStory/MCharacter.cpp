@@ -7,13 +7,13 @@
 #include "MCharacter.h"
 
 MCharacter::MCharacter() :m_pPhysics(nullptr),
-m_nSkillCnt(0), m_nAtkCnt(0), bFalling(true)
+m_nSkillCnt(0), m_nAtkCnt(0), bFalling(true), m_bCollision(true), m_bHit(false)
 {
 	m_eObjType = EMObjType::eMO_Player;
 }
 
 MCharacter::MCharacter(const std::string& _filename) : m_strName(_filename), m_pPhysics(nullptr),
-m_nSkillCnt(0), m_nAtkCnt(0), bFalling(true)
+m_nSkillCnt(0), m_nAtkCnt(0), bFalling(true), m_bCollision(true), m_bHit(false)
 {
 	m_eObjType = EMObjType::eMO_Player;
 	LoadData(_filename);
@@ -144,12 +144,23 @@ Gdiplus::Rect const& MCharacter::GetColRc()
 	{
 
 		m_rcCollision.X = Transform.Translation.X + imgdata->lt.X + imgdata->origin.X;
-		m_rcCollision.Y = Transform.Translation.X + imgdata->lt.Y + imgdata->origin.Y;
+		m_rcCollision.Y = Transform.Translation.Y + imgdata->lt.Y + imgdata->origin.Y;
 		m_rcCollision.Width = imgdata->rb.X + imgdata->origin.X;
 		m_rcCollision.Height = imgdata->rb.Y + imgdata->origin.Y;
 	}
 
 	return m_rcCollision;
+}
+
+void MCharacter::HitDamage(int _demage)
+{
+	m_bHit = true;
+	m_bCollision = false;
+	m_dwHitTick = GetTickCount64();
+
+	//damage font(_demage)
+
+	m_nHp -= _demage;
 }
 
 void MCharacter::HandleInput(EMAnimType _atype)

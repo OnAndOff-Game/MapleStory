@@ -228,6 +228,9 @@
     <ClInclude Include="MLadRop.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="MDamageFont.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MapleStory.cpp">
@@ -378,6 +381,9 @@
       <Filter>Map</Filter>
     </ClCompile>
     <ClCompile Include="MLadRop.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="MDamageFont.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

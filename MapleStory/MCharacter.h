@@ -23,6 +23,8 @@ public:
 
 	Gdiplus::Rect const& GetColRc();
 
+	void HitDamage(int _demage);
+
 	void Move();
 	void Jump();
 	bool Stand();
@@ -41,24 +43,8 @@ public:
 	ProxyID m_ProxyID;
 
 private:
-	Gdiplus::Rect m_rcCollision;
-	
-	bool m_bDie;
-
-	EMAnimType playerState;
-	
-	bool bFalling;
 
 
-	Node m_Paser;
-
-	std::string m_strName;
-
-	int m_nHp;
-	int m_nMp;
-
-	int m_nSkillCnt;
-	int m_nAtkCnt;
 	const MobInfo* m_pMobInfo;
 
 	std::vector<Component*> m_vComponent;
@@ -69,5 +55,23 @@ private:
 	std::list<Maple::LADDER_ROPE>* m_pLdRope;
 
 	MState* m_pState;
+
+	Node m_Paser;
+	std::string m_strName;
+	Gdiplus::Rect m_rcCollision;
+	EMAnimType playerState;
+
+	bool	m_bHit;
+	bool	m_bCollision;
+	DWORD	m_dwHitTick;
+
+	bool m_bDie;
+	bool bFalling;
+	   	 
+	int m_nHp;
+	int m_nMp;
+
+	int m_nSkillCnt;
+	int m_nAtkCnt;
 };
 
