@@ -1034,7 +1034,7 @@ namespace rapidxml
                 return 0;
             }
             else
-                return m_first_attribute;
+               return m_first_attribute;
         }
 
         //! Gets last attribute of node, optionally matching attribute name.

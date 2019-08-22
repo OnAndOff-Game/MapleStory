@@ -189,6 +189,9 @@
     <ClInclude Include="ISkill.h">
       <Filter>Game\Skill</Filter>
     </ClInclude>
+    <ClInclude Include="MLife.h">
+      <Filter>Map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MapleStory.cpp">
@@ -304,6 +307,9 @@
     </ClCompile>
     <ClCompile Include="ISkill.cpp">
       <Filter>Game\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="MLife.cpp">
+      <Filter>Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

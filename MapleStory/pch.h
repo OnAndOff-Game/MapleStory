@@ -20,6 +20,8 @@
 #include <unordered_map>
 #include <algorithm>
 #include <iostream>
+#include <fmod.hpp>
+#include <fmod_errors.h>
 
 #include "Constants.h"
 #include "common.h"

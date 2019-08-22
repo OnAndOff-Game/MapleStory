@@ -79,6 +79,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>$(ProjectDir)include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -126,6 +128,8 @@
       </StackReserveSize>
       <StackCommitSize>
       </StackCommitSize>
+      <AdditionalLibraryDirectories>$(ProjectDir)library;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>fmod_vc.lib;</AdditionalDependencies>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -213,6 +217,7 @@
     <ClInclude Include="MCharacter.h" />
     <ClInclude Include="MCollision.h" />
     <ClInclude Include="MInput.h" />
+    <ClInclude Include="MLife.h" />
     <ClInclude Include="Mob.h" />
     <ClInclude Include="MObject.h" />
     <ClInclude Include="MobManager.h" />
@@ -260,6 +265,7 @@
     <ClCompile Include="MCharacter.cpp" />
     <ClCompile Include="MCollision.cpp" />
     <ClCompile Include="MInput.cpp" />
+    <ClCompile Include="MLife.cpp" />
     <ClCompile Include="Mob.cpp" />
     <ClCompile Include="MObject.cpp" />
     <ClCompile Include="MobManager.cpp" />

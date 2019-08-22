@@ -101,6 +101,29 @@ void Maple::World::TileData(Node o, int i)
 	layer[i].tile.push_back(pTile);
 }
 
+void Maple::World::LifeData(Node o)
+{
+	LIFE temp;
+	temp.type = o["type"].GetValueString();
+	if (!temp.type.compare("n")) return;
+	////temp.id = o["id"].GetValueInt();
+	temp.id = "2220100";
+	temp.x = o["x"].GetValueInt();
+	temp.y = o["y"].GetValueInt();
+	////temp.mobTime = o["mobTime"].GetValueInt();
+	//temp.f = o["f"].GetValueInt();
+	//temp.hide = o["hide"].GetValueInt();
+	//temp.fh = o["fh"].GetValueInt();
+	//temp.cy = o["cy"].GetValueInt();
+	temp.rx0 = o["rx0"].GetValueInt();
+	temp.rx1 = o["rx1"].GetValueInt();
+
+	MLife* pLife = new MLife(temp);
+	pLife->Init();
+	pLife->Move();
+	life.push_back(pLife);
+}
+
 void Maple::World::Clear()
 {
 	for (int i = 0; i < 8; i++)
@@ -112,4 +135,5 @@ void Maple::World::Clear()
 	back.clear();
 	footHold.clear();
 	portal.clear();
+	life.clear();
 }

@@ -88,6 +88,8 @@ int CChildView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if (CWnd::OnCreate(lpCreateStruct) == -1)
 		return -1;
 
+	srand((unsigned int)time(NULL));
+	SoundManager->InitSound();
 	SceneManager::GetInstance().LoadScene("GameScene");
 	AfxBeginThread(&CMapleStoryApp::funcThread, NULL);
 	// TODO:  여기에 특수화된 작성 코드를 추가합니다.

@@ -37,12 +37,15 @@ public:
 
 	void LoadData(const std::string& _filename);
 
+	void SetDirection(int dir);
 private:
 
 
 	void LoadInfo(Node _node);
 
 private:
+	float m_MoveTime;
+	int m_Direction;
 
 	bool bFalling;
 

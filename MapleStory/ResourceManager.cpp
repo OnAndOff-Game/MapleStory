@@ -44,3 +44,40 @@ Image* ResourceManager::LoadAssetImg(std::string _name)
 
 	return img;
 }
+
+void ResourceManager::InitSound()
+{
+	System_Create(&pFmod);
+	pFmod->init(10, FMOD_INIT_NORMAL, 0);
+}
+
+void ResourceManager::LoadSound(std::string BgmPath)
+{
+	if (!curBgSound.compare(BgmPath))
+		return;
+	curBgSound = BgmPath;
+	ch[0]->stop();
+	pFmod->update();
+	r = pFmod->createSound(curBgSound.c_str(), FMOD_LOOP_NORMAL, NULL, &music[0]);
+	r = pFmod->createSound("Sound/Game/Portal.mp3", FMOD_DEFAULT, NULL, &music[2]);
+	r = pFmod->createSound("Sound/Game/Jump.mp3", FMOD_DEFAULT, NULL, &music[1]);
+}
+
+void ResourceManager::PlaySound(int _type)
+{
+	bool bIsPlaying = false;
+
+	if (_type == 0)
+	{
+	ch[_type]->isPlaying(&bIsPlaying);
+	if (bIsPlaying)
+		return;
+	}
+		
+	r = pFmod->playSound(music[_type], NULL, false, &ch[_type]);
+}
+
+void ResourceManager::ReleaseSound()
+{
+	
+}
