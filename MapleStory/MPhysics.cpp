@@ -359,6 +359,11 @@ void MPhysics::SetVelocityY(float _vy)
 	vy = _vy;
 }
 
+void MPhysics::SetLevitation()
+{
+	m_pRL = nullptr;
+}
+
 /*
 
 if (m_pRL == nullptr)

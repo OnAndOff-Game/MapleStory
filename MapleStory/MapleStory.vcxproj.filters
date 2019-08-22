@@ -228,8 +228,8 @@
     <ClInclude Include="MLadRop.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="FlashJumpSkill.h">
-      <Filter>Game\Skill</Filter>
+    <ClInclude Include="MDamageFont.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -383,8 +383,8 @@
     <ClCompile Include="MLadRop.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="FlashJumpSkill.cpp">
-      <Filter>Game\Skill</Filter>
+    <ClCompile Include="MDamageFont.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

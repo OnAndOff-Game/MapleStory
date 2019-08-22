@@ -24,6 +24,7 @@ public:
 	void SetVelocity(float _vx, float _vy);
 	void SetVelocityX(float _vx);
 	void SetVelocityY(float _vy);
+	void SetLevitation();
 
 
 	

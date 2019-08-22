@@ -13,6 +13,8 @@ public:
 	
 	void SetObject(int _pryid, MObject* _obj);
 
+	void Reset();
+
 	//LPIMG_DATA GetAssetData(const std::string& _assetname)
 
 private:

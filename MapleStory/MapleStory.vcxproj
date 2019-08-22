@@ -225,6 +225,7 @@
     <ClInclude Include="MBack.h" />
     <ClInclude Include="MCharacter.h" />
     <ClInclude Include="MCollision.h" />
+    <ClInclude Include="MDamageFont.h" />
     <ClInclude Include="MInput.h" />
     <ClInclude Include="MLadRop.h" />
     <ClInclude Include="MLife.h" />
@@ -285,6 +286,7 @@
     <ClCompile Include="MBack.cpp" />
     <ClCompile Include="MCharacter.cpp" />
     <ClCompile Include="MCollision.cpp" />
+    <ClCompile Include="MDamageFont.cpp" />
     <ClCompile Include="MInput.cpp" />
     <ClCompile Include="MLadRop.cpp" />
     <ClCompile Include="MLife.cpp" />
