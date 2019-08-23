@@ -48,6 +48,7 @@ struct BatchElement
 
 	int z;
 	float alpha;
+	float red;
 
 	bool bFlip;
 

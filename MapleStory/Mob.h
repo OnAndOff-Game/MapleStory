@@ -23,6 +23,7 @@ public:
 	void Hit(int _damage);
 
 	int GetExp();
+	int GetPushed();
 	int GetPAtk();
 	int GetMAtk();
 	int GetLv();

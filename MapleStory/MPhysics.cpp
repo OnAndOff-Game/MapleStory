@@ -87,7 +87,8 @@ void MPhysics::Update(MObject* _obj, float _delta)
 					if (!(pos.Y > it.line1.Y && pos.Y > it.line2.Y) && &it != m_pJumpRL)
 					{
 						m_pRL = &it;
-						//std::cout << "m_pRL : " <<m_pRL->id <<  std::endl;
+					//	if (_obj->m_eObjType == EMObjType::eMO_Player)
+						//	std::cout << "m_pRL : " << m_pRL->line1.X << "   " << m_pRL->line1.Y<< std::endl;
 
 					}
 				}

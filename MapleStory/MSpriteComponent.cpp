@@ -48,24 +48,24 @@ void MSpriteComponent::Update(MObject* _obj, float _delta)
 				if (m_nFrame + 1 < m_pSprite->GetFrame())
 					m_nFrame++;
 				else
+				{
+					m_pSprite->AssetReset();
+
 					if (!m_bLooping)
 						Stop();
 					else
 						m_nFrame = 0;
+				}
 				
 				m_nCurrentTime = 0;
 				m_pSprite->SetFrame(m_nFrame);
 			}
 		}
-
-
 		m_pSprite->SetFlip(m_bFlip);
 
 		m_pSprite->Update(_obj, _delta);
 	}
-
 	//imgdata;
-
 }
 
 void MSpriteComponent::Release()
@@ -132,6 +132,18 @@ void MSpriteComponent::SetCurrentAnim(EMAnimType _type, int _cnt)
 
 		m_pSprite = spr->second;
 	}
+}
+
+void MSpriteComponent::SetAlpha(float _alpha)
+{
+	if (m_pSprite != nullptr)
+		m_pSprite->SetAlpha(_alpha);
+}
+
+void MSpriteComponent::SetRed(float _red)
+{
+	if (m_pSprite != nullptr)
+		m_pSprite->SetRed(_red);
 }
 
 IMG_DATA const& MSpriteComponent::GetCurrentImgData()

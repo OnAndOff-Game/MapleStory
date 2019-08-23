@@ -4,6 +4,7 @@
 #include "MCharacter.h"
 #include "Mob.h"
 #include "Map.h"
+#include "MDamageFont.h"
 #include "GameScene.h"
 
 void GameScene::Init()
@@ -11,11 +12,14 @@ void GameScene::Init()
 	map = new Map(100000000);
 	map->Init();
 
+	pFont = new MDamageFont();
+	pFont->Init();
 
 	player = new MCharacter("Mob/131.img.xml");
 	player->Init();
 	player->Move();
 	player->SetPosition(112, 216);
+
 	
 	OBJMGR->SetObject(player->m_ProxyID.GetProxyID(), player);
 }
@@ -25,6 +29,12 @@ void GameScene::Update(float Delta)
 	//player->Update(Delta);
 	//pMob->Update(Delta);
 	//pMob2->Update(Delta);
+
+	if (GetAsyncKeyState('F'))
+		pFont->SetDamage(4000, player->GetPosition());
+
+	pFont->Update(Delta);
+
 	OBJMGR->Update(Delta);
 	map->Update(Delta);
 

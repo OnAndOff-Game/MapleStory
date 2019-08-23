@@ -4,6 +4,7 @@ class MSpriteComponent;
 class MPhysics;
 class MState;
 class ISkill;
+class MDamageFont;
 //struct LADDER_ROPE;
 
 class MCharacter : public MObject
@@ -27,8 +28,10 @@ public:
 
 	Gdiplus::Rect const& GetColRc();
 
-	void HitDamage(int _demage);
+	void HitDamage(int _damage);
 	void SetLevitation();
+
+	bool IsCollision();
 
 	void Move();
 	void Jump();
@@ -55,7 +58,8 @@ private:
 	std::vector<Component*> m_vComponent;
 
 	MSpriteComponent* m_pSprites;
-
+	MPhysics* m_pPhysics;
+	MDamageFont* m_pDF;
 
 	std::list<Maple::LADDER_ROPE>* m_pLdRope;
 
@@ -80,5 +84,7 @@ private:
 	int m_nAtkCnt;
 
 	std::list<ISkill*> skills;
+
+	bool bFlag;
 };
 
