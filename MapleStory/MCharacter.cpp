@@ -2,6 +2,7 @@
 #include "MSprite.h"
 #include "MSpriteComponent.h"
 #include "MPhysics.h"
+#include "FlashJumpSkill.h"
 #include "ISkill.h"
 #include "StandingState.h"
 #include "MDamageFont.h"
@@ -36,6 +37,7 @@ void MCharacter::Init()
 
 	m_pState = new StandingState();
 
+	skills.push_back(new FlashJumpSkill());
 	m_pDF = new MDamageFont();
 }
 
@@ -67,14 +69,16 @@ void MCharacter::Release()
 void MCharacter::Update(float _delta)
 {
 	m_pPhysics->SetImgData(m_pSprites->GetCurrentImgData());
-	m_pPhysics->SetVelocityX(0);
+
+	if(m_pPhysics->IsJump())
+		m_pPhysics->SetVelocityX(Lerp(m_pPhysics->GetVelocityX(), 0, _delta * 0.02));
 
 	if (GetAsyncKeyState(VK_LCONTROL))
 	{
 		if (m_pPhysics->IsJump())
 		{
 			HandleInput(EMAnimType::eMA_Jumping);
-			m_pPhysics->SetVelocityY(-1.5);
+			m_pPhysics->SetVelocityY(-1.2);
 			m_pPhysics->SetJump(true);
 			SoundManager->PlaySound(1);
 		}
@@ -97,10 +101,9 @@ void MCharacter::Update(float _delta)
 		if (m_pPhysics->IsJump())
 		{
 			HandleInput(EMAnimType::eMA_Moving);
+			m_pPhysics->SetVelocityX(1);
 		}
-
-		m_pSprites->SetFlip(true);
-		m_pPhysics->SetVelocityX(1);
+			m_pSprites->SetFlip(true);
 	}
 
 	else if (GetAsyncKeyState(VK_LEFT))
@@ -108,9 +111,9 @@ void MCharacter::Update(float _delta)
 		if (m_pPhysics->IsJump())
 		{
 			HandleInput(EMAnimType::eMA_Moving);
+			m_pPhysics->SetVelocityX(-1);
 		}
-		m_pSprites->SetFlip(false);
-		m_pPhysics->SetVelocityX(-1);
+			m_pSprites->SetFlip(false);
 	}
 
 	else if(GetAsyncKeyState('W'))
@@ -127,6 +130,11 @@ void MCharacter::Update(float _delta)
 	for (auto it : m_vComponent)
 	{
 		it->Update(this, _delta);
+	}
+
+	for (auto s : skills)
+	{
+		s->Update(this, _delta);
 	}
 
 	m_dwHitTick += _delta;
@@ -247,6 +255,11 @@ void MCharacter::SetComponent(Component* _pComp)
 void MCharacter::Revision()
 {
 	m_pPhysics->SetJump(true);
+}
+
+bool MCharacter::IsJump()
+{
+	return m_pPhysics->IsJump();
 }
 
 void MCharacter::Move()

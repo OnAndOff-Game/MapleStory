@@ -3,6 +3,7 @@
 class MSpriteComponent;
 class MPhysics;
 class MState;
+class ISkill;
 class MDamageFont;
 //struct LADDER_ROPE;
 
@@ -23,6 +24,7 @@ public:
 	void SetComponent(Component* _pComp);
 
 	void Revision();
+	bool IsJump();
 
 	Gdiplus::Rect const& GetColRc();
 
@@ -45,7 +47,7 @@ public:
 	void LoadData(const std::string& _filename);
 
 public:
-
+	MPhysics* m_pPhysics;
 	ProxyID m_ProxyID;
 
 private:
@@ -81,6 +83,7 @@ private:
 	int m_nSkillCnt;
 	int m_nAtkCnt;
 
+	std::list<ISkill*> skills;
 
 	bool bFlag;
 };

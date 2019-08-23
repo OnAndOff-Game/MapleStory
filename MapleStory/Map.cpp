@@ -183,6 +183,7 @@ void Map::PlayerInPortal(MCharacter* player)
 		if (t->PortalCollision(player->GetPosition()))
 		{
 			std::string tn = t->PortalData.tn;
+			OBJMGR->Reset();
 			Load(t->PortalData.tm);
 			for (auto t : world->portal)
 			{
