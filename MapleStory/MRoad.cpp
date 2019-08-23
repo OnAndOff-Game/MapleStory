@@ -121,3 +121,8 @@ void MRoad::Release()
 {
 	m_vRoad.clear();
 }
+
+void MRoad::DrawLine(bool _bdraw)
+{
+	bCollision = _bdraw;
+}

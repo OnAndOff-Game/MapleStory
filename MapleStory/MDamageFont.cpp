@@ -22,7 +22,7 @@ void MDamageFont::Init()
 	for (int i = 0; i < 10; ++i)
 	{
 		std::string path = "Font/101.";
-		path += 48 + i;
+		path += std::to_string(i);
 		path += ".png";
 
 		m_pFont[i] = new Asset(EMRenderType::eMR_UI, path);

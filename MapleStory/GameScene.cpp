@@ -29,7 +29,7 @@ void GameScene::Update(float Delta)
 	//player->Update(Delta);
 	//pMob->Update(Delta);
 	//pMob2->Update(Delta);
-
+	
 	if (GetAsyncKeyState('F'))
 		pFont->SetDamage(4000, player->GetPosition());
 
@@ -44,6 +44,12 @@ void GameScene::Update(float Delta)
 
 	if (GetAsyncKeyState('P'))
 		OBJMGR->Reset();
+
+	if (GetAsyncKeyState('O'))
+		ROAD->DrawLine(true);
+	
+	if (GetAsyncKeyState('I'))
+		ROAD->DrawLine(false);
 
 
 	View::Target = player->GetPosition();

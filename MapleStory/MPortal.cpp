@@ -19,7 +19,7 @@ MPortal::MPortal(const PORTAL& _portaldata)
 		Gdiplus::Image* img = SpriteManager->GetAssetImg(path);
 		data.origin.X = img->GetWidth() / 2;
 		data.origin.Y = img->GetHeight() -5 ;
-		data.z = 3;
+		data.z = 4;
 		mAsset[i] = new Asset(EMRenderType::eMR_Map,path,data);
 	}
 	curAni = 0;

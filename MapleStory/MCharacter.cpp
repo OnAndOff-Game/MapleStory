@@ -124,7 +124,6 @@ void MCharacter::Update(float _delta)
 		HandleInput(EMAnimType::eMA_Standing);
 	}
 
-
 	for (auto it : m_vComponent)
 	{
 		it->Update(this, _delta);

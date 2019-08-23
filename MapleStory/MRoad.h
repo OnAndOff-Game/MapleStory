@@ -17,6 +17,8 @@ public:
 	
 	void Release();
 
+	void DrawLine(bool _bdraw);
+
 public:
 	std::vector<RoadLine>	m_vRoad;
 
