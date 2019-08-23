@@ -103,13 +103,13 @@ void Map::Load(int mapCode)
 		world->PortalData(o);
 	}
 
-	//Node life = mapNode["life"];
-	//for (auto o = life.begin(); o; o = o++)
-	//{
-	//	std::string w = o["type"].GetValueString();
-	//	if(!o["type"].GetValueString().compare("m"))
-	//		world->LifeData(o);
-	//}
+	Node life = mapNode["life"];
+	for (auto o = life.begin(); o; o = o++)
+	{
+		std::string w = o["type"].GetValueString();
+		if(!o["type"].GetValueString().compare("m"))
+			world->LifeData(o);
+	}
 
 	Node ladderRope = mapNode["ladderRope"];
 	for (auto o = ladderRope.begin(); o; o = o++)
@@ -183,6 +183,7 @@ void Map::PlayerInPortal(MCharacter* player)
 		if (t->PortalCollision(player->GetPosition()))
 		{
 			std::string tn = t->PortalData.tn;
+			OBJMGR->Reset();
 			Load(t->PortalData.tm);
 			for (auto t : world->portal)
 			{

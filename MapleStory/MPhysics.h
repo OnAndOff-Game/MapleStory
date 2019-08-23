@@ -26,6 +26,8 @@ public:
 	void SetVelocityY(float _vy);
 	void SetLevitation();
 
+	float GetVelocityX();
+	float GetVelocityY();
 
 	
 private:

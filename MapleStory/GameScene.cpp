@@ -32,9 +32,6 @@ void GameScene::Update(float Delta)
 	if (GetAsyncKeyState('A'))
 		map->PlayerInPortal(player);
 
-	if (GetAsyncKeyState('P'))
-		OBJMGR->Reset();
-
 	View::Target = player->GetPosition();
 	int left =  View::Target.X - Constants::SCREEN_SIZE_X / 2 + map->world->centerPos.x - 40;
 	int right = left - map->world->mapSize.x + Constants::SCREEN_SIZE_X + 71;

@@ -59,8 +59,9 @@ void ResourceManager::LoadSound(std::string BgmPath)
 	ch[0]->stop();
 	pFmod->update();
 	r = pFmod->createSound(curBgSound.c_str(), FMOD_LOOP_NORMAL, NULL, &music[0]);
-	r = pFmod->createSound("Sound/Game/Portal.mp3", FMOD_DEFAULT, NULL, &music[2]);
 	r = pFmod->createSound("Sound/Game/Jump.mp3", FMOD_DEFAULT, NULL, &music[1]);
+	r = pFmod->createSound("Sound/Game/Portal.mp3", FMOD_DEFAULT, NULL, &music[2]);
+	r = pFmod->createSound("Sound/Skill/4111006.Use.mp3", FMOD_DEFAULT, NULL, &music[3]);
 }
 
 void ResourceManager::PlaySound(int _type)

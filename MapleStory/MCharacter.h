@@ -3,6 +3,7 @@
 class MSpriteComponent;
 class MPhysics;
 class MState;
+class ISkill;
 //struct LADDER_ROPE;
 
 class MCharacter : public MObject
@@ -22,6 +23,7 @@ public:
 	void SetComponent(Component* _pComp);
 
 	void Revision();
+	bool IsJump();
 
 	Gdiplus::Rect const& GetColRc();
 
@@ -42,7 +44,7 @@ public:
 	void LoadData(const std::string& _filename);
 
 public:
-
+	MPhysics* m_pPhysics;
 	ProxyID m_ProxyID;
 
 private:
@@ -53,7 +55,7 @@ private:
 	std::vector<Component*> m_vComponent;
 
 	MSpriteComponent* m_pSprites;
-	MPhysics* m_pPhysics;
+
 
 	std::list<Maple::LADDER_ROPE>* m_pLdRope;
 
@@ -76,5 +78,7 @@ private:
 
 	int m_nSkillCnt;
 	int m_nAtkCnt;
+
+	std::list<ISkill*> skills;
 };
 

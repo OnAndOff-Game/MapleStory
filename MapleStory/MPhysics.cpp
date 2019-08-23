@@ -138,6 +138,7 @@ void MPhysics::Update(MObject* _obj, float _delta)
 					{
 						pos = crd;
 						//std::cout << "Äç" << std::endl;
+
 					}
 
 					vy = 0;
@@ -149,6 +150,7 @@ void MPhysics::Update(MObject* _obj, float _delta)
 				pos = posd;
 				if (vy > 2)
 					vy = 2;
+
 				//std::cout
 			}
 		}
@@ -180,6 +182,7 @@ void MPhysics::Update(MObject* _obj, float _delta)
 							vy = 1;
 							d.Y = vy * speed * delta;
 							m_pRL = nullptr;
+
 						}
 
 						else if (posd.Y < prv->line1.Y && posd.Y > prv->line2.Y)
@@ -214,7 +217,6 @@ void MPhysics::Update(MObject* _obj, float _delta)
 						{
 							double x = m_pRL->line2.X - m_pRL->line1.X;
 							double y = m_pRL->line2.Y - m_pRL->line1.Y;
-
 							d.Y = (y / x) * d.X;
 						}
 					}
@@ -293,7 +295,6 @@ void MPhysics::Update(MObject* _obj, float _delta)
 					double x = m_pRL->line2.X - m_pRL->line1.X;
 					double y = m_pRL->line2.Y - m_pRL->line1.Y;
 					double px = posd.X - m_pRL->line1.X;
-
 					d.Y = (y / x) * d.X;
 				}
 			}
@@ -362,6 +363,16 @@ void MPhysics::SetVelocityY(float _vy)
 void MPhysics::SetLevitation()
 {
 	m_pRL = nullptr;
+}
+
+float MPhysics::GetVelocityX()
+{
+	return vx;
+}
+
+float MPhysics::GetVelocityY()
+{
+	return vy;
 }
 
 /*
