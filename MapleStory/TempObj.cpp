@@ -4,13 +4,13 @@
 
 TempObj::TempObj() : mAsset(nullptr)
 {
-	m_eObjType = EMObjType::eMO_Obj;
+	m_eObjType = EMObjType::eMObjType_Obj;
 
 }
 
 TempObj::TempObj(const OBJECT& _objdata, Asset* _asset)
 {
-	m_eObjType = EMObjType::eMO_Obj;
+	m_eObjType = EMObjType::eMObjType_Obj;
 	ObjData = _objdata;
 	mAsset = _asset;
 }

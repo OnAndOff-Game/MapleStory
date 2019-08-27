@@ -10,11 +10,10 @@ public:
 	MPhysics(int _fs, int _speed);
 	~MPhysics();
 
-	void Init();
-	void Update(MObject* _obj, float _delta);
-	void Release();
-
-
+	virtual void Init() override;
+	virtual void Update(MObject* _obj, float _delta) override;
+	virtual void Release() override;
+	
 	void SetJump(bool bJumping);
 	bool IsJump();
 	bool IsFloor();
@@ -28,7 +27,6 @@ public:
 
 	float GetVelocityX();
 	float GetVelocityY();
-
 	
 private:
 
@@ -38,10 +36,8 @@ private:
 	float vx, vy;
 	int RoadNum;
 	bool bJumping;
-	
 
-
-	int fs;
+	int slidingFriction;
 	int speed;
 };
 

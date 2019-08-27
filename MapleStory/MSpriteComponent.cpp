@@ -23,15 +23,15 @@ MSpriteComponent::~MSpriteComponent()
 
 void MSpriteComponent::Init()
 {
-	int cnt = SPRMGR->GetSprDataCnt(m_nSprID);
+	int cnt = SPRMGR->GetSpriteDataCnt(m_nSprID);
 
 	for (int i = 0; i < cnt; ++i)
 	{
-		MSprite* pSpr = new MSprite(SPRMGR->GetSprData(m_nSprID, i), m_eRenderType);
+		MSprite* pSpr = new MSprite(SPRMGR->GetSpriteData(m_nSprID, i), m_eRenderType);
 
 		pSpr->Init();
 
-		m_mSprites.insert(std::make_pair(pSpr->GetAnimType(), pSpr));
+		SpritesMap.insert(std::make_pair(pSpr->GetAnimType(), pSpr));
 	}	
 }
 
@@ -70,7 +70,7 @@ void MSpriteComponent::Update(MObject* _obj, float _delta)
 
 void MSpriteComponent::Release()
 {
-	for (auto it : m_mSprites)
+	for (auto it : SpritesMap)
 	{
 		it.second->Release();
 		delete it.second;
@@ -107,30 +107,37 @@ void MSpriteComponent::Reverse()
 
 void MSpriteComponent::SetCurrentAnim(EMAnimType _type)
 {
-	m_pSprite = m_mSprites.find(_type)->second;
+	if (SpritesMap.find(_type) == SpritesMap.end())
+		return;
+	
+	m_pSprite = SpritesMap.find(_type)->second;
 
 	if (m_pSprite == nullptr)
-		m_pSprite = m_mSprites.begin()->second;
+		m_pSprite = SpritesMap.begin()->second;
 
 	m_nFrame = 0;
 }
  
 void MSpriteComponent::SetCurrentAnim(EMAnimType _type, int _cnt)
 {
-	auto anim = m_mSprites.equal_range(_type);
+	auto anim = SpritesMap.equal_range(_type);
 
 	if (anim.first == anim.second)
 		return;
 
 	else
 	{
-		auto spr = anim.first;
+		auto sprite = anim.first;
+
 		for (int i = 0; i < _cnt; ++i)
 		{
-			spr++;
+			sprite++;
 		}
 
-		m_pSprite = spr->second;
+		m_pSprite = sprite->second;
+
+		if (m_pSprite == nullptr)
+			m_pSprite = SpritesMap.begin()->second;
 	}
 }
 
@@ -151,7 +158,7 @@ IMG_DATA const& MSpriteComponent::GetCurrentImgData()
 	if (m_pSprite != nullptr)
 		return m_pSprite->GetCurrentImgData();
 	else
-		return m_mSprites.find(EMAnimType::eMA_Standing)->second->GetCurrentImgData();
+		return SpritesMap.find(EMAnimType::eMAnimType_Standing)->second->GetCurrentImgData();
 }
 
 void MSpriteComponent::SetLooping(bool _bLooping)

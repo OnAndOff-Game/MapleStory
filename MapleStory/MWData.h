@@ -2,40 +2,40 @@
 
 
 enum EMRenderType : int{
-	eMR_Back,
-	eMR_Map,
-	eMR_Obj,
-	eMR_UI,
-	eMR_Cnt,
+	eMRenderType_BackGround,
+	eMRenderType_Map,
+	eMRenderType_Object,
+	eMRenderType_UI,
+	eMRenderType_Cnt,
 };
 
 enum EMAnimType : int{
 
-	eMA_Static,
-	eMA_Standing,
-	eMA_Moving,
-	eMA_Prone,
-	eMA_Jumping,
-	eMA_Ladder,
-	eMA_Rope,
-	eMA_Hit,
-	eMA_Die,
-	eMA_Attack,
-	eMA_Skill,
-	eMA_Chase,
-	eMA_Cnt,
+	eMAnimType_Static,
+	eMAnimType_Standing,
+	eMAnimType_Moving,
+	eMAnimType_Prone,
+	eMAnimType_Jumping,
+	eMAnimType_Ladder,
+	eMAnimType_Rope,
+	eMAnimType_Hit,
+	eMAnimType_Die,
+	eMAnimType_Attack,
+	eMAnimType_Skill,
+	eMAnimType_Chase,
+	eMAnimType_Cnt,
 };
 
 enum EMObjType : int {
-	eMO_Map,
-	eMO_Obj,
-	eMO_LbRp,
-	eMO_Player,
-	eMO_Mob,
-	eMO_PSkill,
-	eMO_MSkill,
-	eMO_Item,
-	eMO_Cnt,
+	eMObjType_Map,
+	eMObjType_Obj,
+	eMObjType_LadderRope,
+	eMObjType_Player,
+	eMObjType_Mob,
+	eMObjType_PlayerSkill,
+	eMObjType_MobSkill,
+	eMObjType_Item,
+	eMObjType_Cnt,
 };
 
 struct BatchElement
@@ -71,7 +71,7 @@ typedef struct MTransform
 	float			Rotation;
 }MTRASFORM;
 
-typedef struct SprData
+typedef struct SpritesData
 {
 	EMAnimType type;	// 드로우 타입
 	std::string path;   // 경로 ex) Object\acc1.img
@@ -89,15 +89,15 @@ typedef struct Img_Data
 
 	Gdiplus::Point origin; // 좌표 이거 없으면 중점 좌표를 계산해서 넣어야함
 	Gdiplus::Point head; //충돌안하면 안씀
-	Gdiplus::Point lt;  //충돌안하면 안씀
-	Gdiplus::Point rb; // 충돌안하면
+	Gdiplus::Point leftTop;  //충돌안하면 안씀
+	Gdiplus::Point rightBottom; // 충돌안하면
 
 	int delay;			// anim 출력 딜레이
 				
 	int z;				// z값
 
-	int a0;				// 알파 0값
-	int a1;				// 알파 1값
+	int alphaMin;				// 알파 0값
+	int alphaMax;				// 알파 1값
 
 	std::string link;   // 링크 안씀
 }IMG_DATA, *LPIMG_DATA;

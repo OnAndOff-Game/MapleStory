@@ -58,7 +58,7 @@ private:
 	std::vector<Component*> m_vComponent;
 
 	MSpriteComponent* m_pSprites;
-	MPhysics* m_pPhysics;
+//	MPhysics* m_pPhysics;
 	MDamageFont* m_pDF;
 
 	std::list<Maple::LADDER_ROPE>* m_pLdRope;

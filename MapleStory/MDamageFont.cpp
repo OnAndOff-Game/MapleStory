@@ -25,7 +25,7 @@ void MDamageFont::Init()
 		path += std::to_string(i);
 		path += ".png";
 
-		m_pFont[i] = new Asset(EMRenderType::eMR_UI, path);
+		m_pFont[i] = new Asset(EMRenderType::eMRenderType_UI, path);
 	}
 
 }

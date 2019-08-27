@@ -40,7 +40,7 @@ public:
 
 private:
 	
-	std::multimap<EMAnimType, MSprite*> m_mSprites;
+	std::multimap<EMAnimType, MSprite*> SpritesMap;
 
 	EMRenderType m_eRenderType;
 

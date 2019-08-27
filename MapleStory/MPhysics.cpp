@@ -12,11 +12,11 @@ bool GetIntersectPoint(const Gdiplus::PointF& AP1, const Gdiplus::PointF& AP2,
 {
 	double t;
 	double s;
-	double under = (BP2.Y - BP1.Y) * (AP2.X - AP1.X) - (BP2.X - BP1.X) * (AP2.Y - AP1.Y);
+	double under = static_cast<double>(BP2.Y - BP1.Y) * static_cast<double>(AP2.X - AP1.X) - static_cast<double>(BP2.X - BP1.X) * static_cast<double>(AP2.Y - AP1.Y);
 	if (under == 0) return false;
 
-	double _t = (BP2.X - BP1.X) * (AP1.Y - BP1.Y) - (BP2.Y - BP1.Y) * (AP1.X - BP1.X);
-	double _s = (AP2.X - AP1.X) * (AP1.Y - BP1.Y) - (AP2.Y - AP1.Y) * (AP1.X - BP1.X);
+	double _t = static_cast<double>(BP2.X - BP1.X) * static_cast<double>(AP1.Y - BP1.Y) - static_cast<double>(BP2.Y - BP1.Y) * static_cast<double>(AP1.X - BP1.X);
+	double _s = static_cast<double>(AP2.X - AP1.X) * static_cast<double>(AP1.Y - BP1.Y) - static_cast<double>(AP2.Y - AP1.Y) * static_cast<double>(AP1.X - BP1.X);
 
 	t = _t / under;
 	s = _s / under;
@@ -24,14 +24,14 @@ bool GetIntersectPoint(const Gdiplus::PointF& AP1, const Gdiplus::PointF& AP2,
 	if (t < 0.0 || t>1.0 || s < 0.0 || s>1.0) return false;
 	if (_t == 0 && _s == 0) return false;
 
-	IP->X = AP1.X + t * (double)(AP2.X - AP1.X);
-	IP->Y = AP1.Y + t * (double)(AP2.Y - AP1.Y);
+	IP->X = AP1.X + t * static_cast<double>(AP2.X - AP1.X);
+	IP->Y = AP1.Y + t * static_cast<double>(AP2.Y - AP1.Y);
 
 	return true;
 }
 
 MPhysics::MPhysics() : m_pRL(nullptr), m_pJumpRL(nullptr), m_pImgData(nullptr), bJumping(false),
-fs(0), speed(0)
+slidingFriction(0), speed(0)
 {
 	vx = 0;
 	vy = 1;
@@ -39,7 +39,7 @@ fs(0), speed(0)
 }
 
 MPhysics::MPhysics(int _fs, int _speed) : m_pRL(nullptr), m_pJumpRL(nullptr), m_pImgData(nullptr), bJumping(false),
-fs(_fs), speed(_speed)
+slidingFriction(_fs), speed(_speed)
 {
 	vx = 0;
 	vy = 1;
@@ -87,7 +87,7 @@ void MPhysics::Update(MObject* _obj, float _delta)
 					if (!(pos.Y > it.line1.Y && pos.Y > it.line2.Y) && &it != m_pJumpRL)
 					{
 						m_pRL = &it;
-					//	if (_obj->m_eObjType == EMObjType::eMO_Player)
+					//	if (_obj->m_eObjType == EMObjType::eMObjType_Player)
 						//	std::cout << "m_pRL : " << m_pRL->line1.X << "   " << m_pRL->line1.Y<< std::endl;
 
 					}

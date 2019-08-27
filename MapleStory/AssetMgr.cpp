@@ -33,16 +33,16 @@ void AssetMgr::SetAssetData(IMG_DATA& _data)
 const IMG_DATA& AssetMgr::operator[](const std::string& _key)
 {
 	std::hash<std::string> hashkey;
-	LPIMG_DATA pImgData;
+	IMG_DATA pImgData;
 		
 	auto it = m_mAssetData.find(hashkey(_key));
 
 	if (it == m_mAssetData.end())
 		throw "error";
-	else
-		pImgData = &it->second;
+	//else
+	//	pImgData = &;
 
-	return *pImgData;
+	return it->second;
 }
 
 LPIMG_DATA AssetMgr::GetAssetData(const std::string& _assetname)

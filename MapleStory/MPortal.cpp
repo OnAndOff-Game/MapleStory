@@ -6,7 +6,7 @@
 
 MPortal::MPortal(const PORTAL& _portaldata)
 {
-	m_eObjType = EMObjType::eMO_Obj;
+	m_eObjType = EMObjType::eMObjType_Obj;
 	PortalData = _portaldata;
 
 	for (int i = 0; i < 8; i++)
@@ -20,7 +20,7 @@ MPortal::MPortal(const PORTAL& _portaldata)
 		data.origin.X = img->GetWidth() / 2;
 		data.origin.Y = img->GetHeight() -5 ;
 		data.z = 4;
-		mAsset[i] = new Asset(EMRenderType::eMR_Map,path,data);
+		mAsset[i] = new Asset(EMRenderType::eMRenderType_Map,path,data);
 	}
 	curAni = 0;
 	curAniTime = 0;

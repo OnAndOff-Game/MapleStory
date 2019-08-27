@@ -31,7 +31,7 @@ void ObjectMgr::Update(float _delta)
 {
 	for (auto& it : m_mObject)
 	{
-		if (it.second->m_eObjType == EMObjType::eMO_Player)
+		if (it.second->m_eObjType == EMObjType::eMObjType_Player)
 		{
 			MCharacter* pPlayer = static_cast<MCharacter*>(it.second);
 		
@@ -45,7 +45,7 @@ void ObjectMgr::Update(float _delta)
 
 			for (auto& t : m_mObject)
 			{
-				if (t.second->m_eObjType == EMObjType::eMO_Mob)
+				if (t.second->m_eObjType == EMObjType::eMObjType_Mob)
 				{
 					Mob* pMob = static_cast<Mob*>(t.second);
 									   
@@ -61,23 +61,23 @@ void ObjectMgr::Update(float _delta)
 					}
 				}
 				
-				else if (t.second->m_eObjType == EMObjType::eMO_MSkill)
+				else if (t.second->m_eObjType == EMObjType::eMObjType_MobSkill)
 				{
 
 				}
 
-				else if (t.second->m_eObjType == EMObjType::eMO_LbRp)
+				else if (t.second->m_eObjType == EMObjType::eMObjType_LadderRope)
 				{
 
 				}
 			}
 		}
 
-		else if (it.second->m_eObjType == EMObjType::eMO_PSkill)
+		else if (it.second->m_eObjType == EMObjType::eMObjType_PlayerSkill)
 		{
 			for (auto& t : m_mObject)
 			{
-				if (t.second->m_eObjType == EMObjType::eMO_Mob)
+				if (t.second->m_eObjType == EMObjType::eMObjType_Mob)
 				{
 
 				}
@@ -100,10 +100,10 @@ void ObjectMgr::Reset()
 	MCharacter* pCh = nullptr;
 	for (auto& it : m_mObject)
 	{
-		if (it.second->m_eObjType == EMObjType::eMO_Player)
+		if (it.second->m_eObjType == EMObjType::eMObjType_Player)
 			pCh = static_cast<MCharacter*>(it.second);
 
-		else if (it.second->m_eObjType == EMObjType::eMO_Mob)
+		else if (it.second->m_eObjType == EMObjType::eMObjType_Mob)
 		{
 			Mob* pMob = static_cast<Mob*>(it.second);
 			

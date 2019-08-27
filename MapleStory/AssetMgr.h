@@ -20,6 +20,7 @@ private:
 
 	std::unordered_map<size_t, IMG_DATA> m_mAssetData;
 
+	
 	//std::
 };
 

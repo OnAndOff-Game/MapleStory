@@ -43,9 +43,9 @@ void Maple::World::BackData(Node o)
 
 	MBack* pBack;
 	if (temp.type == 3)
-		pBack = new MBack(temp, new Asset(EMRenderType::eMR_Map, path + '/' + fileName, Gdiplus::Rect(0, 0, Constants::SCREEN_SIZE_X, Constants::SCREEN_SIZE_Y), 0, true));
+		pBack = new MBack(temp, new Asset(EMRenderType::eMRenderType_Map, path + '/' + fileName, Gdiplus::Rect(0, 0, Constants::SCREEN_SIZE_X, Constants::SCREEN_SIZE_Y), 0, true));
 	else
-		pBack = new MBack(temp, new Asset(EMRenderType::eMR_Map, path + '/' + fileName, 0));
+		pBack = new MBack(temp, new Asset(EMRenderType::eMRenderType_Map, path + '/' + fileName, 0));
 	pBack->SetPosition(pBack->GetSize().Width / 2, pBack->GetSize().Height / 2);
 
 	back.push_back(pBack);
@@ -66,7 +66,7 @@ void Maple::World::ObjData(Node o, int i)
 	std::string path = "Object/" + temp.oS + ".img";
 	std::string fileName = temp.l0 + "." + temp.l1 + "." + temp.l2 + ".0" + ".png";
 
-	TempObj* pTempObj = new TempObj(temp, new Asset(EMRenderType::eMR_Map, path + '/' + fileName, i));
+	TempObj* pTempObj = new TempObj(temp, new Asset(EMRenderType::eMRenderType_Map, path + '/' + fileName, i));
 
 	//SpriteManager->LoadResource(path.c_str());
 	pTempObj->SetPosition(temp.x, temp.y);
@@ -83,7 +83,7 @@ void Maple::World::TileData(Node o, int i)
 	temp.zM = o["zM"].GetValueInt();
 
 
-	MTile* pTile = new MTile(temp, new Asset(EMRenderType::eMR_Map, layer[i].info.tS + '/' + temp.GetTileName(), i));
+	MTile* pTile = new MTile(temp, new Asset(EMRenderType::eMRenderType_Map, layer[i].info.tS + '/' + temp.GetTileName(), i));
 
 	if (!pTile->TileData.u.compare("enV0"))
 		pTile->SetPosition({ pTile->TileData.x - pTile->GetAssetSize().X / 2, pTile->TileData.y + pTile->GetAssetSize().Y / 2 });

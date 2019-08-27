@@ -25,18 +25,18 @@ void MRoad::LoadData(Node* pNode)
 
 			for (auto o3 = o2.begin(); o3; o3 = o3++)
 			{
-				RoadLine rl;
-				rl.layer = layer;
-				rl.group = group;
-				rl.id = std::stoi(o3.GetName());
-				rl.line1.X = o3["x1"].GetValueInt();
-				rl.line1.Y = o3["y1"].GetValueInt();
-				rl.line2.X = o3["x2"].GetValueInt();
-				rl.line2.Y = o3["y2"].GetValueInt();
-				rl.prv = o3["prev"].GetValueInt();
-				rl.nxt = o3["next"].GetValueInt();
+				RoadLine localRoadLine;
+				localRoadLine.layer = layer;
+				localRoadLine.group = group;
+				localRoadLine.id = std::stoi(o3.GetName());
+				localRoadLine.line1.X = o3["x1"].GetValueInt();
+				localRoadLine.line1.Y = o3["y1"].GetValueInt();
+				localRoadLine.line2.X = o3["x2"].GetValueInt();
+				localRoadLine.line2.Y = o3["y2"].GetValueInt();
+				localRoadLine.prv = o3["prev"].GetValueInt();
+				localRoadLine.nxt = o3["next"].GetValueInt();
 
-				m_vRoad.push_back(rl);
+				m_vRoad.push_back(localRoadLine);
 			}
 		}
 	}
@@ -109,6 +109,7 @@ void MRoad::Render(Gdiplus::Graphics* _mem)
 	if (bCollision)
 	{
 		Gdiplus::Pen MPen(Gdiplus::Color(255, 0, 0), 3);
+
 		for (auto& it : m_vRoad)
 		{
 			_mem->DrawLine(&MPen, it.line1.X - View::viewPort.X + Constants::SCREEN_SIZE_X / 2, it.line1.Y - View::viewPort.Y + Constants::SCREEN_SIZE_Y / 2,

@@ -26,4 +26,4 @@ public:
 		
 };
 
-#define ROAD MRoad::GetInstance()
+#define ROAD (MRoad::GetInstance())

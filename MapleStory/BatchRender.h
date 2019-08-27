@@ -51,3 +51,8 @@ private:
 };
 
 #define BATCHRENDER BatchRender::GetInstance()
+
+
+//ToDo 작업할꺼
+//UNDONE 수정할꺼
+//HACK 매직넘버? 하드코딩

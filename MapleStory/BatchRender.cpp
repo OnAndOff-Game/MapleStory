@@ -3,6 +3,9 @@
 
 void BatchRender::BatchDraw(EMRenderType _type, Gdiplus::Image* _img, const Gdiplus::Point& _pos, int _z, float _alpha, bool _flip)
 {
+	if (_img == nullptr)
+		return;
+
 	if (!bDraw)
 		Clear();
 
@@ -16,18 +19,19 @@ void BatchRender::BatchDraw(EMRenderType _type, Gdiplus::Image* _img, const Gdip
 	element.z = _z;
 	element.img = _img;
 
-	if (_type == eMR_Map)
+	if (_type == eMRenderType_Map)
 		BatchMap.insert(element);
-
-	else if (_type == eMR_Obj)
-		BatchObj.insert(element);
-	   
-	else if(_type == eMR_UI)
+	else if (_type == eMRenderType_Object)
+		BatchObj.insert(element);	   
+	else if(_type == eMRenderType_UI)
 		BatchUI.insert(element);
 }
 
 void BatchRender::BatchDraw(EMRenderType _type, Gdiplus::Image* _img, const Gdiplus::Rect& _rect, const Gdiplus::Point& _origin, int _z, float _alpha, float _red, bool _flip)
 {
+	if (_img == nullptr)
+		return;
+
 	if (!bDraw)
 		Clear();
 
@@ -43,31 +47,27 @@ void BatchRender::BatchDraw(EMRenderType _type, Gdiplus::Image* _img, const Gdip
 	element.z = _z;
 	element.img = _img;
 
-	if (_type == eMR_Map)
+	if (_type == eMRenderType_Map)
 		BatchMap.insert(element);
-
-	else if (_type == eMR_Obj)
+	else if (_type == eMRenderType_Object)
 		BatchObj.insert(element);
-
-	else if (_type == eMR_UI)
+	else if (_type == eMRenderType_UI)
 		BatchUI.insert(element);
 }
 
 void BatchRender::Draw(Gdiplus::Graphics* _view)
 {
-	//std::cout << "BatchMap : " << BatchMap.size() << std::endl;
-	for (auto it : BatchMap)
-	{
-	//	if(it.z == 1)
-		Render(_view, it);
-	}
-
-	for (auto it : BatchObj)
+	for (auto& it : BatchMap)
 	{
 		Render(_view, it);
 	}
 
-	for (auto it : BatchUI)
+	for (auto& it : BatchObj)
+	{
+		Render(_view, it);
+	}
+
+	for (auto& it : BatchUI)
 	{
 		Render(_view, it);
 	}
@@ -83,7 +83,8 @@ void BatchRender::DrawEnd()
 
 void BatchRender::Render(Gdiplus::Graphics* _view, const BatchElement& _element)
 {
-	//Gdiplus::Rect Dst(Size.X,Size.Y, m_pImg->GetWidth(), m_pImg->GetHeight());
+	if (_element.img == nullptr)
+		return;
 
 	DWORD Tick = GetTickCount64();
 	DWORD Delta = Tick - PreTick;
@@ -112,22 +113,17 @@ void BatchRender::Render(Gdiplus::Graphics* _view, const BatchElement& _element)
 
 			_view->DrawImage(&bm, Gdiplus::Rect(_element.Pos.X - (_element.img->GetWidth() - _element.Origin.X), _element.Pos.Y - _element.Origin.Y, _element.SizeX, _element.SizeY));
 		}
-
 		else
 		{
 			_view->DrawImage(&bm, Gdiplus::Rect(_element.Pos.X - _element.Origin.X, _element.Pos.Y - _element.Origin.Y, _element.SizeX, _element.SizeY));
 		}
 
 	}
-
 	else
 	{
 		_view->DrawImage(_element.img, Gdiplus::Rect(_element.Pos.X - _element.Origin.X, _element.Pos.Y - _element.Origin.Y, _element.SizeX, _element.SizeY));
 	}
-
-//	if(Delta != 0)
-	//	std::cout << "½Ã°£ : " << Delta << std::endl;
-
+	
 	PreTick = Tick;
 }
 
