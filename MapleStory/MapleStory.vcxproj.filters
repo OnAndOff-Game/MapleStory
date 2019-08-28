@@ -69,9 +69,6 @@
     <ClInclude Include="pch.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="ProxyID.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="MRoad.h">
       <Filter>Game</Filter>
     </ClInclude>
@@ -234,6 +231,9 @@
     <ClInclude Include="FlashJumpSkill.h">
       <Filter>Game\Skill</Filter>
     </ClInclude>
+    <ClInclude Include="ObjectId.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MapleStory.cpp">
@@ -250,9 +250,6 @@
     </ClCompile>
     <ClCompile Include="MWData.cpp">
       <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="ProxyID.cpp">
-      <Filter>헤더 파일</Filter>
     </ClCompile>
     <ClCompile Include="MRoad.cpp">
       <Filter>Game</Filter>
@@ -391,6 +388,9 @@
     </ClCompile>
     <ClCompile Include="FlashJumpSkill.cpp">
       <Filter>Game\Skill</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectId.cpp">
+      <Filter>헤더 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

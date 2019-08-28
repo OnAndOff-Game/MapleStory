@@ -138,7 +138,7 @@ void Maple::World::LifeData(Node o)
 	pLife->Init();
 	pLife->Move();
 	life.push_back(pLife);
-	OBJMGR->SetObject(pLife->m_ProxyID.GetProxyID(), pLife);
+	OBJMGR->SetObject(pLife->objectId.GetObjectId(), pLife);
 }
 
 void Maple::World::Clear()

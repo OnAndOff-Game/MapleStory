@@ -82,7 +82,6 @@ void Asset::Update(MObject* _obj, float _delta)
 			rect.X = _obj->Transform.Translation.X - View::viewPort.X + Constants::SCREEN_SIZE_X / 2;
 			rect.Y = _obj->Transform.Translation.Y - View::viewPort.Y + Constants::SCREEN_SIZE_Y / 2;
 		}
-
 		else
 		{
 			rect.X = _obj->Transform.Translation.X;

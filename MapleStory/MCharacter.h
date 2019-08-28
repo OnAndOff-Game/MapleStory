@@ -14,8 +14,8 @@ public:
 	MCharacter(const std::string& _filename);
 	~MCharacter();
 
-	void Init();
-	void Update(float _delta);
+	virtual void Init() override;
+	virtual void Update(float _delta) override;
 	void Render(Gdiplus::Graphics* _memG);
 	void Release();
 
@@ -47,12 +47,12 @@ public:
 	void LoadData(const std::string& _filename);
 
 public:
+	
 	MPhysics* m_pPhysics;
-	ProxyID m_ProxyID;
+	ObjectId objectId;
 
 private:
-
-
+	
 	const MobInfo* m_pMobInfo;
 
 	std::vector<Component*> m_vComponent;
@@ -82,9 +82,7 @@ private:
 
 	int m_nSkillCnt;
 	int m_nAtkCnt;
-
-	std::list<ISkill*> skills;
-
+	
 	bool bFlag;
 };
 

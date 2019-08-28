@@ -28,7 +28,7 @@
 #include "MWData.h"
 
 
-#include "ProxyID.h"
+#include "ObjectId.h"
 #include "Node.h"
 #include "Component.h"
 

@@ -37,7 +37,7 @@ void MCharacter::Init()
 
 	m_pState = new StandingState();
 
-	skills.push_back(new FlashJumpSkill());
+	//skills.push_back(new FlashJumpSkill());
 	m_pDF = new MDamageFont();
 }
 
@@ -132,11 +132,11 @@ void MCharacter::Update(float _delta)
 		it->Update(this, _delta);
 	}
 
-	for (auto s : skills)
+	/*for (auto s : skills)
 	{
 		s->Update(this, _delta);
 	}
-
+*/
 	m_dwHitTick += _delta;
 
 	if (m_bCollision == false)

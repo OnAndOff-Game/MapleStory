@@ -53,7 +53,7 @@ private:
 
 public:
 
-	ProxyID m_ProxyID;
+	ObjectId objectId;
 
 private:
 

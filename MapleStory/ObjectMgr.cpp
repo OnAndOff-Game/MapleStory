@@ -116,5 +116,5 @@ void ObjectMgr::Reset()
 	m_mObject.clear();
 
 	if (pCh != nullptr)
-		m_mObject.insert(std::make_pair(pCh->m_ProxyID.GetProxyID(), pCh));
+		m_mObject.insert(std::make_pair(pCh->objectId.GetObjectId(), pCh));
 }

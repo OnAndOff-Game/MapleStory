@@ -21,7 +21,7 @@ void GameScene::Init()
 	player->SetPosition(112, 216);
 
 	
-	OBJMGR->SetObject(player->m_ProxyID.GetProxyID(), player);
+	OBJMGR->SetObject(player->objectId.GetObjectId(), player);
 }
 
 void GameScene::Update(float Delta)
