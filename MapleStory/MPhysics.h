@@ -15,7 +15,7 @@ public:
 	virtual void Release() override;
 	
 	void SetJump(bool bJumping);
-	bool IsJump();
+	bool IsJumping();
 	bool IsFloor();
 
 	void SetInfo();

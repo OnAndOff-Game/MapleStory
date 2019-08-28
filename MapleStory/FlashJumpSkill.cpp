@@ -29,8 +29,8 @@ void FlashJumpSkill::Update(MCharacter* player, float _delta)
 		{
 			if (GetAsyncKeyState(VK_LCONTROL))
 			{
-				player->m_pPhysics->SetVelocityX(player->m_pPhysics->GetVelocityX() * 4);
-				player->m_pPhysics->SetVelocityY(-1.5);
+				player->physics->SetVelocityX(player->physics->GetVelocityX() * 4);
+				player->physics->SetVelocityY(-1.5);
 				SoundManager->PlaySound(3);
 				m_Used = true;
 			}

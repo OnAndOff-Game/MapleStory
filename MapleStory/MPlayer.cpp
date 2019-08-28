@@ -70,12 +70,12 @@ void MPlayer::Update(float _delta)
 {
 	m_pPhysics->SetImgData(m_pSprites->GetCurrentImgData());
 
-	if (m_pPhysics->IsJump())
+	if (m_pPhysics->IsJumping())
 		m_pPhysics->SetVelocityX(Lerp(m_pPhysics->GetVelocityX(), 0, _delta * 0.02));
 
 	if (GetAsyncKeyState(VK_LCONTROL))
 	{
-		if (m_pPhysics->IsJump())
+		if (m_pPhysics->IsJumping())
 		{
 			HandleInput(EMAnimType::eMAnimType_Jumping);
 			m_pPhysics->SetVelocityY(-1.2);
@@ -98,7 +98,7 @@ void MPlayer::Update(float _delta)
 	}
 	else if (KEY_DOWN(VK_RIGHT))
 	{
-		if (m_pPhysics->IsJump())
+		if (m_pPhysics->IsJumping())
 		{
 			HandleInput(EMAnimType::eMAnimType_Moving);
 			m_pPhysics->SetVelocityX(1);
@@ -108,7 +108,7 @@ void MPlayer::Update(float _delta)
 
 	else if (GetAsyncKeyState(VK_LEFT))
 	{
-		if (m_pPhysics->IsJump())
+		if (m_pPhysics->IsJumping())
 		{
 			HandleInput(EMAnimType::eMAnimType_Moving);
 			m_pPhysics->SetVelocityX(-1);
@@ -259,7 +259,7 @@ void MPlayer::Revision()
 
 bool MPlayer::IsJump()
 {
-	return m_pPhysics->IsJump();
+	return m_pPhysics->IsJumping();
 }
 
 void MPlayer::Move()
@@ -276,7 +276,7 @@ void MPlayer::Jump()
 
 bool MPlayer::Stand()
 {
-	if (m_pPhysics->IsJump())
+	if (m_pPhysics->IsJumping())
 	{
 		m_pSprites->SetCurrentAnim(EMAnimType::eMAnimType_Standing);
 		m_pSprites->SetLooping(true);

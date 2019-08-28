@@ -17,7 +17,7 @@ public:
 	std::string& GetName();
 
 	void SetFrame(int _frame);
-	int GetFrame();
+	int GetFrame() const;
 
 	int GetCurrentDelay();
 	IMG_DATA const& GetCurrentImgData();

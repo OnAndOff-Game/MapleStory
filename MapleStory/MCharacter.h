@@ -26,7 +26,7 @@ public:
 	void Revision();
 	bool IsJump();
 
-	Gdiplus::Rect const& GetColRc();
+	Gdiplus::Rect const& GetCollisionRect();
 
 	void HitDamage(int _damage);
 	void SetLevitation();
@@ -48,17 +48,16 @@ public:
 
 public:
 	
-	MPhysics* m_pPhysics;
+	MPhysics* physics;
 	ObjectId objectId;
 
 private:
 	
 	const MobInfo* m_pMobInfo;
 
-	std::vector<Component*> m_vComponent;
+	std::vector<Component*> component;
 
 	MSpriteComponent* m_pSprites;
-//	MPhysics* m_pPhysics;
 	MDamageFont* m_pDF;
 
 	std::list<Maple::LADDER_ROPE>* m_pLdRope;
@@ -67,7 +66,7 @@ private:
 
 	Node m_Paser;
 	std::string m_strName;
-	Gdiplus::Rect m_rcCollision;
+	Gdiplus::Rect collisionRect;
 	EMAnimType playerState;
 
 	bool	m_bHit;
@@ -80,8 +79,8 @@ private:
 	int m_nHp;
 	int m_nMp;
 
-	int m_nSkillCnt;
-	int m_nAtkCnt;
+	int skillCnt;
+	int attackCnt;
 	
 	bool bFlag;
 };

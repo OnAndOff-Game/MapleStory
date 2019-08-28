@@ -83,7 +83,7 @@ void MSprite::SetFrame(int _frame)
 		m_nFrame = _frame;
 }
 
-int MSprite::GetFrame()
+int MSprite::GetFrame() const
 {
 	return m_SprData.cnt;
 }

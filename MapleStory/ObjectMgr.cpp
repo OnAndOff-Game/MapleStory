@@ -41,7 +41,7 @@ void ObjectMgr::Update(float _delta)
 				continue;
 			}
 		
-			Gdiplus::Rect const* prc = &pPlayer->GetColRc();
+			Gdiplus::Rect const& PlayerCollisionRect = pPlayer->GetCollisionRect();
 
 			for (auto& t : m_mObject)
 			{
@@ -51,7 +51,7 @@ void ObjectMgr::Update(float _delta)
 									   
 					Gdiplus::Rect const* mrc = &pMob->GetColRc();
 
-					if (AABBIntersectionSize(*prc, *mrc) == true)
+					if (AABBIntersectionSize(PlayerCollisionRect, *mrc) == true)
 					{
 						std::cout << pPlayer->GetPosition().X << "   " << pPlayer->GetPosition().Y << std::endl;
 

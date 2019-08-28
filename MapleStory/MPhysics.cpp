@@ -321,7 +321,7 @@ void MPhysics::SetJump(bool _bJumping)
 	bJumping = _bJumping;
 }
 
-bool MPhysics::IsJump()
+bool MPhysics::IsJumping()
 {
 	if (bJumping || m_pRL == nullptr)
 		return false;
