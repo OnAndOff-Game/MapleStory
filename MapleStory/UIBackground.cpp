@@ -9,9 +9,9 @@ UIBackground::UIBackground()
 
 void UIBackground::Init()
 {
-	baseBackgroundSprite[0] = new Asset(EMRenderType::eMR_UI,"UI/base.backgrnd.png",
+	baseBackgroundSprite[0] = new Asset(EMRenderType::eMRenderType_UI,"UI/base.backgrnd.png",
 		Gdiplus::Rect(0,0,Constants::SCREEN_SIZE_X,120),10,true);
-	baseBackgroundSprite[1] = new Asset(EMRenderType::eMR_UI, "UI/base.StatusBackground.png", 
+	baseBackgroundSprite[1] = new Asset(EMRenderType::eMRenderType_UI, "UI/base.StatusBackground.png", 
 		Gdiplus::Rect(0, 0, 800, 70), 10, true);
 
 	baseBackgroundSprite[0]->SetOffset(Point(0, 18));

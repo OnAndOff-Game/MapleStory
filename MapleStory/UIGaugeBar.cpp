@@ -9,10 +9,10 @@ UIGaugeBar::UIGaugeBar()
 
 void UIGaugeBar::Init()
 {
-	gaugeBarSprite = new Asset(EMRenderType::eMR_UI, "UI/gauge.bar.png", Gdiplus::Rect(0, 0, 470, 50), 10, true);
+	gaugeBarSprite = new Asset(EMRenderType::eMRenderType_UI, "UI/gauge.bar.png", Gdiplus::Rect(0, 0, 470, 50), 10, true);
 	gaugeBarSprite->SetOffset(Point(Constants::SCREEN_SIZE_X / 2 + 30, Constants::SCREEN_SIZE_Y / 2 + 290));
 	
-	gaugeBarGraduationSprite = new Asset(EMRenderType::eMR_UI, "UI/gauge.graduation.png", Gdiplus::Rect(0, 0, 470, 50), 10, true);
+	gaugeBarGraduationSprite = new Asset(EMRenderType::eMRenderType_UI, "UI/gauge.graduation.png", Gdiplus::Rect(0, 0, 470, 50), 10, true);
 	gaugeBarGraduationSprite->SetOffset(Point(Constants::SCREEN_SIZE_X / 2 + 30, Constants::SCREEN_SIZE_Y / 2 + 290));
 }
 
