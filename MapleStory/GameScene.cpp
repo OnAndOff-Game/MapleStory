@@ -24,7 +24,7 @@ void GameScene::Init()
 	gameUI = new GameUI();
 	gameUI->Init();
 	
-	OBJMGR->SetObject(player->m_ProxyID.GetProxyID(), player);
+	OBJMGR->SetObject(player->objectId.GetObjectId(), player);
 }
 
 void GameScene::Update(float Delta)

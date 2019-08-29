@@ -46,6 +46,9 @@
     <Filter Include="State">
       <UniqueIdentifier>{adb3921a-f20a-4510-a461-0b35d6f3105f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\UI">
+      <UniqueIdentifier>{dc54a8af-9ce6-4deb-99a2-3033400a1094}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MapleStory.h">
@@ -240,6 +243,18 @@
     <ClInclude Include="StandingState.h">
       <Filter>State</Filter>
     </ClInclude>
+    <ClInclude Include="UICharacterInfo.h">
+      <Filter>Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIGaugeBar.h">
+      <Filter>Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUI.h">
+      <Filter>Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UIBackground.h">
+      <Filter>Game\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MapleStory.cpp">
@@ -403,6 +418,18 @@
     </ClCompile>
     <ClCompile Include="MEnemy.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="UIGaugeBar.cpp">
+      <Filter>Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="GameUI.cpp">
+      <Filter>Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UIBackground.cpp">
+      <Filter>Game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UICharacterInfo.cpp">
+      <Filter>Game\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

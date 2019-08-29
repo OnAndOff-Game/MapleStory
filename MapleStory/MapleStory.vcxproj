@@ -214,6 +214,7 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameScene.h" />
+    <ClInclude Include="GameUI.h" />
     <ClInclude Include="HitState.h" />
     <ClInclude Include="ISkill.h" />
     <ClInclude Include="JumpingState.h" />
@@ -262,6 +263,9 @@
     <ClInclude Include="StandingState.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TempObj.h" />
+    <ClInclude Include="UIBackground.h" />
+    <ClInclude Include="UICharacterInfo.h" />
+    <ClInclude Include="UIGaugeBar.h" />
     <ClInclude Include="View.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>
@@ -277,6 +281,7 @@
     <ClCompile Include="FlashJumpSkill.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="GameUI.cpp" />
     <ClCompile Include="HitState.cpp" />
     <ClCompile Include="ISkill.cpp" />
     <ClCompile Include="JumpingState.cpp" />
@@ -323,6 +328,9 @@
     <ClCompile Include="SprMgr.cpp" />
     <ClCompile Include="StandingState.cpp" />
     <ClCompile Include="TempObj.cpp" />
+    <ClCompile Include="UIBackground.cpp" />
+    <ClCompile Include="UICharacterInfo.cpp" />
+    <ClCompile Include="UIGaugeBar.cpp" />
     <ClCompile Include="View.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
