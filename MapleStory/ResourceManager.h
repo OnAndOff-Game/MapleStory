@@ -22,20 +22,21 @@ private:
 	   
 	std::unordered_map <size_t, Gdiplus::Image*> m_mAssetImg;
 
+
 	// 사운드 부분
-
 public:
-
 	void InitSound();
-	void LoadSound(std::string BgmPath);
+	void LoadBackGroundSound(std::string BgmPath);
+	void LoadSound();
 	void PlaySound(int _type);
 	void StopSound();
 	void ReleaseSound();
 private:
 	void SoundErrorCheck();
+
 	std::string curBgSound;
-	System* pFmod;
-	Channel* ch[10];
-	Sound* music[10];
-	FMOD_RESULT r;
+	System* soundSystem;
+	std::vector<Sound*> music;
+	std::vector<Channel*> soundChannel;
+	FMOD_RESULT soundResult;
 };

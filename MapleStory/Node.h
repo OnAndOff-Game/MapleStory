@@ -11,9 +11,8 @@ public:
 	Node(const Node& n);
 	Node(rapidxml::xml_node<char>* n);
 	Node(const char* fileName);
-	~Node() { }
+	~Node();
 
-	//attribute
 	std::string GetValueString();
 	int GetValueInt();
 	float GetValueFloat();
@@ -32,13 +31,14 @@ public:
 	void operator=(const Node& o);
 	bool operator==(Node const& o) const;
 	bool operator!=(Node const& o) const;
-	Node operator++(int) const;
+	Node& operator++(int);
 	Node operator[](const char* name);
 	Node operator[](int index);
 	Node operator[](Node* o);
 
 	operator bool() const { return node ? true : false; }
 
+private:
 	rapidxml::xml_node<char>* node;
 	rapidxml::xml_document<char>* xmlDoc;
 	rapidxml::file<>* xmlFile;

@@ -16,3 +16,12 @@ enum EObjectType
 	eObjectType_Enemy,
 	eObjectType_Cnt
 };
+
+enum SoundType
+{
+	Sound_BackGround,
+	Sound_Portal,
+	Sound_Jump,
+	Sound_Skill,
+	Sound_Cnt
+};

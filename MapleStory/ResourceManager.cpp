@@ -47,38 +47,70 @@ Image* ResourceManager::LoadAssetImg(std::string _name)
 
 void ResourceManager::InitSound()
 {
-	System_Create(&pFmod);
-	pFmod->init(10, FMOD_INIT_NORMAL, 0);
+	System_Create(&soundSystem);
+	soundSystem->init(Sound_Cnt, FMOD_INIT_NORMAL, 0);
 }
 
-void ResourceManager::LoadSound(std::string BgmPath)
+void ResourceManager::LoadBackGroundSound(std::string BgmPath)
 {
 	if (!curBgSound.compare(BgmPath))
 		return;
+	delete music[0];
 	curBgSound = BgmPath;
-	ch[0]->stop();
-	pFmod->update();
-	r = pFmod->createSound(curBgSound.c_str(), FMOD_LOOP_NORMAL, NULL, &music[0]);
-	r = pFmod->createSound("Sound/Game/Jump.mp3", FMOD_DEFAULT, NULL, &music[1]);
-	r = pFmod->createSound("Sound/Game/Portal.mp3", FMOD_DEFAULT, NULL, &music[2]);
-	r = pFmod->createSound("Sound/Skill/4111006.Use.mp3", FMOD_DEFAULT, NULL, &music[3]);
+	soundResult = soundSystem->createSound(curBgSound.c_str(), SoundType::Sound_BackGround, NULL, &music[Sound_BackGround]);
+}
+
+void ResourceManager::LoadSound()
+{
+	const char* str[] = { 
+		"Sound/Bgm00/GoPicnic.mp3",
+		"Sound/Game/Jump.mp3",
+		"Sound/Game/Portal.mp3",
+		"Sound/Game/Portal.mp3" };
+
+	for (int i = 0; i < Sound_Cnt; i++)
+	{
+		Sound* Temp;
+		soundResult = soundSystem->createSound(str[i], i, NULL, &Temp);
+		if (soundResult == FMOD_RESULT::FMOD_OK)
+		{
+			music.push_back(Temp);
+		}
+	}
+	soundChannel.resize(Sound_Cnt, nullptr);
 }
 
 void ResourceManager::PlaySound(int _type)
 {
-	bool bIsPlaying = false;
-
-	if (_type == 0)
+	if (_type == SoundType::Sound_BackGround)
 	{
-	ch[_type]->isPlaying(&bIsPlaying);
-	if (bIsPlaying)
+	bool backGroundPlaying = false;
+	soundChannel[_type]->isPlaying(&backGroundPlaying);
+	if (backGroundPlaying)
 		return;
 	}
 		
-	r = pFmod->playSound(music[_type], NULL, false, &ch[_type]);
+	soundResult = soundSystem->playSound(music[_type], NULL, false, &soundChannel[_type]);
+	SoundErrorCheck();
+}
+
+void ResourceManager::StopSound()
+{
 }
 
 void ResourceManager::ReleaseSound()
 {
-	
+	for (int i = 0; i < Sound_Cnt; i++)
+	{
+		music[i]->release();
+	}
+}
+
+void ResourceManager::SoundErrorCheck()
+{
+	if (soundResult != FMOD_OK)
+	{
+		printf("FMOD error! (%d) %s\n", soundResult, FMOD_ErrorString(soundResult));
+		exit(-1);
+	}
 }

@@ -25,6 +25,7 @@ public:
 	void SetRotate(bool _bRotate);
 	void SetDrawPoint();
 	void SetScale();
+	void SetOffset(Gdiplus::Point& InOffsetPosition);
 	
 	Gdiplus::Point& GetImgSize();
 	Gdiplus::Rect& GetSize();
@@ -38,6 +39,7 @@ private:
 	Gdiplus::Image* m_pImg;
 	Gdiplus::Point CustomPos;
 	Gdiplus::Point ImgSize;
+	Gdiplus::Point offsetPosition;
 
 	bool bBillBoard;
 	int z;

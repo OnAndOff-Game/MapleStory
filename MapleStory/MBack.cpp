@@ -4,31 +4,31 @@
 
 
 
-MBack::MBack(const BACK& _backdata, Asset* _asset)
+MBackground::MBackground(const BACKGROUND& _backdata, Asset* _asset)
 {
 	BackData = _backdata;
 	mAsset = _asset;
-	m_eObjType = EMObjType::eMObjType_Map;
+	m_eObjType = EMObjType::eMO_Map;
 }
 
-MBack::~MBack()
+MBackground::~MBackground()
 {
 }
 
-void MBack::Init()
+void MBackground::Init()
 {
 }
 
-void MBack::LoadData(const std::string& _filename)
+void MBackground::LoadData(const std::string& _filename)
 {
 }
 
-void MBack::Update(float _delta)
+void MBackground::Update(float _delta)
 {
 	mAsset->Update(this, _delta);
 }
 
-void MBack::Release()
+void MBackground::Release()
 {
 	if (mAsset != nullptr)
 	{
@@ -38,12 +38,12 @@ void MBack::Release()
 }
 
 
-Gdiplus::Point& MBack::GetAssetSize()
+Gdiplus::Point& MBackground::GetAssetSize()
 {
 	return mAsset->GetImgSize();
 }
 
-Gdiplus::Rect& MBack::GetSize()
+Gdiplus::Rect& MBackground::GetSize()
 {
 	return mAsset->GetSize();
 }

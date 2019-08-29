@@ -3,7 +3,7 @@
 #include "MTile.h"
 #include "MBack.h"
 #include "MPortal.h"
-#include "MLife.h"
+#include "MEnemy.h"
 #include "TempObj.h"
 #include <list>
 class MLadRop;
@@ -55,18 +55,18 @@ namespace Maple
 	{
 	public:
 		LAYER layer[8];
-		std::list<MBack*> back;
+		std::list<MBackground*> background;
 		std::list<FOOTHOLD> footHold;
 		std::list<MPortal*> portal;
-		std::list<MLife*> life;
+		std::list<MEnemy*> enemy;
 		std::list<MLadRop*> ladderRope;
 		
-		void PortalData(Node o);
-		void BackData(Node o);
-		void ObjData(Node o, int i);
-		void TileData(Node o, int i);
-		void LadderData(Node o);
-		void LifeData(Node o);
+		void PortalData(Node node);
+		void BackData(Node node);
+		void ObjData(Node node, int index);
+		void TileData(Node node, int index);
+		void LadderData(Node node);
+		void EnemyData(Node node);
 		void Clear();
 
 		CPoint centerPos;

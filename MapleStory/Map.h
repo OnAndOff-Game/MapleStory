@@ -17,7 +17,7 @@ public:
 	Map(int mapCode);
 	~Map();
 	void Init();
-	void Load(int mapCode);
+	void Load(int InMapCode);
 	void Update(float delta);
 	void Render(CDC* pDC);
 	void Release();
@@ -32,8 +32,6 @@ private:
 
 	Mob* pMob;
 	Node mapNode;
-
-	bool test;
 
 	Gdiplus::PointF Target;
 };

@@ -5,6 +5,7 @@
 #include "Mob.h"
 #include "Map.h"
 #include "MDamageFont.h"
+#include "GameUI.h"
 #include "GameScene.h"
 
 void GameScene::Init()
@@ -20,8 +21,10 @@ void GameScene::Init()
 	player->Move();
 	player->SetPosition(112, 216);
 
+	gameUI = new GameUI();
+	gameUI->Init();
 	
-	OBJMGR->SetObject(player->objectId.GetObjectId(), player);
+	OBJMGR->SetObject(player->m_ProxyID.GetProxyID(), player);
 }
 
 void GameScene::Update(float Delta)
@@ -37,13 +40,13 @@ void GameScene::Update(float Delta)
 
 	OBJMGR->Update(Delta);
 	map->Update(Delta);
+	//player->GetLadderRope(map->world->ladderRope);
+
 
 	// 포탈 이동
 	if (GetAsyncKeyState('A'))
 		map->PlayerInPortal(player);
 
-	if (GetAsyncKeyState('P'))
-		OBJMGR->Reset();
 
 	if (GetAsyncKeyState('O'))
 		ROAD->DrawLine(true);
@@ -51,7 +54,10 @@ void GameScene::Update(float Delta)
 	if (GetAsyncKeyState('I'))
 		ROAD->DrawLine(false);
 
+	// 인게임 모든 HUD
+	gameUI->Update(Delta);
 
+	// 카메라 이동
 	View::Target = player->GetPosition();
 	int left =  View::Target.X - Constants::SCREEN_SIZE_X / 2 + map->world->centerPos.x - 40;
 	int right = left - map->world->mapSize.x + Constants::SCREEN_SIZE_X + 71;

@@ -6,6 +6,7 @@ class Map;
 class Mob;
 class MCharacter;
 class MDamageFont;
+class GameUI;
 
 class GameScene : public Scene
 {
@@ -21,4 +22,5 @@ private:
 	Map* map;
 	MCharacter* player;
 	MDamageFont* pFont;
+	GameUI* gameUI;
 };
