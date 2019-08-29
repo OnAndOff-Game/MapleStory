@@ -13,6 +13,7 @@ public:
 	Node(const char* fileName);
 	~Node() { }
 
+	//attribute
 	std::string GetValueString();
 	int GetValueInt();
 	float GetValueFloat();

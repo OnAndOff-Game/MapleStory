@@ -49,7 +49,7 @@ public:
 
 private:
 	
-	void LoadInfo(Node _node);
+	//MobInfo LoadInfo(Node& _node);
 
 public:
 
@@ -74,7 +74,7 @@ private:
 	
 	int m_nSkillCnt;
 	int m_nAtkCnt;
-	MobInfo m_MobInfo;
+	//MobInfo m_MobInfo;
 
 
 	std::vector<Component*> m_vComponent;

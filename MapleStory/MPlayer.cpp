@@ -79,7 +79,7 @@ void MPlayer::Update(float _delta)
 		{
 			HandleInput(EMAnimType::eMAnimType_Jumping);
 			m_pPhysics->SetVelocityY(-1.2);
-			m_pPhysics->SetJump(true);
+			m_pPhysics->SetJumping(true);
 			SoundManager->PlaySound(1);
 		}
 	}
@@ -254,7 +254,7 @@ void MPlayer::SetComponent(Component* _pComp)
 
 void MPlayer::Revision()
 {
-	m_pPhysics->SetJump(true);
+	m_pPhysics->SetJumping(true);
 }
 
 bool MPlayer::IsJump()
@@ -397,14 +397,14 @@ void MPlayer::LoadData(const std::string& _filename)
 						imgdata.delay = t["delay"].GetValueInt();
 
 					if (!t["a0"].IsNull())
-						imgdata.alphaMin = t["a0"].GetValueInt();
+						imgdata.beginAlpha = t["a0"].GetValueInt();
 					else
-						imgdata.alphaMin = 0;
+						imgdata.beginAlpha = 0;
 
 					if (!t["a1"].IsNull())
-						imgdata.alphaMax = t["a1"].GetValueInt();
+						imgdata.endAlpha = t["a1"].GetValueInt();
 					else
-						imgdata.alphaMax = 0;
+						imgdata.endAlpha = 0;
 
 					if (!t["z"].IsNull())
 						imgdata.z = t["z"].GetValueInt();

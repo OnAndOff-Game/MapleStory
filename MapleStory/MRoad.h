@@ -20,7 +20,7 @@ public:
 	void DrawLine(bool _bdraw);
 
 public:
-	std::vector<RoadLine>	m_vRoad;
+	std::vector<RoadLine>	road;
 
 	bool bCollision;
 		

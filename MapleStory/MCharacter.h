@@ -53,7 +53,7 @@ public:
 
 private:
 	
-	const MobInfo* m_pMobInfo;
+	//const MobInfo* m_pMobInfo;
 
 	std::vector<Component*> component;
 

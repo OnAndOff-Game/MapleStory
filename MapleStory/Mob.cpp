@@ -30,7 +30,7 @@ void Mob::Init()
 
 	m_pSprites->SetLooping(true);
 
-	m_pPhysics = new MPhysics(m_MobInfo.fs, m_MobInfo.speed);
+	m_pPhysics = new MPhysics(0, 120);
 
 	m_pPhysics->Init();
 	m_MoveTime = 1000;
@@ -100,12 +100,12 @@ void Mob::SetComponent(Component* _pComp)
 
 int Mob::GetPushed()
 {
-	return m_MobInfo.pushed;
+	return 0;//m_MobInfo.pushed;
 }
 
 int Mob::GetPAtk()
 {
-	return m_MobInfo.PADamge;
+	return 0;//m_MobInfo.PADamge;
 }
 
 void Mob::Move()
@@ -193,7 +193,7 @@ void Mob::LoadData(const std::string& _filename)
 		{
 			if (!strcmp(anim.GetName(), "info"))
 			{
-				LoadInfo(anim);
+				//m_MobInfo = LoadInfo(anim);
 			}
 
 			else
@@ -216,11 +216,7 @@ void Mob::LoadData(const std::string& _filename)
 					imgdata.filename = file;
 					imgdata.id = atoi(num.GetName());
 					imgdata.imgsize = num.GetValuePoint();
-
-					//if(t.GetValuePoint() ==
-
-					//t.GetValueInt();
-
+										
 					if (imgdata.imgsize.X * imgdata.imgsize.Y == 1)
 					{
 						std::string templink;
@@ -234,8 +230,7 @@ void Mob::LoadData(const std::string& _filename)
 							std::replace(templink.begin(), templink.end(), from, to);
 
 							imgdata.link = sprname + '/' + sprdata.name + '.' + templink + ".png";
-						}
-
+						}						
 						//if (!t["_outlink"].IsNull())
 						//	imgdata.origin = t["origin"].GetValuePoint();
 					}
@@ -261,14 +256,14 @@ void Mob::LoadData(const std::string& _filename)
 						imgdata.delay = num["delay"].GetValueInt();
 
 					if (!num["a0"].IsNull())
-						imgdata.alphaMin = num["a0"].GetValueInt();
+						imgdata.beginAlpha = num["a0"].GetValueInt();
 					else
-						imgdata.alphaMin = 0;
+						imgdata.beginAlpha = 0;
 
 					if (!num["a1"].IsNull())
-						imgdata.alphaMax = num["a1"].GetValueInt();
+						imgdata.endAlpha = num["a1"].GetValueInt();
 					else
-						imgdata.alphaMax = 0;
+						imgdata.endAlpha = 0;
 
 					if (!num["z"].IsNull())
 						imgdata.z = num["z"].GetValueInt();
@@ -341,7 +336,7 @@ void Mob::LoadData(const std::string& _filename)
 		{
 			if (!strcmp(o.GetName(), "info"))
 			{
-				LoadInfo(o);
+				//m_MobInfo = LoadInfo(o);
 				break;
 			}
 		}
@@ -355,25 +350,4 @@ void Mob::LoadData(const std::string& _filename)
 void Mob::SetDirection(int dir)
 {
 	m_Direction = dir;
-}
-
-void Mob::LoadInfo(Node _node)
-{
-	m_MobInfo.level = _node["level"].GetValueInt();
-	m_MobInfo.bodyAttack = _node["bodyAttack"].GetValueInt();
-	m_MobInfo.maxHp = _node["maxHP"].GetValueInt();
-	m_MobInfo.maxMp = _node["maxMP"].GetValueInt();
-	m_MobInfo.speed = _node["speed"].GetValueInt();
-	m_MobInfo.PADamge = _node["PADamage"].GetValueInt();
-	m_MobInfo.PDDamge = _node["PDDamage"].GetValueInt();
-	m_MobInfo.PDRate = _node["PDRate"].GetValueInt();
-	m_MobInfo.MADamge = _node["MADamage"].GetValueInt();
-	m_MobInfo.MDDamge = _node["MDDamage"].GetValueInt();
-	m_MobInfo.MDRate = _node["MDRate"].GetValueInt();
-	m_MobInfo.acc = _node["acc"].GetValueInt();
-	m_MobInfo.eva = _node["eva"].GetValueInt();
-	m_MobInfo.pushed = _node["pushed"].GetValueInt();
-	m_MobInfo.fs = _node["fs"].GetValueInt();
-	m_MobInfo.exp = _node["exp"].GetValueInt();
-	m_MobInfo.category = _node["category"].GetValueInt();
 }
