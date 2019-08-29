@@ -4,6 +4,7 @@ class MSpriteComponent;
 class MPhysics;
 class MState;
 class ISkill;
+class MLadRop;
 class MDamageFont;
 //struct LADDER_ROPE;
 
@@ -14,19 +15,19 @@ public:
 	MCharacter(const std::string& _filename);
 	~MCharacter();
 
-	virtual void Init() override;
-	virtual void Update(float _delta) override;
+	void Init();
+	void Update(float _delta);
 	void Render(Gdiplus::Graphics* _memG);
 	void Release();
 
-	void GetLadderRope(std::list<Maple::LADDER_ROPE>& _ladderrope);
+	void GetLadderRope(std::list<MLadRop*>  _ladderrope);
 	void HandleInput(EMAnimType _atype);
 	void SetComponent(Component* _pComp);
 
 	void Revision();
 	bool IsJump();
 
-	Gdiplus::Rect const& GetCollisionRect();
+	Gdiplus::Rect const& GetColRc();
 
 	void HitDamage(int _damage);
 	void SetLevitation();
@@ -47,26 +48,26 @@ public:
 	void LoadData(const std::string& _filename);
 
 public:
-	
-	MPhysics* physics;
-	ObjectId objectId;
+	MPhysics* m_pPhysics;
+	ProxyID m_ProxyID;
 
 private:
-	
+
+
 	const MobInfo* m_pMobInfo;
 
-	std::vector<Component*> component;
+	std::vector<Component*> m_vComponent;
 
 	MSpriteComponent* m_pSprites;
 	MDamageFont* m_pDF;
 
-	std::list<Maple::LADDER_ROPE>* m_pLdRope;
+	std::list<MLadRop*> m_pLdRope;
 
 	MState* m_pState;
 
 	Node m_Paser;
 	std::string m_strName;
-	Gdiplus::Rect collisionRect;
+	Gdiplus::Rect m_rcCollision;
 	EMAnimType playerState;
 
 	bool	m_bHit;
@@ -79,9 +80,11 @@ private:
 	int m_nHp;
 	int m_nMp;
 
-	int skillCnt;
-	int attackCnt;
-	
+	int m_nSkillCnt;
+	int m_nAtkCnt;
+
+	std::list<ISkill*> skills;
+
 	bool bFlag;
 };
 

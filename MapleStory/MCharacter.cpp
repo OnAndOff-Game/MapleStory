@@ -8,16 +8,16 @@
 #include "MDamageFont.h"
 #include "MCharacter.h"
 
-MCharacter::MCharacter() :physics(nullptr), skillCnt(0), attackCnt(0),
-bFalling(true), m_bCollision(true), m_bHit(false), bFlag(false)
+MCharacter::MCharacter() :m_pPhysics(nullptr),
+m_nSkillCnt(0), m_nAtkCnt(0), bFalling(true), m_bCollision(true), m_bHit(false), bFlag(false)
 {
-	m_eObjType = EMObjType::eMObjType_Player;
+	m_eObjType = EMObjType::eMO_Player;
 }
 
-MCharacter::MCharacter(const std::string& _filename) : m_strName(_filename), physics(nullptr),
-skillCnt(0), attackCnt(0), bFalling(true), m_bCollision(true), m_bHit(false)
+MCharacter::MCharacter(const std::string& _filename) : m_strName(_filename), m_pPhysics(nullptr),
+m_nSkillCnt(0), m_nAtkCnt(0), bFalling(true), m_bCollision(true), m_bHit(false)
 {
-	m_eObjType = EMObjType::eMObjType_Player;
+	m_eObjType = EMObjType::eMO_Player;
 	LoadData(_filename);
 }
 
@@ -32,22 +32,22 @@ void MCharacter::Init()
 
 	m_pSprites->SetLooping(true);
 
-	physics = new MPhysics;
-	physics->Init();
+	m_pPhysics = new MPhysics;
+	m_pPhysics->Init();
 
 	m_pState = new StandingState();
 
-	//skills.push_back(new FlashJumpSkill());
+	skills.push_back(new FlashJumpSkill());
 	m_pDF = new MDamageFont();
 }
 
 void MCharacter::Release()
 {
-	if (physics != nullptr)
+	if (m_pPhysics != nullptr)
 	{
-		physics->Release();
-		delete physics;
-		physics = nullptr;
+		m_pPhysics->Release();
+		delete m_pPhysics;
+		m_pPhysics = nullptr;
 	}
 
 	if (m_pSprites != nullptr)
@@ -57,86 +57,86 @@ void MCharacter::Release()
 		m_pSprites = nullptr;
 	}
 
-	for (auto it : component)
+	for (auto it : m_vComponent)
 	{
 		it->Release();
 		delete it;
 	}
 
-	component.clear();
+	m_vComponent.clear();
 }
 
 void MCharacter::Update(float _delta)
 {
-	physics->SetImgData(m_pSprites->GetCurrentImgData());
+	m_pPhysics->SetImgData(m_pSprites->GetCurrentImgData());
 
-	if(physics->IsJumping())
-		physics->SetVelocityX(Lerp(physics->GetVelocityX(), 0, _delta * 0.02));
+	if(m_pPhysics->IsJump())
+		m_pPhysics->SetVelocityX(Lerp(m_pPhysics->GetVelocityX(), 0, _delta * 0.02));
 
-	if (GetAsyncKeyState(VK_LCONTROL))
+	if (GetAsyncKeyState(VK_LCONTROL) & 0x0001)
 	{
-		if (physics->IsJumping())
+		if (m_pPhysics->IsJump())
 		{
-			HandleInput(EMAnimType::eMAnimType_Jumping);
-			physics->SetVelocityY(-1.2);
-			physics->SetJump(true);
-			SoundManager->PlaySound(1);
+			HandleInput(EMAnimType::eMA_Jumping);
+			m_pPhysics->SetVelocityY(-1.2);
+			m_pPhysics->SetJump(true);
+			SoundManager->PlaySound(SoundType::Sound_Jump);
 		}
 	}
 
 	if (GetAsyncKeyState(VK_DOWN))
 	{
-		HandleInput(EMAnimType::eMAnimType_Prone);
+		HandleInput(EMAnimType::eMA_Prone);
 		m_pSprites->SetFlip(false);
-		if (physics->IsFloor())
+		if (m_pPhysics->IsFloor())
 		{
 			if (KEY_DOWN(VK_LCONTROL))
 			{
-				physics->SetVelocityY(1);
+				m_pPhysics->SetVelocityY(1);
 			}
 		}
 	}
 	else if (KEY_DOWN(VK_RIGHT))
 	{
-		if (physics->IsJumping())
+		if (m_pPhysics->IsJump())
 		{
-			HandleInput(EMAnimType::eMAnimType_Moving);
-			physics->SetVelocityX(1);
+			HandleInput(EMAnimType::eMA_Moving);
+			m_pPhysics->SetVelocityX(1);
 		}
 			m_pSprites->SetFlip(true);
 	}
 
 	else if (GetAsyncKeyState(VK_LEFT))
 	{
-		if (physics->IsJumping())
+		if (m_pPhysics->IsJump())
 		{
-			HandleInput(EMAnimType::eMAnimType_Moving);
-			physics->SetVelocityX(-1);
+			HandleInput(EMAnimType::eMA_Moving);
+			m_pPhysics->SetVelocityX(-1);
 		}
 			m_pSprites->SetFlip(false);
 	}
 
 	else if(GetAsyncKeyState('W'))
 	{
-		Skill();
-		//HandleInput(EMAnimType::eMAnimType_Skill);
+		//Skill();
+		//HandleInput(EMAnimType::eMA_Skill);
 	}
 
 	else
 	{
-		HandleInput(EMAnimType::eMAnimType_Standing);
+		HandleInput(EMAnimType::eMA_Standing);
 	}
 
-	for (auto it : component)
+	for (auto it : m_vComponent)
 	{
 		it->Update(this, _delta);
 	}
 
-	/*for (auto s : skills)
+	for (auto it : skills)
 	{
-		s->Update(this, _delta);
+		it->Update(this, _delta);
 	}
-*/
+
 	m_dwHitTick += _delta;
 
 	if (m_bCollision == false)
@@ -168,43 +168,42 @@ void MCharacter::Update(float _delta)
 		m_dwHitTick = 0;
 	}
 
-	physics->Update(this, _delta);
+	m_pPhysics->Update(this, _delta);
 	m_pSprites->Update(this, _delta);
 	m_pDF->Update(_delta);
 }
 
-void MCharacter::GetLadderRope(std::list<Maple::LADDER_ROPE>& _ladderrope)
+void MCharacter::GetLadderRope(std::list<MLadRop*> _ladderrope)
 {
-	m_pLdRope = &_ladderrope;
 }
 
-Gdiplus::Rect const& MCharacter::GetCollisionRect()
+Gdiplus::Rect const& MCharacter::GetColRc()
 {
 	// TODO: 여기에 반환 구문을 삽입합니다.
 
 	IMG_DATA const* imgdata = &m_pSprites->GetCurrentImgData();
 
-	if (imgdata->leftTop.X == 0 && imgdata->leftTop.Y == 0)
+	if (imgdata->lt.X == 0 && imgdata->lt.Y == 0)
 	{
 		if (imgdata->imgsize.X == imgdata->origin.X && imgdata->imgsize.Y == imgdata->origin.Y)
 		{
-			collisionRect.X = Transform.Translation.X;
-			collisionRect.Y = Transform.Translation.Y;
-			collisionRect.Width = imgdata->origin.X * 2;
-			collisionRect.Height = imgdata->origin.Y * 2;
+			m_rcCollision.X = Transform.Translation.X;
+			m_rcCollision.Y = Transform.Translation.Y;
+			m_rcCollision.Width = imgdata->origin.X * 2;
+			m_rcCollision.Height = imgdata->origin.Y * 2;
 		}
 	}
 
 	else
 	{
 
-		collisionRect.X = Transform.Translation.X + imgdata->leftTop.X;
-		collisionRect.Y = Transform.Translation.Y + imgdata->leftTop.Y;
-		collisionRect.Width = imgdata->rightBottom.X + imgdata->origin.X;
-		collisionRect.Height = imgdata->rightBottom.Y + imgdata->origin.Y;
+		m_rcCollision.X = Transform.Translation.X + imgdata->lt.X;
+		m_rcCollision.Y = Transform.Translation.Y + imgdata->lt.Y;
+		m_rcCollision.Width = imgdata->rb.X + imgdata->origin.X;
+		m_rcCollision.Height = imgdata->rb.Y + imgdata->origin.Y;
 	}
 
-	return collisionRect;
+	return m_rcCollision;
 }
 
 void MCharacter::HitDamage(int _damage)
@@ -213,12 +212,12 @@ void MCharacter::HitDamage(int _damage)
 	m_bCollision = false;
 	m_dwHitTick = 0;
 
-	IMG_DATA const& localImgData = m_pSprites->GetCurrentImgData();
+	IMG_DATA const* pTemp = &m_pSprites->GetCurrentImgData();
 	//damage font(_demage)
 	Gdiplus::Point pt = GetPosition();
 
-	pt.X -= localImgData.imgsize.X / 2;
-	pt.Y -= localImgData.imgsize.Y + 20;
+	pt.X -= pTemp->imgsize.X / 2;
+	pt.Y -= pTemp->imgsize.Y + 20;
 
 	m_pDF->SetDamage(_damage, pt);
 
@@ -227,7 +226,7 @@ void MCharacter::HitDamage(int _damage)
 
 void MCharacter::SetLevitation()
 {
-	physics->SetLevitation();
+	m_pPhysics->SetLevitation();
 }
 
 bool MCharacter::IsCollision()
@@ -249,36 +248,36 @@ void MCharacter::HandleInput(EMAnimType _atype)
 void MCharacter::SetComponent(Component* _pComp)
 {
 	if (_pComp != nullptr)
-		component.push_back(_pComp);
+		m_vComponent.push_back(_pComp);
 }
 
 void MCharacter::Revision()
 {
-	physics->SetJump(true);
+	m_pPhysics->SetJump(true);
 }
 
 bool MCharacter::IsJump()
 {
-	return physics->IsJumping();
+	return m_pPhysics->IsJump();
 }
 
 void MCharacter::Move()
 {
 	//spr->anim("move")
-	m_pSprites->SetCurrentAnim(EMAnimType::eMAnimType_Standing);
+	m_pSprites->SetCurrentAnim(EMAnimType::eMA_Moving);
 	m_pSprites->SetLooping(true);
 }
 
 void MCharacter::Jump()
 {
-	m_pSprites->SetCurrentAnim(EMAnimType::eMAnimType_Jumping);
+	m_pSprites->SetCurrentAnim(EMAnimType::eMA_Jumping);
 }
 
 bool MCharacter::Stand()
 {
-	if (physics->IsJumping())
+	if (m_pPhysics->IsJump())
 	{
-		m_pSprites->SetCurrentAnim(EMAnimType::eMAnimType_Standing);
+		m_pSprites->SetCurrentAnim(EMAnimType::eMA_Standing);
 		m_pSprites->SetLooping(true);
 		return true;
 	}
@@ -289,17 +288,17 @@ bool MCharacter::Stand()
 
 void MCharacter::Hit()
 {
-	m_pSprites->SetCurrentAnim(EMAnimType::eMAnimType_Hit);
+	m_pSprites->SetCurrentAnim(EMAnimType::eMA_Hit);
 }
 
 void MCharacter::Die()
 {
-	m_pSprites->SetCurrentAnim(EMAnimType::eMAnimType_Die);
+	m_pSprites->SetCurrentAnim(EMAnimType::eMA_Die);
 }
 
 void MCharacter::Skill()
 {
-	m_pSprites->SetCurrentAnim(EMAnimType::eMAnimType_Skill);
+	m_pSprites->SetCurrentAnim(EMAnimType::eMA_Skill);
 }
 
 void MCharacter::Attack()
@@ -308,17 +307,17 @@ void MCharacter::Attack()
 
 void MCharacter::Prone()
 {
-	m_pSprites->SetCurrentAnim(EMAnimType::eMAnimType_Prone);
+	m_pSprites->SetCurrentAnim(EMAnimType::eMA_Prone);
 }
 
 void MCharacter::Ladder()
 {
-	m_pSprites->SetCurrentAnim(EMAnimType::eMAnimType_Ladder);
+	m_pSprites->SetCurrentAnim(EMAnimType::eMA_Ladder);
 }
 
 void MCharacter::Rope()
 {
-	m_pSprites->SetCurrentAnim(EMAnimType::eMAnimType_Rope);
+	m_pSprites->SetCurrentAnim(EMAnimType::eMA_Rope);
 }
 
 void MCharacter::LoadData(const std::string& _filename)
@@ -330,7 +329,7 @@ void MCharacter::LoadData(const std::string& _filename)
 
 	int sprid = std::stoi(m_Paser.GetName());
 
-	if (SPRMGR->GetSpriteDataCnt(sprid) == 0)
+	if (SPRMGR->GetSprDataCnt(sprid) == 0)
 		for (auto o = m_Paser.begin(); o; o = o++) //anim name
 		{
 			if (strcmp(o.GetName(), "info"))
@@ -385,10 +384,10 @@ void MCharacter::LoadData(const std::string& _filename)
 					}
 
 					if (!t["lt"].IsNull())
-						imgdata.leftTop = t["lt"].GetValuePoint();
+						imgdata.lt = t["lt"].GetValuePoint();
 
 					if (!t["rb"].IsNull())
-						imgdata.rightBottom = t["rb"].GetValuePoint();
+						imgdata.rb = t["rb"].GetValuePoint();
 
 					if (!t["head"].IsNull())
 						imgdata.head = t["head"].GetValuePoint();
@@ -397,20 +396,19 @@ void MCharacter::LoadData(const std::string& _filename)
 						imgdata.delay = t["delay"].GetValueInt();
 
 					if (!t["a0"].IsNull())
-						imgdata.alphaMin = t["a0"].GetValueInt();
+						imgdata.a0 = t["a0"].GetValueInt();
 					else
-						imgdata.alphaMin = 0;
+						imgdata.a0 = 0;
 
 					if (!t["a1"].IsNull())
-						imgdata.alphaMax = t["a1"].GetValueInt();
+						imgdata.a1 = t["a1"].GetValueInt();
 					else
-						imgdata.alphaMax = 0;
+						imgdata.a1 = 0;
 
 					if (!t["z"].IsNull())
 						imgdata.z = t["z"].GetValueInt();
 					else
 						imgdata.z = 2;
-
 
 					ASSETMGR->SetAssetData(imgdata);
 					nCnt++;
@@ -420,49 +418,49 @@ void MCharacter::LoadData(const std::string& _filename)
 
 				if (!sprdata.name.find("move") || !sprdata.name.find("walk"))
 				{
-					sprdata.type = EMAnimType::eMAnimType_Moving;
+					sprdata.type = EMAnimType::eMA_Moving;
 				}
 
 				else if (!sprdata.name.find("stand"))
 				{
-					sprdata.type = EMAnimType::eMAnimType_Standing;
+					sprdata.type = EMAnimType::eMA_Standing;
 				}
 
 				else if (!sprdata.name.find("skill"))
 				{
-					sprdata.type = EMAnimType::eMAnimType_Skill;
-					skillCnt++;
+					sprdata.type = EMAnimType::eMA_Skill;
+					m_nSkillCnt++;
 				}
 
 				else if (!sprdata.name.find("jump"))
 				{
-					sprdata.type = EMAnimType::eMAnimType_Jumping;
+					sprdata.type = EMAnimType::eMA_Jumping;
 				}
 
 				else if (!sprdata.name.find("attack"))
 				{
-					sprdata.type = EMAnimType::eMAnimType_Attack;
-					attackCnt++;
+					sprdata.type = EMAnimType::eMA_Attack;
+					m_nAtkCnt++;
 				}
 
 				else if (!sprdata.name.find("prone"))
 				{
-					sprdata.type = EMAnimType::eMAnimType_Prone;
+					sprdata.type = EMAnimType::eMA_Prone;
 				}
 
 				else if (!sprdata.name.find("hit"))
 				{
-					sprdata.type = EMAnimType::eMAnimType_Hit;
+					sprdata.type = EMAnimType::eMA_Hit;
 				}
 
 				else if (!sprdata.name.find("die"))
 				{
-					sprdata.type = EMAnimType::eMAnimType_Die;
+					sprdata.type = EMAnimType::eMA_Die;
 				}
 
 				else if (!sprdata.name.find("chase"))
 				{
-					sprdata.type = EMAnimType::eMAnimType_Chase;
+					sprdata.type = EMAnimType::eMA_Chase;
 				}
 
 				else
@@ -471,11 +469,11 @@ void MCharacter::LoadData(const std::string& _filename)
 					p = "a";
 				}
 
-				SPRMGR->SetSpriteData(sprid, sprdata);
+				SPRMGR->SetSprData(sprid, sprdata);
 			}
 		}
 
-	m_pSprites = new MSpriteComponent(sprid, EMRenderType::eMRenderType_Object);
+	m_pSprites = new MSpriteComponent(sprid, EMRenderType::eMR_Obj);
 
 	//m_vComponent.push_back(pSC);
 }
