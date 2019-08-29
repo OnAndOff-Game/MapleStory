@@ -15,19 +15,19 @@ public:
 	MCharacter(const std::string& _filename);
 	~MCharacter();
 
-	void Init();
-	void Update(float _delta);
+	virtual void Init() override;
+	virtual void Update(float _delta) override;
 	void Render(Gdiplus::Graphics* _memG);
 	void Release();
 
-	void GetLadderRope(std::list<MLadRop*>  _ladderrope);
+	void GetLadderRope(std::list<Maple::LADDER_ROPE>& _ladderrope);
 	void HandleInput(EMAnimType _atype);
 	void SetComponent(Component* _pComp);
 
 	void Revision();
 	bool IsJump();
 
-	Gdiplus::Rect const& GetColRc();
+	Gdiplus::Rect const& GetCollisionRect();
 
 	void HitDamage(int _damage);
 	void SetLevitation();
@@ -48,8 +48,8 @@ public:
 	void LoadData(const std::string& _filename);
 
 public:
-	MPhysics* m_pPhysics;
-	ProxyID m_ProxyID;
+	MPhysics* physics;
+	ObjectId objectId;
 
 private:
 	
