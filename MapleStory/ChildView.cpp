@@ -7,9 +7,9 @@
 #include "MapleStory.h"
 #include "ChildView.h"
 
-#ifdef _DEBUG
-#define new DEBUG_NEW
-#endif
+//#ifdef _DEBUG
+//#define new DEBUG_NEW
+//#endif
 
 
 // CChildView
@@ -50,6 +50,7 @@ void CChildView::OnPaint()
 {
 	CPaintDC dc(this);
 	Gdiplus::Graphics MainG(dc);
+	MainG.SetSmoothingMode(Gdiplus::SmoothingMode::SmoothingModeHighSpeed);
 
 	CRect rc;
 	GetClientRect(rc);
@@ -64,9 +65,13 @@ void CChildView::OnPaint()
 
 	BATCHRENDER->Draw(&MemG);
 
+
 	ROAD->Render(&MemG);
 
-	MainG.DrawImage(&BackBuffer, 0, 0, rc.Width(), rc.Height());
+	CachedBitmap cB(&BackBuffer, &MainG);
+
+	//MainG.DrawImage(&BackBuffer, 0, 0, rc.Width(), rc.Height());
+	MainG.DrawCachedBitmap(&cB, 0, 0);
 
 	BATCHRENDER->DrawEnd();
 
@@ -90,6 +95,7 @@ int CChildView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 
 	srand((unsigned int)time(NULL));
 	SoundManager->InitSound();
+	SoundManager->LoadSound();
 	SceneManager::GetInstance().LoadScene("GameScene");
 	AfxBeginThread(&CMapleStoryApp::funcThread, NULL);
 	// TODO:  여기에 특수화된 작성 코드를 추가합니다.

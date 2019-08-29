@@ -1,11 +1,9 @@
 #include "pch.h"
+#include "MapleStory.h"
 #include "BatchRender.h"
 
 void BatchRender::BatchDraw(EMRenderType _type, Gdiplus::Image* _img, const Gdiplus::Point& _pos, int _z, float _alpha, bool _flip)
 {
-	if (_img == nullptr)
-		return;
-
 	if (!bDraw)
 		Clear();
 
@@ -18,20 +16,20 @@ void BatchRender::BatchDraw(EMRenderType _type, Gdiplus::Image* _img, const Gdip
 	element.bFlip = _flip;
 	element.z = _z;
 	element.img = _img;
+	element.cachedImg = BmpToCahcedBmp(_img, element.SizeX, element.SizeY);
 
-	if (_type == eMRenderType_Map)
+	if (_type == eMR_Map)
 		BatchMap.insert(element);
-	else if (_type == eMRenderType_Object)
-		BatchObj.insert(element);	   
-	else if(_type == eMRenderType_UI)
+
+	else if (_type == eMR_Obj)
+		BatchObj.insert(element);
+	   
+	else if(_type == eMR_UI)
 		BatchUI.insert(element);
 }
 
 void BatchRender::BatchDraw(EMRenderType _type, Gdiplus::Image* _img, const Gdiplus::Rect& _rect, const Gdiplus::Point& _origin, int _z, float _alpha, float _red, bool _flip)
 {
-	if (_img == nullptr)
-		return;
-
 	if (!bDraw)
 		Clear();
 
@@ -46,28 +44,33 @@ void BatchRender::BatchDraw(EMRenderType _type, Gdiplus::Image* _img, const Gdip
 	element.bFlip = _flip;
 	element.z = _z;
 	element.img = _img;
+	element.cachedImg = BmpToCahcedBmp(_img, element.SizeX, element.SizeY);
 
-	if (_type == eMRenderType_Map)
+	if (_type == eMR_Map)
 		BatchMap.insert(element);
-	else if (_type == eMRenderType_Object)
+
+	else if (_type == eMR_Obj)
 		BatchObj.insert(element);
-	else if (_type == eMRenderType_UI)
+
+	else if (_type == eMR_UI)
 		BatchUI.insert(element);
 }
 
 void BatchRender::Draw(Gdiplus::Graphics* _view)
 {
-	for (auto& it : BatchMap)
+	//std::cout << "BatchMap : " << BatchMap.size() << std::endl;
+	for (auto it : BatchMap)
+	{
+	//	if(it.z == 1)
+		Render(_view, it);
+	}
+
+	for (auto it : BatchObj)
 	{
 		Render(_view, it);
 	}
 
-	for (auto& it : BatchObj)
-	{
-		Render(_view, it);
-	}
-
-	for (auto& it : BatchUI)
+	for (auto it : BatchUI)
 	{
 		Render(_view, it);
 	}
@@ -80,20 +83,33 @@ void BatchRender::DrawEnd()
 	bDraw = false;
 }
 
+CachedBitmap* BatchRender::BmpToCahcedBmp(Gdiplus::Image* img, int SizeX, int SizeY)
+{
+	CClientDC dc(theApp.m_pMainWnd);
+	Graphics G(dc);
+
+	Bitmap* m_pBmp = new Bitmap(SizeX, SizeY, &G);
+	Graphics* pG = new Graphics(m_pBmp);
+	pG->DrawImage(img, 0, 0, SizeX, SizeY);
+	CachedBitmap* cachedbmp = new CachedBitmap(m_pBmp, &G);
+
+	delete pG;
+	delete m_pBmp;
+	return cachedbmp;
+}
 
 void BatchRender::Render(Gdiplus::Graphics* _view, const BatchElement& _element)
 {
-	if (_element.img == nullptr)
-		return;
+	//Gdiplus::Rect Dst(Size.X,Size.Y, m_pImg->GetWidth(), m_pImg->GetHeight());
 
 	DWORD Tick = GetTickCount64();
 	DWORD Delta = Tick - PreTick;
 	
 	if (_element.alpha < 1.0f || _element.bFlip || _element.red > 1.0f)
 	{
-		Bitmap bm(_element.img->GetWidth(), _element.img->GetHeight(), PixelFormat32bppARGB);
+		Gdiplus::Bitmap bm(_element.img->GetWidth(), _element.img->GetHeight(), PixelFormat32bppARGB);
 		Gdiplus::Graphics memG(&bm);
-
+		
 		Gdiplus::Rect rc(0, 0, _element.img->GetWidth(), _element.img->GetHeight());
 		ColorMatrix colorMatrix = { _element.red, 0.0f, 0.0f, 0.0f, 0.0f,
 									0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
@@ -113,17 +129,23 @@ void BatchRender::Render(Gdiplus::Graphics* _view, const BatchElement& _element)
 
 			_view->DrawImage(&bm, Gdiplus::Rect(_element.Pos.X - (_element.img->GetWidth() - _element.Origin.X), _element.Pos.Y - _element.Origin.Y, _element.SizeX, _element.SizeY));
 		}
+
 		else
 		{
 			_view->DrawImage(&bm, Gdiplus::Rect(_element.Pos.X - _element.Origin.X, _element.Pos.Y - _element.Origin.Y, _element.SizeX, _element.SizeY));
 		}
 
 	}
+
 	else
 	{
-		_view->DrawImage(_element.img, Gdiplus::Rect(_element.Pos.X - _element.Origin.X, _element.Pos.Y - _element.Origin.Y, _element.SizeX, _element.SizeY));
+		//_view->DrawImage(_element.img, Gdiplus::Rect(_element.Pos.X - _element.Origin.X, _element.Pos.Y - _element.Origin.Y, _element.SizeX, _element.SizeY));
+		_view->DrawCachedBitmap(_element.cachedImg, _element.Pos.X - _element.Origin.X, _element.Pos.Y - _element.Origin.Y);
 	}
-	
+
+//	if(Delta != 0)
+	//	std::cout << "½Ã°£ : " << Delta << std::endl;
+
 	PreTick = Tick;
 }
 

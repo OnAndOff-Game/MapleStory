@@ -33,11 +33,14 @@ public:
 	void Draw(Gdiplus::Graphics* _view);
 	void DrawEnd();
 
+
 	void Clear();
 
 private:
+	// 비트맵을 캐시비트맵으로 바꿔줍니다.
+	Gdiplus::CachedBitmap* BmpToCahcedBmp(Gdiplus::Image* img, int SizeX, int SizeY);
 
-		void Render(Gdiplus::Graphics* _view, const BatchElement& _element);
+	void Render(Gdiplus::Graphics* _view, const BatchElement& _element);
 
 private:
 
@@ -47,12 +50,8 @@ private:
 	std::multiset<BatchElement, BatchCompare> BatchObj;
 	std::multiset<BatchElement, BatchCompare> BatchUI;
 
+
 	DWORD PreTick;
 };
 
 #define BATCHRENDER BatchRender::GetInstance()
-
-
-//ToDo 작업할꺼
-//UNDONE 수정할꺼
-//HACK 매직넘버? 하드코딩
