@@ -25,15 +25,7 @@ Map::Map(const char* fileName)
 
 Map::Map(int mapCode)
 {
-	char temp[10];
-	this->mapCode = mapCode;
-	std::string filePath;
-	filePath = "Xml/Map1/";
-	filePath += _itoa(mapCode,temp,10);
-	filePath += ".img.xml";
-	mapNode = Node(filePath.c_str());
 	world = new World();
-	
 }
 
 Map::~Map()
@@ -42,41 +34,40 @@ Map::~Map()
 
 void Map::Init()
 {
+	// 100000000는 헤네시스 맵코드.
 	Load(100000000);
-
-	//Node BackGround = mapNode["back"];
-	//for (auto o = BackGround.begin(); o; o = o++)
-	//{
-	//	world->BackData(o);
-	//}
 }
 
-void Map::Load(int mapCode)
+void Map::Load(int InMapCode)
 {
 	char temp[10];
-	this->mapCode = mapCode;
+	this->mapCode = InMapCode;
 	std::string filePath;
 	filePath = "Xml/Map1/";
-	filePath += _itoa(mapCode, temp, 10);
+	filePath += _itoa(InMapCode, temp, 10);
 	filePath += ".img.xml";
+
+	// 해제
+	mapNode.Release();
 	mapNode = Node(filePath.c_str());
 	world->Clear();
+	OBJMGR->Reset();
 	ROAD->GetInstance()->Release();
 
 	// 사운드 로드
 	Node info = mapNode["info"];
 	world->layer[0].info.bgm = info["bgm"].GetValueString();
 	std::string soundPath = "Sound/" + world->layer[0].info.bgm + ".mp3";
-	SoundManager->LoadSound(soundPath);
+	//SoundManager->LoadBackGroundSound(soundPath);
 
-	// 크기
+	// 맵의 사이즈
 	Node miniMap = mapNode["miniMap"];
 	world->centerPos.x = miniMap["centerX"].GetValueInt();
 	world->centerPos.y = miniMap["centerY"].GetValueInt();
 	world->mapSize.x = miniMap["width"].GetValueInt();
 	world->mapSize.y = miniMap["height"].GetValueInt();
 
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < LAYER_SIZE; i++)
 	{
 		Node info = mapNode[i]["info"]["tS"];
 		if (!info.IsNull())
@@ -86,37 +77,38 @@ void Map::Load(int mapCode)
 
 		Node tile = mapNode[i]["tile"];
 
-		for (auto o = tile.begin(); o; o = o++)
+		for (auto Itr = tile.begin(); Itr; Itr++)
 		{
-			world->TileData(o, i);
+			world->TileData(Itr, i);
 		}
 		Node obj = mapNode[i]["obj"];
-		for (auto o = obj.begin(); o; o = o++)
+		for (auto Itr = obj.begin(); Itr; Itr++)
 		{
-			world->ObjData(o, i);
+			world->ObjData(Itr, i);
 		}
 	}
 
 	Node portal = mapNode["portal"];
-	for (auto o = portal.begin(); o; o = o++)
+	for (auto Itr = portal.begin(); Itr; Itr++)
 	{
-		world->PortalData(o);
+		world->PortalData(Itr);
 	}
 
 	Node life = mapNode["life"];
-	for (auto o = life.begin(); o; o = o++)
+	for (auto Itr = life.begin(); Itr; Itr++)
 	{
-		std::string w = o["type"].GetValueString();
-		if(!o["type"].GetValueString().compare("m"))
-			world->LifeData(o);
+		std::string w = Itr["type"].GetValueString();
+		if(!Itr["type"].GetValueString().compare("m"))
+			world->EnemyData(Itr);
 	}
 
 	Node ladderRope = mapNode["ladderRope"];
-	for (auto o = ladderRope.begin(); o; o = o++)
+	for (auto Itr = ladderRope.begin(); Itr; Itr++)
 	{
-		world->LadderData(o);
+		world->LadderData(Itr);
 	}
 
+	// TODO : 아직 사용 안합니다.
 	//Node BackGround = mapNode["back"];
 	//for (auto o = BackGround.begin(); o; o = o++)
 	//{
@@ -124,7 +116,8 @@ void Map::Load(int mapCode)
 	//}
 
 	ROAD->LoadData(&mapNode["foothold"]);
-	SoundManager->PlaySound(0);
+	SoundManager->PlaySound(Sound_BackGround);
+	mapNode.Release();
 }
 
 void Map::Update(float delta)
@@ -135,42 +128,37 @@ void Map::Update(float delta)
 	//	break;
 	//}
 
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < LAYER_SIZE; i++)
 	{
-		for (auto t : world->layer[i].obj)
+		for (auto Itr : world->layer[i].obj)
 		{
-			t->Update(delta);
+			Itr->Update(delta);
 		}
-		for (auto t : world->layer[i].tile)
+		for (auto Itr : world->layer[i].tile)
 		{
-			t->Update(delta);
+			Itr->Update(delta);
 		}
 	}
 
-	for (auto t : world->portal)
+	for (auto Itr : world->portal)
 	{
-		t->Update(delta);
+		Itr->Update(delta);
 	}
-
-	//for (auto t : world->life)
-	//{
-	//	t->Update(delta);
-	//}
 }
 
 void Map::Release()
 {
 	for (int i = 0; i < 8; i++)
 	{
-		for (auto t : world->layer[i].tile)
+		for (auto Itr : world->layer[i].tile)
 		{
-			t->Release();
-			delete t;
+			Itr->Release();
+			delete Itr;
 		}
-		for (auto t : world->layer[i].obj)
+		for (auto Itr : world->layer[i].obj)
 		{
-			t->Release();
-			delete t;
+			Itr->Release();
+			delete Itr;
 		}
 	}
 	delete	world;
@@ -178,24 +166,27 @@ void Map::Release()
 
 void Map::PlayerInPortal(MCharacter* player)
 {
-	for (auto t : world->portal)
+	for (auto Itr : world->portal)
 	{
-		if (t->PortalCollision(player->GetPosition()))
+		if (Itr->PortalCollision(player->GetPosition()))
 		{
-			std::string tn = t->PortalData.tn;
-			OBJMGR->Reset();
-			Load(t->PortalData.tm);
-			for (auto t : world->portal)
+			std::string tn = Itr->PortalData.tn;
+			Load(Itr->PortalData.tm);
+			for (auto Itr2 : world->portal)
 			{
-				if (!t->PortalData.pn.compare(tn))
+				if (!Itr2->PortalData.pn.compare(tn))
 				{
-					player->SetPosition(t->PortalData.x, t->PortalData.y - 10);
+					player->SetPosition(Itr2->PortalData.x, Itr2->PortalData.y - 10);
 					player->Revision();
-					//View::viewPort.X = player->GetPosition().X;
-					//View::viewPort.Y = player->GetPosition().Y;
+					
+					if (Itr->PortalData.tm != Itr2->PortalData.tm)
+					{
+						View::viewPort.X = player->GetPosition().X;
+						View::viewPort.Y = player->GetPosition().Y;
+					}
 				}
 			}
-			SoundManager->PlaySound(2);
+			SoundManager->PlaySound(SoundType::Sound_Portal);
 			return;
 		}
 	}

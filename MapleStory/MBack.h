@@ -1,5 +1,5 @@
 #pragma once
-struct BACK
+struct BACKGROUND
 {
 	int x;
 	int y;
@@ -16,11 +16,11 @@ struct BACK
 	int f;
 };
 
-class MBack : public MObject
+class MBackground : public MObject
 {
 public:
-	MBack(const BACK& _backdata, Asset* _asset);
-	~MBack();
+	MBackground(const BACKGROUND& _backdata, Asset* _asset);
+	~MBackground();
 
 	void Init();
 	void LoadData(const std::string& _filename);
@@ -32,7 +32,7 @@ public:
 
 public:
 
-	BACK BackData;
+	BACKGROUND BackData;
 
 
 private:

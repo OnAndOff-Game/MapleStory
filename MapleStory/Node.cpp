@@ -23,6 +23,10 @@ Node::Node(const char* fileName)
 	node = xmlDoc->first_node();
 }
 
+Node::~Node()
+{
+}
+
 std::string Node::GetValueString()
 {
 	return node->first_attribute()->next_attribute()->value();
@@ -69,9 +73,6 @@ void Node::ChildList()
 
 void Node::Release()
 {
-	delete node;
-	delete xmlDoc;
-	delete xmlFile;
 }
 
 
@@ -85,7 +86,7 @@ Node Node::end() const
 	return (node->last_node());
 }
 
-void Node::operator=(const Node& o) 
+void Node::operator=(const Node& o)
 {
 	node = o.node;
 }
@@ -100,9 +101,10 @@ bool Node::operator!=(Node const& o) const
 	return node != o.node;
 }
 
-Node Node::operator++(int) const
+Node& Node::operator++(int)
 {
-	return (node->next_sibling());
+	node = node->next_sibling();
+	return *this;
 }
 
 Node Node::operator[](const char* name)
@@ -119,7 +121,7 @@ Node Node::operator[](const char* name)
 
 Node Node::operator[](int index)
 {
-	char buffer[255];
+	char buffer[20];
 	_itoa_s(index, buffer, 10);
 	return this->operator[](buffer);
 }

@@ -7,7 +7,12 @@ namespace Constants
 
 	const unsigned int FPS = 60;
 
-	//const LPCWSTR SPRITE_PATH = L"C:\\Users\\ME\\Desktop\shoot (2)\\x64\\Release\\Asset\\";
+	const int LAYER_SIZE = 8;
+	const int DIRECTION_RIGHT = 1;
+	const int DIRECTION_LEFT = -1;
+
+	const int MOB_MOVE_TIME = 2000;
+	const int MOB_MOVE_TIME_MIN = 1000;
 }
 
 static inline float Lerp(float value1, float value2, float amount)
