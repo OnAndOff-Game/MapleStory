@@ -27,7 +27,6 @@ MCharacter::~MCharacter()
 
 void MCharacter::Init()
 {
-	//LoadData(m_strName);
 	m_pSprites->Init();
 
 	m_pSprites->SetLooping(true);
@@ -70,17 +69,17 @@ void MCharacter::Update(float _delta)
 {
 	m_pPhysics->SetImgData(m_pSprites->GetCurrentImgData());
 
-	if(m_pPhysics->IsJump())
-		m_pPhysics->SetVelocityX(Lerp(m_pPhysics->GetVelocityX(), 0, _delta * 0.02));
+	if (physics->IsJumping())
+		physics->SetVelocityX(Lerp(physics->GetVelocityX(), 0, _delta * 0.02));
 
 	if (GetAsyncKeyState(VK_LCONTROL) & 0x0001)
 	{
 		if (m_pPhysics->IsJump())
 		{
-			HandleInput(EMAnimType::eMA_Jumping);
-			m_pPhysics->SetVelocityY(-1.2);
-			m_pPhysics->SetJump(true);
-			SoundManager->PlaySound(SoundType::Sound_Jump);
+			HandleInput(EMAnimType::eMAnimType_Jumping);
+			physics->SetVelocityY(-1.2);
+			physics->SetJumping(true);
+			SoundManager->PlaySound(1);
 		}
 	}
 
@@ -103,9 +102,8 @@ void MCharacter::Update(float _delta)
 			HandleInput(EMAnimType::eMA_Moving);
 			m_pPhysics->SetVelocityX(1);
 		}
-			m_pSprites->SetFlip(true);
+		m_pSprites->SetFlip(true);
 	}
-
 	else if (GetAsyncKeyState(VK_LEFT))
 	{
 		if (m_pPhysics->IsJump())
@@ -113,15 +111,13 @@ void MCharacter::Update(float _delta)
 			HandleInput(EMAnimType::eMA_Moving);
 			m_pPhysics->SetVelocityX(-1);
 		}
-			m_pSprites->SetFlip(false);
+		m_pSprites->SetFlip(false);
 	}
-
-	else if(GetAsyncKeyState('W'))
+	else if (GetAsyncKeyState('W'))
 	{
 		//Skill();
 		//HandleInput(EMAnimType::eMA_Skill);
 	}
-
 	else
 	{
 		HandleInput(EMAnimType::eMA_Standing);
@@ -147,19 +143,15 @@ void MCharacter::Update(float _delta)
 		{
 			m_pSprites->SetRed(10.0f);
 		}
-
 		else
 		{
 			m_pSprites->SetRed(1.0f);
 		}
 	}
-
 	else
 	{
 		m_pSprites->SetRed(1.0f);
 	}
-
-
 
 	if (m_dwHitTick > 2000)
 	{
@@ -193,14 +185,12 @@ Gdiplus::Rect const& MCharacter::GetColRc()
 			m_rcCollision.Height = imgdata->origin.Y * 2;
 		}
 	}
-
 	else
 	{
-
-		m_rcCollision.X = Transform.Translation.X + imgdata->lt.X;
-		m_rcCollision.Y = Transform.Translation.Y + imgdata->lt.Y;
-		m_rcCollision.Width = imgdata->rb.X + imgdata->origin.X;
-		m_rcCollision.Height = imgdata->rb.Y + imgdata->origin.Y;
+		collisionRect.X = Transform.Translation.X + imgdata->leftTop.X;
+		collisionRect.Y = Transform.Translation.Y + imgdata->leftTop.Y;
+		collisionRect.Width = imgdata->rightBottom.X + imgdata->origin.X;
+		collisionRect.Height = imgdata->rightBottom.Y + imgdata->origin.Y;
 	}
 
 	return m_rcCollision;
@@ -253,7 +243,7 @@ void MCharacter::SetComponent(Component* _pComp)
 
 void MCharacter::Revision()
 {
-	m_pPhysics->SetJump(true);
+	physics->SetJumping(true);
 }
 
 bool MCharacter::IsJump()
@@ -281,7 +271,6 @@ bool MCharacter::Stand()
 		m_pSprites->SetLooping(true);
 		return true;
 	}
-
 	else
 		return false;
 }
@@ -329,7 +318,8 @@ void MCharacter::LoadData(const std::string& _filename)
 
 	int sprid = std::stoi(m_Paser.GetName());
 
-	if (SPRMGR->GetSprDataCnt(sprid) == 0)
+	if (SPRMGR->GetSpriteDataCnt(sprid) == 0)
+	{
 		for (auto o = m_Paser.begin(); o; o = o++) //anim name
 		{
 			if (strcmp(o.GetName(), "info"))
@@ -396,14 +386,14 @@ void MCharacter::LoadData(const std::string& _filename)
 						imgdata.delay = t["delay"].GetValueInt();
 
 					if (!t["a0"].IsNull())
-						imgdata.a0 = t["a0"].GetValueInt();
+						imgdata.beginAlpha = t["a0"].GetValueInt();
 					else
-						imgdata.a0 = 0;
+						imgdata.beginAlpha = 0;
 
 					if (!t["a1"].IsNull())
-						imgdata.a1 = t["a1"].GetValueInt();
+						imgdata.endAlpha = t["a1"].GetValueInt();
 					else
-						imgdata.a1 = 0;
+						imgdata.endAlpha = 0;
 
 					if (!t["z"].IsNull())
 						imgdata.z = t["z"].GetValueInt();
@@ -473,7 +463,7 @@ void MCharacter::LoadData(const std::string& _filename)
 			}
 		}
 
-	m_pSprites = new MSpriteComponent(sprid, EMRenderType::eMR_Obj);
-
+		m_pSprites = new MSpriteComponent(sprid, EMRenderType::eMRenderType_Object);
+	}
 	//m_vComponent.push_back(pSC);
 }

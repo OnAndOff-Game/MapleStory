@@ -96,13 +96,13 @@ typedef struct Img_Data
 				
 	int z;				// z값
 
-	int alphaMin;				// 알파 0값
-	int alphaMax;				// 알파 1값
+	int beginAlpha;				// 알파 0값
+	int endAlpha;				// 알파 1값
 
 	std::string link;   // 링크 안씀
 }IMG_DATA, *LPIMG_DATA;
 
-struct MobInfo
+struct MobData
 {
 	int acc; // 명중
 	bool bodyAttack; // 몸통 판정
@@ -130,10 +130,10 @@ struct RoadLine
 	int layer;
 	int group;
 	int id;
-	Gdiplus::Point line1;
-	Gdiplus::Point line2;
-	int prv;
-	int nxt;
+	Gdiplus::Point startLine;
+	Gdiplus::Point endLine;
+	int prev;
+	int next;
 };
 
 struct MRoadGroup

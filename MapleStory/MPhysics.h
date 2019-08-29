@@ -1,5 +1,13 @@
 #pragma once
 
+#define VELOCITY_MAX_Y 3
+#define STAB_COUNT 10
+
+const float REVISAL = 1.0f;
+const float CONVERT_SECOND = 0.001f;
+const float PHYSICS_EXACTVALUE = 0.1f;
+const float FRAMESPEED = 4.0f;
+
 class MObject;
 
 class MPhysics : public Component
@@ -14,15 +22,15 @@ public:
 	virtual void Update(MObject* _obj, float _delta) override;
 	virtual void Release() override;
 	
-	void SetJump(bool bJumping);
+	void SetJumping(bool _isJumping);
 	bool IsJumping();
 	bool IsFloor();
 
 	void SetInfo();
-	void SetImgData(IMG_DATA const& _imgdata);
-	void SetVelocity(float _vx, float _vy);
-	void SetVelocityX(float _vx);
-	void SetVelocityY(float _vy);
+	void SetImgData(IMG_DATA const& _imgData);
+	void SetVelocity(float _velocityX, float _velocityY);
+	void SetVelocityX(float _velocityX);
+	void SetVelocityY(float _velocityY);
 	void SetLevitation();
 
 	float GetVelocityX();
@@ -30,12 +38,13 @@ public:
 	
 private:
 
-	RoadLine const* m_pRL;
+	RoadLine const* roadLine;
 	RoadLine const* m_pJumpRL;
-	IMG_DATA const* m_pImgData;
-	float vx, vy;
+	IMG_DATA const* imgData;
+
+	float velocityX, velocityY;
 	int RoadNum;
-	bool bJumping;
+	bool isJumping;
 
 	int slidingFriction;
 	int speed;

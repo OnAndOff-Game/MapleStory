@@ -12,6 +12,7 @@ public:
 	Node(rapidxml::xml_node<char>* n);
 	Node(const char* fileName);
 	~Node();
+
 	std::string GetValueString();
 	int GetValueInt();
 	float GetValueFloat();

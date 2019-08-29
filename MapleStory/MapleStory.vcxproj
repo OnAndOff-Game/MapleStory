@@ -233,6 +233,7 @@
     <ClInclude Include="MObject.h" />
     <ClInclude Include="MobManager.h" />
     <ClInclude Include="MovingState.h" />
+    <ClInclude Include="MParser.h" />
     <ClInclude Include="MPhysics.h" />
     <ClInclude Include="MPlayer.h" />
     <ClInclude Include="MPortal.h" />
@@ -294,6 +295,7 @@
     <ClCompile Include="MObject.cpp" />
     <ClCompile Include="MobManager.cpp" />
     <ClCompile Include="MovingState.cpp" />
+    <ClCompile Include="MParser.cpp" />
     <ClCompile Include="MPhysics.cpp" />
     <ClCompile Include="MPlayer.cpp" />
     <ClCompile Include="MPortal.cpp" />

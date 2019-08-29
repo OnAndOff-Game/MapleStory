@@ -3,7 +3,7 @@
 
 MRoad::MRoad() : bCollision(false)
 {
-	m_vRoad.clear();
+	road.clear();
 }
 
 MRoad::~MRoad()
@@ -29,19 +29,19 @@ void MRoad::LoadData(Node* pNode)
 				localRoadLine.layer = layer;
 				localRoadLine.group = group;
 				localRoadLine.id = std::stoi(o3.GetName());
-				localRoadLine.line1.X = o3["x1"].GetValueInt();
-				localRoadLine.line1.Y = o3["y1"].GetValueInt();
-				localRoadLine.line2.X = o3["x2"].GetValueInt();
-				localRoadLine.line2.Y = o3["y2"].GetValueInt();
-				localRoadLine.prv = o3["prev"].GetValueInt();
-				localRoadLine.nxt = o3["next"].GetValueInt();
+				localRoadLine.startLine.X = o3["x1"].GetValueInt();
+				localRoadLine.startLine.Y = o3["y1"].GetValueInt();
+				localRoadLine.endLine.X = o3["x2"].GetValueInt();
+				localRoadLine.endLine.Y = o3["y2"].GetValueInt();
+				localRoadLine.prev = o3["prev"].GetValueInt();
+				localRoadLine.next = o3["next"].GetValueInt();
 
-				m_vRoad.push_back(localRoadLine);
+				road.push_back(localRoadLine);
 			}
 		}
 	}
 
-	std::sort(m_vRoad.begin(), m_vRoad.end(),
+	std::sort(road.begin(), road.end(),
 		[](RoadLine const& _l1, RoadLine const& _l2) { return _l1.id < _l2.id; });
 }
 
@@ -56,10 +56,10 @@ RoadLine* MRoad::GetLine(Gdiplus::Point& _pt)
 	////MRoadGroup* pTemp = nullptr;
 	//int dt = 0;
 
-	//for (auto &it : m_vRoad)
+	//for (auto &it : road)
 	//{
-	//	double wd = it.line2.X - it.line1.X;
-	//	double ht = it.line2.Y - it.line1.Y;
+	//	double wd = it.endLine.X - it.startLine.X;
+	//	double ht = it.endLine.Y - it.startLine.Y;
 
 
 
@@ -87,10 +87,10 @@ RoadLine* MRoad::GetLine(Gdiplus::Point& _pt)
 
 	//for (int i = 0; i < m_vRGroup[cnt].line.size(); ++i)
 	//{
-	//	if (m_vRoad[m_vRGroup[cnt].line[i]].line1.X < _pt.X && m_vRoad[m_vRGroup[cnt].line[i]].line2.X > _pt.X)
+	//	if (road[m_vRGroup[cnt].line[i]].startLine.X < _pt.X && road[m_vRGroup[cnt].line[i]].endLine.X > _pt.X)
 	//	{
 	//	//	std::cout << "ÁÂÇ¥ x : " << pt.X << "Ä³¸¯ y : " << pt.Y;
-	//		return &m_vRoad[m_vRGroup[cnt].line[i]];
+	//		return &road[m_vRGroup[cnt].line[i]];
 	//	}
 	//}
 	return nullptr;
@@ -98,10 +98,10 @@ RoadLine* MRoad::GetLine(Gdiplus::Point& _pt)
 
 RoadLine* MRoad::GetLine(int _num)
 {
-	if (_num > m_vRoad.size() || _num < 0)
+	if (_num > road.size() || _num < 0)
 		return nullptr;
 	else
-		return &m_vRoad[_num];
+		return &road[_num];
 }
 
 void MRoad::Render(Gdiplus::Graphics* _mem)
@@ -110,17 +110,17 @@ void MRoad::Render(Gdiplus::Graphics* _mem)
 	{
 		Gdiplus::Pen MPen(Gdiplus::Color(255, 0, 0), 3);
 
-		for (auto& it : m_vRoad)
+		for (auto& it : road)
 		{
-			_mem->DrawLine(&MPen, it.line1.X - View::viewPort.X + Constants::SCREEN_SIZE_X / 2, it.line1.Y - View::viewPort.Y + Constants::SCREEN_SIZE_Y / 2,
-				it.line2.X - View::viewPort.X + Constants::SCREEN_SIZE_X / 2, it.line2.Y - View::viewPort.Y + Constants::SCREEN_SIZE_Y / 2);
+			_mem->DrawLine(&MPen, it.startLine.X - View::viewPort.X + Constants::SCREEN_SIZE_X / 2, it.startLine.Y - View::viewPort.Y + Constants::SCREEN_SIZE_Y / 2,
+				it.endLine.X - View::viewPort.X + Constants::SCREEN_SIZE_X / 2, it.endLine.Y - View::viewPort.Y + Constants::SCREEN_SIZE_Y / 2);
 		}
 	}
 }
 
 void MRoad::Release()
 {
-	m_vRoad.clear();
+	road.clear();
 }
 
 void MRoad::DrawLine(bool _bdraw)

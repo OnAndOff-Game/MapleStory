@@ -52,9 +52,8 @@ public:
 	ProxyID m_ProxyID;
 
 private:
-
-
-	const MobInfo* m_pMobInfo;
+	
+	//const MobInfo* m_pMobInfo;
 
 	std::vector<Component*> m_vComponent;
 
