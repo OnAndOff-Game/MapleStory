@@ -4,13 +4,46 @@ class MPlayer : public MObject
 {
 public:
 
-	MPlayer() {}
-	~MPlayer() {}
-	
+	MPlayer();
+	MPlayer(const std::string& _filename);
+	~MPlayer();
+
 	void Init();
 	void Update(float _delta);
 	void Render(Gdiplus::Graphics* _memG);
+	void Release();
+
+	void GetLadderRope(std::list<Maple::LADDER_ROPE>& _ladderrope);
+	void HandleInput(EMAnimType _atype);
+	void SetComponent(Component* _pComp);
+
+	void Revision();
+	bool IsJump();
+
+	Gdiplus::Rect const& GetColRc();
+
+	void HitDamage(int _damage);
+	void SetLevitation();
+
+	bool IsCollision();
+
+	void Move();
+	void Jump();
+	bool Stand();
+	void Hit();
+	void Die();
+	void Skill();
+	void Attack();
+	void Prone();
+	void Ladder();
+	void Rope();
+
+	void LoadData(const std::string& _filename);
+
+public:
 	
+	MPhysics* m_pPhysics;
+
 private:
 
 	//const MobInfo* m_pMobInfo;
@@ -47,4 +80,3 @@ private:
 
 	bool bFlag;
 };
-

@@ -18,13 +18,13 @@ void BatchRender::BatchDraw(EMRenderType _type, Gdiplus::Image* _img, const Gdip
 	element.img = _img;
 	element.cachedImg = BmpToCahcedBmp(_img, element.SizeX, element.SizeY);
 
-	if (_type == eMR_Map)
+	if (_type == EMRenderType::eMRenderType_Map)
 		BatchMap.insert(element);
 
-	else if (_type == eMR_Obj)
+	else if (_type == EMRenderType::eMRenderType_Object)
 		BatchObj.insert(element);
 	   
-	else if(_type == eMR_UI)
+	else if(_type == EMRenderType::eMRenderType_UI)
 		BatchUI.insert(element);
 }
 
@@ -46,13 +46,13 @@ void BatchRender::BatchDraw(EMRenderType _type, Gdiplus::Image* _img, const Gdip
 	element.img = _img;
 	element.cachedImg = BmpToCahcedBmp(_img, element.SizeX, element.SizeY);
 
-	if (_type == eMR_Map)
+	if (_type == EMRenderType::eMRenderType_Map)
 		BatchMap.insert(element);
 
-	else if (_type == eMR_Obj)
+	else if (_type == EMRenderType::eMRenderType_Object)
 		BatchObj.insert(element);
 
-	else if (_type == eMR_UI)
+	else if (_type == EMRenderType::eMRenderType_UI)
 		BatchUI.insert(element);
 }
 
