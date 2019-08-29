@@ -1,4 +1,11 @@
 #include "pch.h"
+#include "MSprite.h"
+#include "MSpriteComponent.h"
+#include "MPhysics.h"
+#include "FlashJumpSkill.h"
+#include "ISkill.h"
+#include "StandingState.h"
+#include "MDamageFont.h"
 #include "MPlayer.h"
 
 MPlayer::MPlayer() :m_pPhysics(nullptr),
