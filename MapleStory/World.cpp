@@ -43,9 +43,9 @@ void Maple::World::BackData(Node node)
 
 	MBackground* pBack;
 	if (temp.type == 3)
-		pBack = new MBackground(temp, new Asset(EMRenderType::eMR_Map, path + '/' + fileName, Gdiplus::Rect(0, 0, Constants::SCREEN_SIZE_X, Constants::SCREEN_SIZE_Y), 0, true));
+		pBack = new MBackground(temp, new Asset(EMRenderType::eMRenderType_Map, path + '/' + fileName, Gdiplus::Rect(0, 0, Constants::SCREEN_SIZE_X, Constants::SCREEN_SIZE_Y), 0, true));
 	else
-		pBack = new MBackground(temp, new Asset(EMRenderType::eMR_Map, path + '/' + fileName, 0));
+		pBack = new MBackground(temp, new Asset(EMRenderType::eMRenderType_Map, path + '/' + fileName, 0));
 	pBack->SetPosition(pBack->GetSize().Width / 2, pBack->GetSize().Height / 2);
 
 	background.push_back(pBack);
@@ -66,7 +66,7 @@ void Maple::World::ObjData(Node node, int index)
 	std::string path = "Object/" + temp.oS + ".img";
 	std::string fileName = temp.l0 + "." + temp.l1 + "." + temp.l2 + ".0" + ".png";
 
-	TempObj* pTempObj = new TempObj(temp, new Asset(EMRenderType::eMR_Map, path + '/' + fileName, index));
+	TempObj* pTempObj = new TempObj(temp, new Asset(EMRenderType::eMRenderType_Map, path + '/' + fileName, index));
 
 	//SpriteManager->LoadResource(path.c_str());
 	pTempObj->SetPosition(temp.x, temp.y);
@@ -83,7 +83,7 @@ void Maple::World::TileData(Node node, int index)
 	temp.zM = node["zM"].GetValueInt();
 
 
-	MTile* pTile = new MTile(temp, new Asset(EMRenderType::eMR_Map, layer[index].info.tS + '/' + temp.GetTileName(), index));
+	MTile* pTile = new MTile(temp, new Asset(EMRenderType::eMRenderType_Map, layer[index].info.tS + '/' + temp.GetTileName(), index));
 
 	if (!pTile->TileData.u.compare("enV0"))
 		pTile->SetPosition(Point(pTile->TileData.x - pTile->GetAssetSize().X / 2, 
@@ -149,7 +149,7 @@ void Maple::World::EnemyData(Node node)
 	pEnemy->Init();
 	pEnemy->Move();
 	enemy.push_back(pEnemy);
-	OBJMGR->SetObject(pEnemy->m_ProxyID.GetProxyID(), pEnemy);
+	OBJMGR->SetObject(pEnemy->objectId.GetObjectId(), pEnemy);
 }
 
 void Maple::World::Clear()

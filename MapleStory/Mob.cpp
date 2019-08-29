@@ -166,7 +166,6 @@ Gdiplus::Rect const& Mob::GetColRc()
 			std::cout << "있다";
 		}
 	}
-
 	else
 	{
 		m_rcCollision.X = Transform.Translation.X + imgdata->leftTop.X;
@@ -180,22 +179,24 @@ Gdiplus::Rect const& Mob::GetColRc()
 
 void Mob::LoadData(const std::string& _filename)
 {
-	m_Paser = Node(_filename.c_str());
+	Node node = Node(_filename.c_str());
+
+	if (!node.IsNull())
+		return;
 
 	std::string sprname = _filename; // 이름
 	sprname.replace(sprname.find(".xml"), 4, "");
 
-	int sprid = std::stoi(m_Paser.GetName());
+	int sprid = std::stoi(node.GetName());
 
 	if (SPRMGR->GetSpriteDataCnt(sprid) == 0)
 	{
-		for (auto anim = m_Paser.begin(); anim; anim = anim++) //anim name
+		for (auto anim = node.begin(); anim; anim = anim++) //anim name
 		{
 			if (!strcmp(anim.GetName(), "info"))
 			{
-				//m_MobInfo = LoadInfo(anim);
+				//LoadInfo(anim);
 			}
-
 			else
 			{
 				SPRDATA sprdata;
@@ -203,17 +204,13 @@ void Mob::LoadData(const std::string& _filename)
 
 				sprdata.path = sprname;
 				sprdata.name = anim.GetName();
+				//sprdata.type = AnimTypeSetting(sprdata.name);
 
-
-				for (auto num = m_Paser[anim.GetName()].begin(); num; num = num++) // num
+				for (auto num = node[anim.GetName()].begin(); num; num = num++) // num
 				{
-					std::string file;
-
 					IMG_DATA imgdata;
 
-					file = sprname + '/' + sprdata.name + '.' + num.GetName() + ".png";
-
-					imgdata.filename = file;
+					imgdata.filename = sprname + '/' + sprdata.name + '.' + num.GetName() + ".png";
 					imgdata.id = atoi(num.GetName());
 					imgdata.imgsize = num.GetValuePoint();
 
@@ -222,8 +219,7 @@ void Mob::LoadData(const std::string& _filename)
 						std::string templink;
 						if (!num["_inlink"].IsNull())
 						{
-							char from = '/';
-							char to = '.';
+							char from = '/', to = '.';
 
 							templink = num["_inlink"].GetValueString();
 
@@ -236,22 +232,25 @@ void Mob::LoadData(const std::string& _filename)
 						//	imgdata.origin = t["origin"].GetValuePoint();
 					}
 
-					if (!t["origin"].IsNull())
-						imgdata.origin = t["origin"].GetValuePoint();
+					if (!num["origin"].IsNull())
+						imgdata.origin = num["origin"].GetValuePoint();
 					else
 					{
 						imgdata.origin.X = imgdata.imgsize.X / 2;
 						imgdata.origin.Y = imgdata.imgsize.Y / 2;
 					}
 
-					if (!t["lt"].IsNull())
-						imgdata.lt = t["lt"].GetValuePoint();
+					if (!num["lt"].IsNull())
+						imgdata.leftTop = num["lt"].GetValuePoint();
 
-					if (!t["rb"].IsNull())
-						imgdata.rb = t["rb"].GetValuePoint();
+					if (!num["rb"].IsNull())
+						imgdata.rightBottom = num["rb"].GetValuePoint();
 
-					if (!t["head"].IsNull())
-						imgdata.head = t["head"].GetValuePoint();
+					if (!num["head"].IsNull())
+						imgdata.head = num["head"].GetValuePoint();
+
+					if (!num["delay"].IsNull())
+						imgdata.delay = num["delay"].GetValueInt();
 
 					if (!num["a0"].IsNull())
 						imgdata.beginAlpha = num["a0"].GetValueInt();
@@ -263,73 +262,30 @@ void Mob::LoadData(const std::string& _filename)
 					else
 						imgdata.endAlpha = 0;
 
-					if (!t["a1"].IsNull())
-						imgdata.a1 = t["a1"].GetValueInt();
-					else
-						imgdata.a1 = 0;
-
-					if (!t["z"].IsNull())
-						imgdata.z = t["z"].GetValueInt();
+					if (!num["z"].IsNull())
+						imgdata.z = num["z"].GetValueInt();
 					else
 						imgdata.z = 2;
+
+
+					ASSETMGR->SetAssetData(imgdata);
+					nCnt++;
 				}
 
-				ASSETMGR->SetAssetData(imgdata);
-				nCnt++;
-			}
+				sprdata.cnt = nCnt;
 
-			if (!sprdata.name.find("move") || !sprdata.name.find("walk"))
-			{
-				sprdata.type = EMAnimType::eMAnimType_Moving;
-			}
-
-			else if (!sprdata.name.find("stand"))
-			{
-				sprdata.type = EMAnimType::eMAnimType_Standing;
-			}
-
-			else if (!sprdata.name.find("skill"))
-			{
-				sprdata.type = EMAnimType::eMAnimType_Skill;
-				m_nSkillCnt++;
-			}
-
-			else if (!sprdata.name.find("jump"))
-			{
-				sprdata.type = EMAnimType::eMAnimType_Jumping;
-			}
-
-			else if (!sprdata.name.find("attack"))
-			{
-				sprdata.type = EMAnimType::eMAnimType_Attack;
-				m_nAtkCnt++;
-			}
-
-			else if (!sprdata.name.find("hit"))
-			{
-				sprdata.type = EMAnimType::eMAnimType_Hit;
-			}
-
-			else if (!sprdata.name.find("die"))
-			{
-				sprdata.type = EMAnimType::eMAnimType_Die;
-			}
-
-			else if (!sprdata.name.find("chase"))
-			{
-				sprdata.type = EMAnimType::eMAnimType_Chase;
+				SPRMGR->SetSpriteData(sprid, sprdata);
 			}
 		}
-
-		SPRMGR->SetSprData(sprid, sprdata);
 	}
+
 	else
 	{
-		for (auto o = m_Paser.begin(); o; o = o++) //anim name
+		for (auto o = node.begin(); o; o = o++) //anim name
 		{
 			if (!strcmp(o.GetName(), "info"))
 			{
-				//m_MobInfo = LoadInfo(o);
+				//LoadInfo(o);
 				break;
 			}
 		}
@@ -339,7 +295,6 @@ void Mob::LoadData(const std::string& _filename)
 
 	//m_vComponent.push_back(pSC);
 }
-
 void Mob::SetDirection(int dir)
 {
 	m_Direction = dir;

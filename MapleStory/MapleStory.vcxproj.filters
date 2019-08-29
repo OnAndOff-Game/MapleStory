@@ -189,9 +189,6 @@
     <ClInclude Include="ISkill.h">
       <Filter>Game\Skill</Filter>
     </ClInclude>
-    <ClInclude Include="StandingState.h">
-      <Filter>State</Filter>
-    </ClInclude>
     <ClInclude Include="MState.h">
       <Filter>State</Filter>
     </ClInclude>
@@ -239,6 +236,9 @@
     </ClInclude>
     <ClInclude Include="MEnemy.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="StandingState.h">
+      <Filter>State</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

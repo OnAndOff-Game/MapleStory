@@ -8,7 +8,7 @@ MBackground::MBackground(const BACKGROUND& _backdata, Asset* _asset)
 {
 	BackData = _backdata;
 	mAsset = _asset;
-	m_eObjType = EMObjType::eMO_Map;
+	m_eObjType = EMObjType::eMObjType_Map;
 }
 
 MBackground::~MBackground()

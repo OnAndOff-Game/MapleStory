@@ -52,6 +52,8 @@ struct BatchElement
 
 	bool bFlip;
 
+	Gdiplus::CachedBitmap* cachedImg;
+
 	/*
 	rotation
 	proxyid;
