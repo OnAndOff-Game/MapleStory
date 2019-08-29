@@ -237,6 +237,9 @@
     <ClInclude Include="MParser.h">
       <Filter>Xml</Filter>
     </ClInclude>
+    <ClInclude Include="MEnemy.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MapleStory.cpp">
@@ -397,6 +400,9 @@
     </ClCompile>
     <ClCompile Include="MParser.cpp">
       <Filter>Xml</Filter>
+    </ClCompile>
+    <ClCompile Include="MEnemy.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
