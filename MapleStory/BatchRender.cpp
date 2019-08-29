@@ -16,7 +16,6 @@ void BatchRender::BatchDraw(EMRenderType _type, Gdiplus::Image* _img, const Gdip
 	element.bFlip = _flip;
 	element.z = _z;
 	element.img = _img;
-	element.cachedImg = BmpToCahcedBmp(_img, element.SizeX, element.SizeY);
 
 	if (_type == EMRenderType::eMRenderType_Map)
 		BatchMap.insert(element);
@@ -44,7 +43,6 @@ void BatchRender::BatchDraw(EMRenderType _type, Gdiplus::Image* _img, const Gdip
 	element.bFlip = _flip;
 	element.z = _z;
 	element.img = _img;
-	element.cachedImg = BmpToCahcedBmp(_img, element.SizeX, element.SizeY);
 
 	if (_type == EMRenderType::eMRenderType_Map)
 		BatchMap.insert(element);
@@ -139,8 +137,8 @@ void BatchRender::Render(Gdiplus::Graphics* _view, const BatchElement& _element)
 
 	else
 	{
-		//_view->DrawImage(_element.img, Gdiplus::Rect(_element.Pos.X - _element.Origin.X, _element.Pos.Y - _element.Origin.Y, _element.SizeX, _element.SizeY));
-		_view->DrawCachedBitmap(_element.cachedImg, _element.Pos.X - _element.Origin.X, _element.Pos.Y - _element.Origin.Y);
+		_view->DrawImage(_element.img, Gdiplus::Rect(_element.Pos.X - _element.Origin.X, _element.Pos.Y - _element.Origin.Y, _element.SizeX, _element.SizeY));
+		//_view->DrawCachedBitmap(_element.cachedImg, _element.Pos.X - _element.Origin.X, _element.Pos.Y - _element.Origin.Y);
 	}
 
 //	if(Delta != 0)

@@ -33,7 +33,6 @@ public:
 	void Draw(Gdiplus::Graphics* _view);
 	void DrawEnd();
 
-
 	void Clear();
 
 private:
