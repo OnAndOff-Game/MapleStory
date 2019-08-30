@@ -55,11 +55,11 @@ void Map::Load(int InMapCode)
 	OBJMGR->Reset();
 	ROAD->GetInstance()->Release();
 
-	//// 사운드 로드
-	//Node info = mapNode[0]["info"];
-	//world->layer[0].info.bgm = info["bgm"].GetValueString();
-	//std::string soundPath = "Sound/" + world->layer[0].info.bgm + ".mp3";
-	////SoundManager->LoadBackGroundSound(soundPath);
+	// 사운드 로드
+	Node info = mapNode[0]["info"];
+	world->layer[0].info.bgm = info["bgm"].GetValueString();
+	std::string soundPath = "Sound/" + world->layer[0].info.bgm + ".mp3";
+	SoundManager->LoadBackGroundSound(soundPath);
 
 	////// 맵의 사이즈
 	Node miniMap = mapNode[0]["miniMap"];

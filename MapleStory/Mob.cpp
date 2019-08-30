@@ -71,7 +71,7 @@ void Mob::Update(float _delta)
 		m_Direction = rand() % 3 - 1;
 		m_MoveTime = 0;
 	}
-	m_pPhysics->SetVelocityX(m_Direction);
+	m_pPhysics->SetVelocityX(m_Direction * 0.3f);
 	if (m_Direction == 1)
 		m_pSprites->SetFlip(true);
 	else if (m_Direction == -1)
