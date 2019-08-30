@@ -70,7 +70,8 @@ void GameScene::Update(float Delta)
 	{
 		View::Target.X -= right;
 	}
-	View::CameraFollow(5 * Delta);
+
+	View::CameraFollow(Delta);
 }
 
 

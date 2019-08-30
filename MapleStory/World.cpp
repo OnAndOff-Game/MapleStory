@@ -163,6 +163,15 @@ void Maple::World::Clear()
 	background.clear();
 	footHold.clear();
 	portal.clear();
+
+	for (auto it : enemy)
+	{
+		if (it != nullptr)
+		{
+			it->Release();
+			delete it;
+		}
+	}
 	enemy.clear();
 	ladderRope.clear();
 }

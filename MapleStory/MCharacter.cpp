@@ -70,7 +70,7 @@ void MCharacter::Update(float _delta)
 	physics->SetImgData(m_pSprites->GetCurrentImgData());
 
 	if (physics->IsJumping())
-		physics->SetVelocityX(Lerp(physics->GetVelocityX(), 0, _delta * 0.02));
+		physics->SetVelocityX(Lerp(physics->GetVelocityX(), 0, _delta * 0.005));
 
 	if (GetAsyncKeyState(VK_LCONTROL))
 	{
@@ -255,7 +255,7 @@ bool MCharacter::IsJump()
 void MCharacter::Move()
 {
 	//spr->anim("move")
-	m_pSprites->SetCurrentAnim(EMAnimType::eMAnimType_Standing);
+	m_pSprites->SetCurrentAnim(EMAnimType::eMAnimType_Moving);
 	m_pSprites->SetLooping(true);
 }
 

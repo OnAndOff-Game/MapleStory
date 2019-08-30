@@ -45,6 +45,7 @@ public:
 
 	void SetDirection(int dir);
 
+	EMAnimType AnimTypeSetting(std::string& InAnim);
 
 
 private:

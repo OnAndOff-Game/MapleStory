@@ -20,5 +20,6 @@ static inline float Lerp(float value1, float value2, float amount)
 	return (value1 + (value2 - value1) * amount);
 }
 
+
 #define KEY_DOWN(vk_code)		((GetAsyncKeyState(vk_code) & 0x8000) ? 1 : 0)
 #define KEY_UP(vk_code)			((GetAsyncKeyState(vk_code) & 0x8000) ? 0 : 1)

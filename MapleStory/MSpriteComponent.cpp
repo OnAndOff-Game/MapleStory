@@ -158,7 +158,7 @@ IMG_DATA const& MSpriteComponent::GetCurrentImgData()
 	if (m_pSprite != nullptr)
 		return m_pSprite->GetCurrentImgData();
 	else
-		return SpritesMap.find(EMAnimType::eMAnimType_Standing)->second->GetCurrentImgData();
+		return SpritesMap.find(EMAnimType::eMAnimType_Moving)->second->GetCurrentImgData();
 }
 
 void MSpriteComponent::SetLooping(bool _bLooping)

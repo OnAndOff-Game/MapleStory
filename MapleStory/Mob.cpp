@@ -181,7 +181,7 @@ void Mob::LoadData(const std::string& _filename)
 {
 	Node node = Node(_filename.c_str());
 
-	if (!node.IsNull())
+	if (node.IsNull())
 		return;
 
 	std::string sprname = _filename; // ¿Ã∏ß
@@ -204,7 +204,7 @@ void Mob::LoadData(const std::string& _filename)
 
 				sprdata.path = sprname;
 				sprdata.name = anim.GetName();
-				//sprdata.type = AnimTypeSetting(sprdata.name);
+				sprdata.type = AnimTypeSetting(sprdata.name);
 
 				for (auto num = node[anim.GetName()].begin(); num; num = num++) // num
 				{
@@ -298,4 +298,16 @@ void Mob::LoadData(const std::string& _filename)
 void Mob::SetDirection(int dir)
 {
 	m_Direction = dir;
+}
+
+
+EMAnimType Mob::AnimTypeSetting(std::string& InAnim)
+{
+	for (int i = 0; i < EMAnimType::eMAnimType_Cnt; ++i)
+	{
+		if (!InAnim.find(ANIM_TYPE[i]))
+			return static_cast<EMAnimType>(i);
+	}
+
+	return EMAnimType::eMAnimType_Static;
 }
