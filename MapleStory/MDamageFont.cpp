@@ -63,8 +63,7 @@ void MDamageFont::Update(float _delta)
 			m_pFont[it]->SetAlpha(1.0 - Lerp(0, 1, (m_dwTick - BLENDING_TIME) * 0.001));
 		}
 
-		m_pFont[it]->Update(this, _delta);
-	
+		m_pFont[it]->Update(this, _delta);	
 	}
 
 	Transform.Translation = pt;
