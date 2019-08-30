@@ -13,6 +13,9 @@ namespace Constants
 
 	const int MOB_MOVE_TIME = 2000;
 	const int MOB_MOVE_TIME_MIN = 1000;
+
+	const float PERCENT_MAX = 1.0f;
+	const float PERCENT_MIN = 0.0f;
 }
 
 static inline float Lerp(float value1, float value2, float amount)

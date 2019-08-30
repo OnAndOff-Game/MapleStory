@@ -1,66 +1,67 @@
 #include "pch.h"
 #include "Asset.h"
 
-Asset::Asset()
+Asset::Asset() : img{ nullptr }, fliping{ false }, rendering{ true },
+red{ PERCENT_MAX }, alpha{ PERCENT_MAX }
 {
-	//m_pImgDB = nullptr;
 }
 
-Asset::Asset(EMRenderType _type, const std::string& _assetname, int _z, bool _billboard)
+Asset::Asset(EMRenderType inType, const std::string& inAsset, int inZorder, bool inFixing)
+	: fliping{ false }, rendering{ true }, red{ PERCENT_MAX }, alpha{ PERCENT_MAX }
 {
-	m_eType = _type;
-	bFlip = false;
-	bRender = true;
-	bBillBoard = _billboard;
-	z = _z;
+	renderType = inType;
 
-	m_pImg = SpriteManager->GetAssetImg(_assetname);
-	//SetAssetData(_imgname);
+	fixing = inFixing;
+	zorder = inZorder;
+
+	img = SpriteManager->GetAssetImg(inAsset);
 
 	rect.X = 0;
 	rect.Y = 0;
-	ImgSize.X = rect.Width = m_pImg->GetWidth();
-	ImgSize.Y = rect.Height = m_pImg->GetHeight();
-	Red = Alpha = 1.0f;
-	CustomPos.X = ImgSize.X / 2;
-	CustomPos.Y = ImgSize.Y / 2;
+	
+	imgSize.X = rect.Width = img->GetWidth();
+	imgSize.Y = rect.Height = img->GetHeight();
+	
+	customPosition.X = imgSize.X / 2;
+	customPosition.Y = imgSize.Y / 2;
 }
 
-Asset::Asset(EMRenderType _type, const std::string& _assetname, IMG_DATA const& _imgdata, bool _billboard)
+Asset::Asset(EMRenderType inType, const std::string& inAsset, IMG_DATA const& inImgData, bool inFixing)
+	: fliping{ false }, rendering{ true }, red{ PERCENT_MAX }, alpha{ PERCENT_MAX }
 {
-	m_eType = _type;
-	bFlip = false;
-	bRender = true;
-	bBillBoard = _billboard;
-	z = _imgdata.z;
-	CustomPos = _imgdata.origin;
-
-	m_pImg = SpriteManager->GetAssetImg(_assetname);
-	//SetAssetData(_imgname);
-
+	renderType = inType;
+	
+	fixing = inFixing;
+	zorder = inImgData.z;
+	
+	img = SpriteManager->GetAssetImg(inAsset);
+	
+	customPosition = inImgData.origin;
+	
 	rect.X = 0;
 	rect.Y = 0;
-	ImgSize.X = rect.Width = m_pImg->GetWidth();
-	ImgSize.Y = rect.Height = m_pImg->GetHeight();
-	Red = Alpha = 1.0f;
+	
+	imgSize.X = rect.Width = img->GetWidth();
+	imgSize.Y = rect.Height = img->GetHeight();
 }
 
-Asset::Asset(EMRenderType _type, const std::string& _imgname, Gdiplus::Rect& _size, int _z, bool _billboard)
+Asset::Asset(EMRenderType inType, const std::string& inAsset, Gdiplus::Rect& inRect, int inZorder, bool inFixing)
+	: fliping{ false }, rendering{ true }, red{ PERCENT_MAX }, alpha{ PERCENT_MAX }
 {
-	m_eType = _type;
-	bFlip = false;
-	bRender = true;
-	bBillBoard = _billboard;
-	z = _z;
+	renderType = inType;
+	
+	fixing = inFixing;
+	zorder = inZorder;
 
-	m_pImg = SpriteManager->GetAssetImg(_imgname);
-	//SetAssetData(_imgname);
-	ImgSize.X = m_pImg->GetWidth();
-	ImgSize.Y = m_pImg->GetHeight();
-	rect = _size;
-	Red = Alpha = 1.0f;
-	CustomPos.X = _size.Width / 2;
-	CustomPos.Y = _size.Height / 2;
+	img = SpriteManager->GetAssetImg(inAsset);
+
+	imgSize.X = img->GetWidth();
+	imgSize.Y = img->GetHeight();
+
+	rect = inRect;
+	
+	customPosition.X = inRect.Width / 2;
+	customPosition.Y = inRect.Height / 2;
 }
 
 Asset::~Asset()
@@ -69,15 +70,15 @@ Asset::~Asset()
 
 void Asset::Init()
 {
-	Red = Alpha = 1.0f;
-	bRender = true;
+	red = alpha = PERCENT_MAX;
+	rendering = true;
 }
 
 void Asset::Update(MObject* _obj, float _delta)
 {
-	if (bRender)
+	if (rendering)
 	{
-		if (!bBillBoard)
+		if (!fixing)
 		{
 			rect.X = _obj->Transform.Translation.X - View::viewPort.X + Constants::SCREEN_SIZE_X / 2;
 			rect.Y = _obj->Transform.Translation.Y - View::viewPort.Y + Constants::SCREEN_SIZE_Y / 2;
@@ -93,7 +94,7 @@ void Asset::Update(MObject* _obj, float _delta)
 			rect.X + rect.Width > 0 &&
 			rect.Y - rect.Height< Constants::SCREEN_SIZE_Y &&
 			rect.Y + rect.Height > 0)
-			BATCHRENDER->BatchDraw(m_eType, m_pImg, rect, CustomPos, z, Alpha, Red, bFlip);
+			BATCHRENDER->BatchDraw(renderType, img, rect, customPosition, zorder, alpha, red, fliping);
 
 	}
 }
@@ -107,44 +108,34 @@ void Asset::Release()
 {
 }
 
-//void Asset::SetAssetData(const std::string& _assetname)
-//{
-//	IMG_DATA* pData = ASSETMGR->GetAssetData(_assetname);
-//	
-//	if (pData != nullptr)
-//	{
-//		m_pImgDB = pData;
-//
-//		m_pImg = SpriteManager->GetAssetImg(m_pImgDB->filename);	
-//	}
-//}
-
-//IMG_DATA const* Asset::GetAssetData() const
-//{
-//	if (m_pImgDB != nullptr)
-//		return m_pImgDB;
-//
-//	return nullptr;
-//}
-
-void Asset::SetAlpha(float _alpha)
+void Asset::SetAlpha(float inAlpha)
 {
-	Alpha = _alpha;
+	alpha = inAlpha;
 }
 
-void Asset::SetRed(float _r)
+void Asset::SetRed(float inRed)
 {
-	Red = _r;
+	red = inRed;
 }
 
-void Asset::SetOffset(Gdiplus::Point& InOffsetPosition)
+void Asset::SetRender(bool inRendering)
 {
-	offsetPosition = InOffsetPosition;
+	rendering = inRendering;
+}
+
+void Asset::SetFlip(bool inFliping)
+{
+	fliping = inFliping;
+}
+
+void Asset::SetOffset(Gdiplus::Point& inOffsetPosition)
+{
+	offsetPosition = inOffsetPosition;
 }
 
 Gdiplus::Point& Asset::GetImgSize()
 {
-	return ImgSize;
+	return imgSize;
 }
 
 Gdiplus::Rect& Asset::GetSize()
