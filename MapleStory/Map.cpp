@@ -48,11 +48,11 @@ void Map::Load(int InMapCode)
 	filePath += ".img.xml";
 
 	// 해제
+	OBJMGR->Reset();
 	world->Clear();	
 	if(mapNode !=nullptr)
 		mapNode->Release();
 	mapNode = new Node(filePath.c_str());
-	OBJMGR->Reset();
 	ROAD->GetInstance()->Release();
 
 	// 사운드 로드
@@ -140,11 +140,6 @@ void Map::Update(float delta)
 	}
 
 	for (auto Itr : world->portal)
-	{
-		Itr->Update(delta);
-	}
-
-	for (auto Itr : world->enemy)
 	{
 		Itr->Update(delta);
 	}

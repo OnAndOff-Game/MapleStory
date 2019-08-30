@@ -100,14 +100,14 @@ void ObjectMgr::Reset()
 		if (it.second->m_eObjType == EMObjType::eMObjType_Player)
 			pCh = static_cast<MCharacter*>(it.second);
 
-		else if (it.second->m_eObjType == EMObjType::eMObjType_Mob)
+	/*else if (it.second->m_eObjType == EMObjType::eMObjType_Mob)
 		{
 			Mob* pMob = static_cast<Mob*>(it.second);
 			
 			pMob->Release();
 		
 			delete it.second;
-		}
+		}*/
 	}
 
 	m_mObject.clear();
