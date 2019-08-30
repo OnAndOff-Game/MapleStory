@@ -326,16 +326,16 @@ void MCharacter::Rope()
 
 void MCharacter::LoadData(const std::string& _filename)
 {
-	m_Paser = Node(_filename.c_str());
+	m_Paser = new Node(_filename.c_str());
 
 	std::string sprname = _filename; // ÀÌ¸§
 	sprname.replace(sprname.find(".xml"), 4, "");
 
-	int sprid = std::stoi(m_Paser.GetName());
+	int sprid = std::stoi(m_Paser->GetName());
 
 	if (SPRMGR->GetSpriteDataCnt(sprid) == 0)
 	{
-		for (auto o = m_Paser.begin(); o; o = o++) //anim name
+		for (auto o = m_Paser->begin(); o; o = o++) //anim name
 		{
 			if (strcmp(o.GetName(), "info"))
 			{
@@ -347,7 +347,7 @@ void MCharacter::LoadData(const std::string& _filename)
 				//int a = sprdata.name.find("skill");
 				//sprdata.name.compare("Attack");
 				int n = 0;
-				for (auto t = m_Paser[o.GetName()].begin(); t; t = t++) // num
+				for (auto t = m_Paser[0][o.GetName()].begin(); t; t = t++) // num
 				{
 					n++;
 					o.GetName();
@@ -482,6 +482,7 @@ void MCharacter::LoadData(const std::string& _filename)
 		m_pSprites = new MSpriteComponent(sprid, EMRenderType::eMRenderType_Object);
 	}
 
-	m_Paser.Release();
+	m_Paser->Release();
+	delete m_Paser;
 	//m_vComponent.push_back(pSC);
 }

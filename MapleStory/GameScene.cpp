@@ -4,7 +4,6 @@
 #include "MCharacter.h"
 #include "Mob.h"
 #include "Map.h"
-#include "MDamageFont.h"
 #include "GameUI.h"
 #include "GameScene.h"
 
@@ -12,10 +11,7 @@ void GameScene::Init()
 {
 	map = new Map(100000000);
 	map->Init();
-
-	pFont = new MDamageFont();
-	pFont->Init();
-
+	
 	player = new MCharacter("Mob/131.img.xml");
 	player->Init();
 	player->Move();
@@ -33,16 +29,11 @@ void GameScene::Update(float Delta)
 	//pMob->Update(Delta);
 	//pMob2->Update(Delta);
 	
-	//if (GetAsyncKeyState('F'))
-	//	pFont->SetDamage(4000, player->GetPosition());
-
 	if (KEY_DOWN(VK_ESCAPE))
 	{
 		AfxGetMainWnd()->PostMessage(WM_COMMAND, ID_APP_EXIT);
 	}
-
-	pFont->Update(Delta);
-
+	
 	OBJMGR->Update(Delta);
 	map->Update(Delta);
 	//player->GetLadderRope(map->world->ladderRope);
@@ -97,13 +88,7 @@ void GameScene::Release()
 		player->Release();
 		delete player;
 	}
-
-	if (pFont != nullptr)
-	{
-		pFont->Release();
-		delete pFont;
-	}
-
+	
 	if (gameUI != nullptr)
 	{
 		gameUI->Release();

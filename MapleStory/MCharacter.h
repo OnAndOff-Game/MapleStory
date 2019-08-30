@@ -63,7 +63,7 @@ private:
 
 	MState* m_pState;
 
-	Node m_Paser;
+	Node* m_Paser;
 	std::string m_strName;
 	Gdiplus::Rect collisionRect;
 	EMAnimType playerState;
