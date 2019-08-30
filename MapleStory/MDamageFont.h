@@ -2,6 +2,9 @@
 
 class Asset;
 
+#define BLENDING_TIME 1000
+#define ERARER_TIME 2000
+
 class MDamageFont : public MObject
 {
 public:
