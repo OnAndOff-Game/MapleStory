@@ -151,32 +151,31 @@ void BatchRender::Render(Gdiplus::Graphics* _view, const BatchElement& _element)
 void BatchRender::Clear()
 {
 	if (!BatchMap.empty())
-	{
-		for (auto it : BatchMap)
+	{	
+		/*for (auto it : BatchMap)
 		{
-			if (it.cachedImg != nullptr)
-				delete it.cachedImg;
-		}
+		}*/
+
 		BatchMap.clear();
 	}
 
 	if (!BatchObj.empty())
 	{
-		for (auto it : BatchObj)
+	/*	for (auto it : BatchObj)
 		{
 			if (it.cachedImg != nullptr)
 				delete it.cachedImg;
-		}
+		}*/
 		BatchObj.clear();
 	}
 
 	if (!BatchUI.empty())
 	{
-		for (auto it : BatchUI)
-		{
-			if (it.cachedImg != nullptr)
-				delete it.cachedImg;
-		}
+		//for (auto it : BatchUI)
+		//{
+		//	if (it.cachedImg != nullptr)
+		//		delete it.cachedImg;
+		//}
 		BatchUI.clear();
 	}
 

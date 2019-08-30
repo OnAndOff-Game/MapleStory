@@ -73,6 +73,11 @@ void Node::ChildList()
 
 void Node::Release()
 {
+	if (xmlDoc != nullptr)
+		delete xmlDoc;
+
+	if (xmlFile != nullptr)
+		delete xmlFile;	
 }
 
 

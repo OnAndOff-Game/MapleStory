@@ -8,6 +8,10 @@ ResourceManager::ResourceManager()
 {
 }
 
+ResourceManager::~ResourceManager()
+{
+}
+
 Image* ResourceManager::GetAssetImg(std::string _name)
 {
 	std::hash<std::string> hash_key;
@@ -29,7 +33,10 @@ void ResourceManager::Release()
 	for (auto it : m_mAssetImg)
 	{
 		delete it.second;
+		it.second = nullptr;
 	}
+
+	m_mAssetImg.clear();
 }
 
 Image* ResourceManager::LoadAssetImg(std::string _name)

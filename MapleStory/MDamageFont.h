@@ -13,6 +13,7 @@ public:
 	virtual void Init();
 	virtual void LoadData(const std::string& _filename);
 	virtual void Update(float _delta);
+	void Release();
 
 	void SetDamage(int _damage, Gdiplus::Point& pos);
 

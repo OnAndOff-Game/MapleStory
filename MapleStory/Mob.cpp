@@ -293,6 +293,7 @@ void Mob::LoadData(const std::string& _filename)
 
 	m_pSprites = new MSpriteComponent(sprid, EMRenderType::eMRenderType_Object);
 
+	node.Release();
 	//m_vComponent.push_back(pSC);
 }
 void Mob::SetDirection(int dir)

@@ -7,6 +7,8 @@ public:
 	SprMgr();
 	~SprMgr();
 
+	void Release();
+
 	void LoadData(const char* _filename);
 	
 	//SPRDATA& GetSpriteData(const char* _sprname, int _cnt);

@@ -42,6 +42,17 @@ void MCharacter::Init()
 
 void MCharacter::Release()
 {
+	if (m_pState != nullptr)
+	{
+		delete m_pState;
+	}
+
+	if (m_pDF != nullptr)
+	{
+		m_pDF->Release();
+		delete m_pDF;
+	}
+
 	if (physics != nullptr)
 	{
 		physics->Release();
@@ -467,5 +478,7 @@ void MCharacter::LoadData(const std::string& _filename)
 
 		m_pSprites = new MSpriteComponent(sprid, EMRenderType::eMRenderType_Object);
 	}
+
+	m_Paser.Release();
 	//m_vComponent.push_back(pSC);
 }

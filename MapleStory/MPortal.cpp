@@ -51,6 +51,15 @@ void MPortal::Update(float _delta)
 	mAsset[curAni]->Update(this, _delta);
 }
 
+void MPortal::Release()
+{
+	for (int i = 0; i < 8; ++i)
+	{
+		mAsset[i]->Release();
+		delete mAsset[i];
+	}
+}
+
 bool MPortal::PortalCollision(Gdiplus::Point& player)
 {
 	if (player.X - 10 < GetPosition().X &&

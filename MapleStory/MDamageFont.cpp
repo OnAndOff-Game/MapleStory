@@ -71,6 +71,21 @@ void MDamageFont::Update(float _delta)
 	Transform.Translation = pt;
 }
 
+void MDamageFont::Release()
+{
+
+	for (int i = 0; i < 10; ++i)
+	{
+		if (m_pFont[i] != nullptr)
+		{
+			m_pFont[i]->Release();
+			delete m_pFont[i];
+		}
+	}
+
+	m_lDamage.clear();
+}
+
 void MDamageFont::SetDamage(int _damage, Gdiplus::Point& pos)
 {
 	m_strDamage = std::to_string(_damage);

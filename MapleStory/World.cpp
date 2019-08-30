@@ -157,11 +157,48 @@ void Maple::World::Clear()
 	for (int i = 0; i < LAYER_SIZE; i++)
 	{
 		layer[i].info = INFO();
+
+		for (auto it : layer[i].tile)
+		{
+			if (it != nullptr)
+			{
+				it->Release();
+				delete it;
+			}
+		}
 		layer[i].tile.clear();
+
+		for (auto it : layer[i].obj)
+		{
+			if (it != nullptr)
+			{
+				it->Release();
+				delete it;
+			}
+		}		
 		layer[i].obj.clear();
+	}
+
+	for (auto it : background)
+	{
+		if (it != nullptr)
+		{
+			it->Release();
+			delete it;
+		}
 	}
 	background.clear();
 	footHold.clear();
+
+
+	for (auto it : portal)
+	{
+		if (it != nullptr)
+		{
+			it->Release();
+			delete it;
+		}
+	}
 	portal.clear();
 
 	for (auto it : enemy)
@@ -173,5 +210,14 @@ void Maple::World::Clear()
 		}
 	}
 	enemy.clear();
+
+	for (auto it : ladderRope)
+	{
+		if (it != nullptr)
+		{
+			//it->Release();
+			delete it;
+		}
+	}	
 	ladderRope.clear();
 }

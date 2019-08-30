@@ -8,8 +8,20 @@ SprMgr::SprMgr()
 
 SprMgr::~SprMgr()
 {
+}
+
+void SprMgr::Release()
+{
+	for (auto &it : m_mSprData)
+	{
+		it.second.clear();
+	}
+
+	m_mSprData.clear();
+
 	if (node != nullptr)
 	{
+		node->Release();
 		delete node;
 		node = nullptr;
 	}

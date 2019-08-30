@@ -23,7 +23,7 @@ void GameScene::Init()
 
 	gameUI = new GameUI();
 	gameUI->Init();
-	
+		
 	OBJMGR->SetObject(player->objectId.GetObjectId(), player);
 }
 
@@ -36,6 +36,11 @@ void GameScene::Update(float Delta)
 	if (GetAsyncKeyState('F'))
 		pFont->SetDamage(4000, player->GetPosition());
 
+	if (KEY_DOWN(VK_ESCAPE))
+	{
+		AfxGetMainWnd()->PostMessage(WM_COMMAND, ID_APP_EXIT);
+	}
+
 	pFont->Update(Delta);
 
 	OBJMGR->Update(Delta);
@@ -46,8 +51,7 @@ void GameScene::Update(float Delta)
 	// Æ÷Å» ÀÌµ¿
 	if (GetAsyncKeyState('A'))
 		map->PlayerInPortal(player);
-
-
+	
 	if (GetAsyncKeyState('O'))
 		ROAD->DrawLine(true);
 	
@@ -86,5 +90,22 @@ void GameScene::Release()
 		map->Release();
 		delete map;
 	}
+	
+	if (player != nullptr)
+	{
+		player->Release();
+		delete player;
+	}
 
+	if (pFont != nullptr)
+	{
+		pFont->Release();
+		delete pFont;
+	}
+
+	if (gameUI != nullptr)
+	{
+		gameUI->Release();
+		delete gameUI;
+	}
 }
