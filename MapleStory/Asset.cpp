@@ -19,8 +19,7 @@ Asset::Asset(EMRenderType inType, const std::string& inAsset, int inZorder, bool
 
 	rect.X = 0;
 	rect.Y = 0;
-
-
+	
 	imgSize.X = rect.Width = img->GetWidth();
 	imgSize.Y = rect.Height = img->GetHeight();
 
