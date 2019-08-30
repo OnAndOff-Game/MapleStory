@@ -72,6 +72,7 @@ void Asset::Init()
 {
 	red = alpha = PERCENT_MAX;
 	rendering = true;
+	fixing = false;
 }
 
 void Asset::Update(MObject* _obj, float _delta)
