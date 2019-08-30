@@ -27,7 +27,7 @@ Asset::Asset(EMRenderType inType, const std::string& inAsset, int inZorder, bool
 	customPosition.X = imgSize.X / 2;
 	customPosition.Y = imgSize.Y / 2;
 	
-	m_pCachedBitmap = BmpToCahcedBmp(img, customPosition.X, customPosition.Y);
+	m_pCachedBitmap = BmpToCahcedBmp(img, imgSize.X, imgSize.Y);
 }
 
 Asset::Asset(EMRenderType inType, const std::string& inAsset, IMG_DATA const& inImgData, bool inFixing)
@@ -126,11 +126,6 @@ void Asset::Update(MObject* _obj, float _delta)
 
 	void Asset::Release()
 	{		
-		if (m_pCachedBitmap != nullptr)
-		{
-			delete m_pCachedBitmap;
-			m_pCachedBitmap = nullptr;
-		}
 	}
 
 	void Asset::SetAlpha(float inAlpha)

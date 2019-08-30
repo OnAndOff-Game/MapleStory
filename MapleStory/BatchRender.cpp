@@ -44,16 +44,18 @@ void BatchRender::BatchDraw(EMRenderType _type, Gdiplus::Image* _img, const Gdip
 	element.bFlip = _flip;
 	element.z = _z;
 	element.img = _img;
-
-	BatchMap.insert(element);
-	/*if (_type == EMRenderType::eMRenderType_Map)
+	//if (_type == EMRenderType::eMRenderType_UI)
+	//	BatchUI.insert(element);
+	//else
+	//	BatchMap.insert(element);
+	if (_type == EMRenderType::eMRenderType_Map)
 		BatchMap.insert(element);
 
 	else if (_type == EMRenderType::eMRenderType_Object)
 		BatchObj.insert(element);
 
 	else if (_type == EMRenderType::eMRenderType_UI)
-		BatchUI.insert(element);*/
+		BatchUI.insert(element);
 }
 
 void BatchRender::BatchDraw(EMRenderType _type, Gdiplus::CachedBitmap* _cachedBitmap, const Gdiplus::Rect& _rect, const Gdiplus::Point& _origin, int _z, float _alpha, float _red, bool _flip)

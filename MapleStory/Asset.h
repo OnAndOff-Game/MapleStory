@@ -26,7 +26,7 @@ public:
 	
 private:
 	// 비트맵을 캐시비트맵으로 바꿔줍니다.
-	Gdiplus::CachedBitmap* BmpToCahcedBmp(Gdiplus::Image* img, int SizeX, int SizeY);
+	Gdiplus::CachedBitmap* BmpToCahcedBmp(Gdiplus::Image* inImg, int inSizeX, int inSizeY);
 
 private:
 

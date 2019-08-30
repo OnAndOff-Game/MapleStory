@@ -94,13 +94,13 @@ void Map::Load(int InMapCode)
 		world->PortalData(Itr);
 	}
 
-	//Node life = mapNode[0]["life"];
-	//for (auto Itr = life.begin(); Itr; Itr++)
-	//{
-	//	std::string w = Itr["type"].GetValueString();
-	//	if(!Itr["type"].GetValueString().compare("m"))
-	//		world->EnemyData(Itr);
-	//}
+	Node life = mapNode[0]["life"];
+	for (auto Itr = life.begin(); Itr; Itr++)
+	{
+		std::string w = Itr["type"].GetValueString();
+		if(!Itr["type"].GetValueString().compare("m"))
+			world->EnemyData(Itr);
+	}
 
 	Node ladderRope = mapNode[0]["ladderRope"];
 	for (auto Itr = ladderRope.begin(); Itr; Itr++)
@@ -140,6 +140,10 @@ void Map::Update(float delta)
 	}
 
 	for (auto Itr : world->portal)
+	{
+		Itr->Update(delta);
+	}
+	for (auto Itr : world->enemy)
 	{
 		Itr->Update(delta);
 	}
