@@ -9,6 +9,8 @@
 
 #define _CRT_SECURE_NO_WARNINGS
 
+//#define _CRTDBUG_MAP_ALLOC
+
 // 여기에 미리 컴파일하려는 헤더 추가
 #include "framework.h"
 
@@ -22,6 +24,7 @@
 #include <iostream>
 #include <fmod.hpp>
 #include <fmod_errors.h>
+#include <crtdbg.h>
 
 #include "Constants.h"
 #include "common.h"
@@ -53,4 +56,6 @@
 
 using namespace Constants;
 using namespace Gdiplus;
+
+
 #endif //PCH_H

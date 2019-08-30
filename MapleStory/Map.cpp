@@ -147,20 +147,10 @@ void Map::Update(float delta)
 
 void Map::Release()
 {
-	for (int i = 0; i < 8; i++)
-	{
-		for (auto Itr : world->layer[i].tile)
-		{
-			Itr->Release();
-			delete Itr;
-		}
-		for (auto Itr : world->layer[i].obj)
-		{
-			Itr->Release();
-			delete Itr;
-		}
-	}
-	delete world;
+	mapNode->Release();
+	
+	world->Clear();
+	delete	world;
 }
 
 void Map::PlayerInPortal(MCharacter* player)

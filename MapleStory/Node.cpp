@@ -79,6 +79,7 @@ void Node::Release()
 		delete xmlDoc;
 		xmlDoc = nullptr;
 	}
+
 	if (xmlFile != nullptr)
 	{
 		delete xmlFile;

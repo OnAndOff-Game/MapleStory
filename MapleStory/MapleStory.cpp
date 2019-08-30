@@ -51,6 +51,11 @@ int CMapleStoryApp::CallCount = 0;
 ULONG_PTR gpToken;
 BOOL CMapleStoryApp::InitInstance()
 {
+
+	//_CrtSetBreakAlloc(374);
+	//_CrtMemDumpAllObjectsSince(0);
+	
+	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	// 애플리케이션 매니페스트가 ComCtl32.dll 버전 6 이상을 사용하여 비주얼 스타일을
 	// 사용하도록 지정하는 경우, Windows XP 상에서 반드시 InitCommonControlsEx()가 필요합니다. 
 	// InitCommonControlsEx()를 사용하지 않으면 창을 만들 수 없습니다.
@@ -91,11 +96,7 @@ BOOL CMapleStoryApp::InitInstance()
 	pFrame->LoadFrame(IDR_MAINFRAME,
 		WS_OVERLAPPEDWINDOW | FWS_ADDTOTITLE, nullptr,
 		nullptr);
-
-
-
-
-
+	   	  
 	// 창 하나만 초기화되었으므로 이를 표시하고 업데이트합니다.
 	pFrame->ShowWindow(SW_SHOW);
 	pFrame->UpdateWindow();
@@ -105,10 +106,24 @@ BOOL CMapleStoryApp::InitInstance()
 int CMapleStoryApp::ExitInstance()
 {
 	//TODO: 추가한 추가 리소스를 처리합니다.
-	return CWinApp::ExitInstance();
 	SceneManager::GetInstance().Release();
+
+	BATCHRENDER->Clear();
+	BATCHRENDER->DestoryInstance();
+	SPRMGR->Release();
+	SPRMGR->DestoryInstance();
 	SpriteManager->Release();
+	SpriteManager->DestoryInstance();
+
+	ASSETMGR->DestoryInstance();
+	
+	//SoundManager->ReleaseSound();
+
 	GdiplusShutdown(gpToken);
+
+
+
+	return CWinApp::ExitInstance();
 }
 
 // CMapleStoryApp 메시지 처리기
@@ -158,8 +173,9 @@ void CMapleStoryApp::OnAppAbout()
 
 UINT CMapleStoryApp::funcThread(LPVOID pParam)
 {
+
 	while (true)
-	{
+	{	
 		DWORD tick = GetTickCount64();
 		DWORD Delta = tick - PrevTick;
 		if (CMainFrame * MainFrm = static_cast<CMainFrame*>(theApp.GetMainWnd()))

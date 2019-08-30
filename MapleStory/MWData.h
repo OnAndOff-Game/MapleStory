@@ -38,6 +38,10 @@ enum EMObjType : int {
 	eMObjType_Cnt,
 };
 
+static const char* ANIM_TYPE[EMAnimType::eMAnimType_Cnt] = {
+	"Static", "stand", "move", "prone", "jump", "ladder",
+	"rope", "hit", "die", "attack", "skill", "chase" };
+
 struct BatchElement
 {
 	Gdiplus::Point Pos;
@@ -159,6 +163,7 @@ struct akt
 	Gdiplus::Rect range;
 	   
 };
+
 struct effect
 {
 };

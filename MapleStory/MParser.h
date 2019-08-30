@@ -1,10 +1,6 @@
 #pragma once
 
 
-const char* ANIM_TYPE[EMAnimType::eMAnimType_Cnt] = {
-	"Static", "stand", "move", "prone", "jump", "ladder",
-	"rope", "hit", "die", "attack", "skill", "chase" };
-
 const char* ORIGIN = "origin";
 const char* INLINK = "_inlink";
 const char* LEFT_TOP = "lt";

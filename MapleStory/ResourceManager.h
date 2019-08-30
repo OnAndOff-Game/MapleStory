@@ -9,7 +9,8 @@ class ResourceManager : public Singleton<ResourceManager>
 {
 public:
 	ResourceManager();
-	
+	~ResourceManager();
+
 	Gdiplus::Image* GetAssetImg(std::string _name);
 
 	void Release();

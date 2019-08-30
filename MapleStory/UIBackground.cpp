@@ -31,3 +31,12 @@ void UIBackground::Update(float _delta)
 		baseBackgroundSprite[i]->Update(this,_delta);
 	}
 }
+
+void UIBackground::Release()
+{
+	for (int i = 0; i < backgroundSize; ++i)
+	{
+		baseBackgroundSprite[i]->Release();
+		delete baseBackgroundSprite[i];
+	}
+}

@@ -156,26 +156,69 @@ void Maple::World::Clear()
 {
 	for (int i = 0; i < LAYER_SIZE; i++)
 	{
-		//layer[i].info = INFO();
-		for (auto Itr : layer[i].tile)
+		layer[i].info = INFO();
+
+		for (auto it : layer[i].tile)
 		{
-			Itr->Release();
-		}
-		for (auto Itr : layer[i].obj)
-		{
-			Itr->Release();
+			if (it != nullptr)
+			{
+				it->Release();
+				delete it;
+			}
 		}
 		layer[i].tile.clear();
+
+		for (auto it : layer[i].obj)
+		{
+			if (it != nullptr)
+			{
+				it->Release();
+				delete it;
+			}
+		}		
 		layer[i].obj.clear();
 	}
-	for (auto Itr : background)
+
+	for (auto it : background)
 	{
-		Itr->Release();
+		if (it != nullptr)
+		{
+			it->Release();
+			delete it;
+		}
 	}
 	background.clear();
+
 	footHold.clear();
+	
+	for (auto it : portal)
+	{
+		if (it != nullptr)
+		{
+			it->Release();
+			delete it;
+		}
+	}
 	portal.clear();
+
+	for (auto it : enemy)
+	{
+		if (it != nullptr)
+		{
+			it->Release();
+			delete it;
+		}
+	}
 	enemy.clear();
+
+	for (auto it : ladderRope)
+	{
+		if (it != nullptr)
+		{
+			//it->Release();
+			delete it;
+		}
+	}	
 	ladderRope.clear();
 
 }

@@ -3,6 +3,15 @@
 #include "UIGaugeBar.h"
 #include "GameUI.h"
 
+GameUI::GameUI() : background{ nullptr },
+gaugeBar{ nullptr }
+{
+}
+
+GameUI::~GameUI()
+{
+}
+
 void GameUI::Init()
 {
 	background = new UIBackground();
@@ -30,6 +39,15 @@ void GameUI::Render(Gdiplus::Graphics* _memG)
 
 void GameUI::Release()
 {
-	delete background;
-	delete gaugeBar;
+	if (background != nullptr)
+	{
+		background->Release();
+		delete background;
+	}
+
+	if (gaugeBar != nullptr)
+	{
+		gaugeBar->Release();
+		delete gaugeBar;
+	}
 }

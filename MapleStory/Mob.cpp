@@ -181,6 +181,9 @@ void Mob::LoadData(const std::string& _filename)
 {
 	Node node = Node(_filename.c_str());
 
+	if (node.IsNull())
+		return;
+
 	std::string sprname = _filename; // ¿Ã∏ß
 	sprname.replace(sprname.find(".xml"), 4, "");
 
@@ -201,7 +204,7 @@ void Mob::LoadData(const std::string& _filename)
 
 				sprdata.path = sprname;
 				sprdata.name = anim.GetName();
-				//sprdata.type = AnimTypeSetting(sprdata.name);
+				sprdata.type = AnimTypeSetting(sprdata.name);
 
 				for (auto num = node[anim.GetName()].begin(); num; num = num++) // num
 				{
@@ -290,9 +293,22 @@ void Mob::LoadData(const std::string& _filename)
 
 	m_pSprites = new MSpriteComponent(sprid, EMRenderType::eMRenderType_Object);
 
+	node.Release();
 	//m_vComponent.push_back(pSC);
 }
 void Mob::SetDirection(int dir)
 {
 	m_Direction = dir;
+}
+
+
+EMAnimType Mob::AnimTypeSetting(std::string& InAnim)
+{
+	for (int i = 0; i < EMAnimType::eMAnimType_Cnt; ++i)
+	{
+		if (!InAnim.find(ANIM_TYPE[i]))
+			return static_cast<EMAnimType>(i);
+	}
+
+	return EMAnimType::eMAnimType_Static;
 }
