@@ -11,6 +11,7 @@ public:
 	~ObjectMgr();
 
 	void Update(float _delta);
+	void Release();
 	
 	void SetObject(int _pryid, MObject* _obj);
 
