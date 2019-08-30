@@ -51,7 +51,7 @@ int CMapleStoryApp::CallCount = 0;
 ULONG_PTR gpToken;
 BOOL CMapleStoryApp::InitInstance()
 {
-
+	//_CrtSetBreakAlloc(28827);
 	//_CrtMemDumpAllObjectsSince(0);
 	
 	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
@@ -106,7 +106,10 @@ int CMapleStoryApp::ExitInstance()
 {
 	//TODO: 추가한 추가 리소스를 처리합니다.
 	SceneManager::GetInstance().Release();
-
+	ROAD->Release();
+	ROAD->DestoryInstance();
+	OBJMGR->Release();
+	OBJMGR->DestoryInstance();
 	BATCHRENDER->Clear();
 	BATCHRENDER->DestoryInstance();
 	SPRMGR->Release();

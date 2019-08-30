@@ -90,6 +90,11 @@ void ObjectMgr::Update(float _delta)
 	}
 }
 
+void ObjectMgr::Release()
+{
+	m_mObject.clear();
+}
+
 void ObjectMgr::SetObject(int _pryid, MObject* _obj)
 {
 	m_mObject.insert(std::make_pair(_pryid, _obj));
