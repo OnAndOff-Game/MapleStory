@@ -27,6 +27,7 @@ private:
 	// 사운드 부분
 public:
 	void InitSound();
+	void UpdateSound();
 	void LoadBackGroundSound(std::string BgmPath);
 	void LoadSound();
 	void PlaySound(int _type);

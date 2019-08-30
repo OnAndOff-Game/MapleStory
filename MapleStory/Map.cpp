@@ -35,7 +35,7 @@ Map::~Map()
 void Map::Init()
 {
 	// 100000000는 헤네시스 맵코드.
-	Load(101020000);
+	Load(100000000);
 }
 
 void Map::Load(int InMapCode)
@@ -94,13 +94,13 @@ void Map::Load(int InMapCode)
 		world->PortalData(Itr);
 	}
 
-	//Node life = mapNode[0]["life"];
-	//for (auto Itr = life.begin(); Itr; Itr++)
-	//{
-	//	std::string w = Itr["type"].GetValueString();
-	//	if(!Itr["type"].GetValueString().compare("m"))
-	//		world->EnemyData(Itr);
-	//}
+	Node life = mapNode[0]["life"];
+	for (auto Itr = life.begin(); Itr; Itr++)
+	{
+		std::string w = Itr["type"].GetValueString();
+		if(!Itr["type"].GetValueString().compare("m"))
+			world->EnemyData(Itr);
+	}
 
 	Node ladderRope = mapNode[0]["ladderRope"];
 	for (auto Itr = ladderRope.begin(); Itr; Itr++)
@@ -144,10 +144,10 @@ void Map::Update(float delta)
 		Itr->Update(delta);
 	}
 
-	//for (auto Itr : world->enemy)
-	//{
-	//	Itr->Update(delta);
-	//}
+	for (auto Itr : world->enemy)
+	{
+		Itr->Update(delta);
+	}
 }
 
 void Map::Release()

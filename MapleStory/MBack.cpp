@@ -32,6 +32,7 @@ void MBackground::Release()
 {
 	if (mAsset != nullptr)
 	{
+		mAsset->Release();
 		delete mAsset;
 		mAsset = nullptr;
 	}

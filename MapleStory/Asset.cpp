@@ -102,11 +102,11 @@ void Asset::Update(MObject* _obj, float _delta)
 
 		if (renderType == EMRenderType::eMRenderType_Object)
 		{
-		if (rect.X - rect.Width < Constants::SCREEN_SIZE_X &&
-			rect.X + rect.Width > 0 &&
-			rect.Y - rect.Height < Constants::SCREEN_SIZE_Y &&
-			rect.Y + rect.Height > 0)
-			BATCHRENDER->BatchDraw(renderType, img, rect, customPosition, zorder, alpha, red, fliping);
+			if (rect.X - rect.Width < Constants::SCREEN_SIZE_X &&
+				rect.X + rect.Width > 0 &&
+				rect.Y - rect.Height < Constants::SCREEN_SIZE_Y &&
+				rect.Y + rect.Height > 0)
+				BATCHRENDER->BatchDraw(renderType, img, rect, customPosition, zorder, alpha, red, fliping);
 		}
 		else
 		{
@@ -127,7 +127,9 @@ void Asset::Update(MObject* _obj, float _delta)
 
 	void Asset::Release()
 	{	
-
+		if (this->m_pCachedBitmap != nullptr)
+			delete m_pCachedBitmap;
+		BATCHRENDER->Clear();
 	}
 
 	void Asset::SetAlpha(float inAlpha)
@@ -168,10 +170,10 @@ void Asset::Update(MObject* _obj, float _delta)
 	Gdiplus::CachedBitmap* Asset::BmpToCahcedBmp(Gdiplus::Image * inImg, int inSizeX, int inSizeY)
 	{
 		CClientDC dc(theApp.m_pMainWnd);
-		Graphics G(dc);
+		Gdiplus::Graphics G(dc);
 
 		Bitmap* LocalBmp = new Bitmap(inSizeX, inSizeY, &G);
-		Graphics* LocalG = new Graphics(LocalBmp);
+		Gdiplus::Graphics* LocalG = new Gdiplus::Graphics(LocalBmp);
 		LocalBmp->RotateFlip(Rotate180FlipY);
 		LocalG->DrawImage(inImg, 0, 0, inSizeX, inSizeY);
 		CachedBitmap* cachedbmp = new CachedBitmap(LocalBmp, &G);

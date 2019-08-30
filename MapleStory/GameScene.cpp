@@ -25,9 +25,7 @@ void GameScene::Init()
 
 void GameScene::Update(float Delta)
 {
-	//player->Update(Delta);
-	//pMob->Update(Delta);
-	//pMob2->Update(Delta);
+	SoundManager->UpdateSound();
 	
 	if (KEY_DOWN(VK_ESCAPE))
 	{
@@ -37,7 +35,7 @@ void GameScene::Update(float Delta)
 	OBJMGR->Update(Delta);
 	map->Update(Delta);
 	//player->GetLadderRope(map->world->ladderRope);
-
+			
 
 	// Æ÷Å» ÀÌµ¿
 	if (GetAsyncKeyState('A'))

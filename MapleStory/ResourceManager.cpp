@@ -33,10 +33,7 @@ void ResourceManager::Release()
 	for (auto it : m_mAssetImg)
 	{
 		delete it.second;
-		it.second = nullptr;
 	}
-
-	m_mAssetImg.clear();
 }
 
 Image* ResourceManager::LoadAssetImg(std::string _name)
@@ -58,11 +55,16 @@ void ResourceManager::InitSound()
 	soundSystem->init(Sound_Cnt, FMOD_INIT_NORMAL, 0);
 }
 
+void ResourceManager::UpdateSound()
+{
+	soundSystem->update();
+}
+
 void ResourceManager::LoadBackGroundSound(std::string BgmPath)
 {
 	if (!curBgSound.compare(BgmPath))
 		return;
-	music[Sound_BackGround]->release();
+	soundChannel[Sound_BackGround]->stop();
 	curBgSound = BgmPath;
 	soundResult = soundSystem->createSound(curBgSound.c_str(), FMOD_LOOP_NORMAL, NULL, &music[Sound_BackGround]);
 }
@@ -70,7 +72,7 @@ void ResourceManager::LoadBackGroundSound(std::string BgmPath)
 void ResourceManager::LoadSound()
 {
 	const char* str[] = { 
-		"Sound/Bgm00/FloralLife.mp3",
+		"Sound/Bgm00/GoPicnic.mp3",
 		"Sound/Game/Portal.mp3",
 		"Sound/Game/Jump.mp3",
 		"Sound/Game/Jump.mp3" };
