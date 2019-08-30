@@ -127,10 +127,10 @@ void Asset::Update(MObject* _obj, float _delta)
 
 	void Asset::Release()
 	{	
-		if (m_pCachedBitmap != nullptr)
+	/*	if (m_pCachedBitmap != nullptr)
 		{
 			delete m_pCachedBitmap;
-		}
+		}*/
 	}
 
 	void Asset::SetAlpha(float inAlpha)

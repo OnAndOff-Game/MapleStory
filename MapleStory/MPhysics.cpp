@@ -10,20 +10,20 @@ bool GetIntersectPoint(const Gdiplus::PointF& AP1, const Gdiplus::PointF& AP2,
 {
 	double t;
 	double s;
-	double under = static_cast<double>(BP2.Y - BP1.Y) * (AP2.X - AP1.X) - static_cast<double>(BP2.X - BP1.X) * static_cast<double>(AP2.Y - AP1.Y);
+	double under = (BP2.Y - BP1.Y) * (AP2.X - AP1.X) - (BP2.X - BP1.X) * (AP2.Y - AP1.Y);
 	if (under == 0) return false;
 
-	double _t = static_cast<double>(BP2.X - BP1.X) * static_cast<double>(AP1.Y - BP1.Y) - static_cast<double>(BP2.Y - BP1.Y) * static_cast<double>(AP1.X - BP1.X);
-	double _s = static_cast<double>(AP2.X - AP1.X) * static_cast<double>(AP1.Y - BP1.Y) - static_cast<double>(AP2.Y - AP1.Y) * static_cast<double>(AP1.X - BP1.X);
+	double _t = (BP2.X - BP1.X) * (AP1.Y - BP1.Y) - (BP2.Y - BP1.Y) * (AP1.X - BP1.X);
+	double _s = (AP2.X - AP1.X) * (AP1.Y - BP1.Y) - (AP2.Y - AP1.Y) * (AP1.X - BP1.X);
 
 	t = _t / under;
 	s = _s / under;
 
-	if (t < 0.0 || t>1.0 || s < 0.0 || s>1.0) return false;
+	if (t < 0.0 || t > 1.0 || s < 0.0 || s > 1.0) return false;
 	if (_t == 0 && _s == 0) return false;
 
-	IP->X = AP1.X + t * static_cast<double>(AP2.X - AP1.X);
-	IP->Y = AP1.Y + t * static_cast<double>(AP2.Y - AP1.Y);
+	IP->X = AP1.X + t * (AP2.X - AP1.X);
+	IP->Y = AP1.Y + t * (AP2.Y - AP1.Y);
 
 	return true;
 }

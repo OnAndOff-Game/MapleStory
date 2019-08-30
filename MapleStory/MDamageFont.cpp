@@ -40,7 +40,7 @@ void MDamageFont::Update(float _delta)
 	m_dwTick += _delta;
 	int i = 0;
 
-	if (m_dwTick > 2000)
+	if (m_dwTick > ERARER_TIME)
 	{
 		m_dwTick = 0;
 
@@ -58,9 +58,9 @@ void MDamageFont::Update(float _delta)
 	{
 		Transform.Translation.X += 50;
 
-		if (m_dwTick > 1000)
+		if (m_dwTick > BLENDING_TIME)
 		{
-			m_pFont[it]->SetAlpha(1.0 - Lerp(0, 1, (m_dwTick - 1000) * 0.001));			
+			m_pFont[it]->SetAlpha(1.0 - Lerp(0, 1, (m_dwTick - BLENDING_TIME) * 0.001));
 		}
 
 		m_pFont[it]->Update(this, _delta);

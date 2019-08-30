@@ -9,12 +9,6 @@ bool AABBIntersectionSize(Gdiplus::Rect const& _a_rc, Gdiplus::Rect const& _b_rc
 	bool check = (_a_rc.X + _a_rc.Width < _b_rc.X) || (_b_rc.X + _b_rc.Width < _a_rc.X) ||
 		(_a_rc.Y + _a_rc.Height < _b_rc.Y) || (_b_rc.Y + _b_rc.Height < _a_rc.Y);
 	
-		//if (_a_rc.X + _a_rc.Width < _b_rc.X || _a_rc.X > _b_rc.X + _b_rc.Width)
-	//	return 0;
-
-	//if (_a_rc.Y + _a_rc.Height < _b_rc.Y || _a_rc.Y > _b_rc.Y + _b_rc.Height)
-	//	return 0;
-
 	return !check;
 }
 
@@ -53,8 +47,6 @@ void ObjectMgr::Update(float _delta)
 
 					if (AABBIntersectionSize(PlayerCollisionRect, *mrc) == true)
 					{
-						std::cout << pPlayer->GetPosition().X << "   " << pPlayer->GetPosition().Y << std::endl;
-
 						pPlayer->HitDamage(pMob->GetPushed());
 
 						break;	
@@ -75,17 +67,17 @@ void ObjectMgr::Update(float _delta)
 
 		else if (it.second->m_eObjType == EMObjType::eMObjType_PlayerSkill)
 		{
+			Mob* mob = nullptr;
+
 			for (auto& t : m_mObject)
 			{
 				if (t.second->m_eObjType == EMObjType::eMObjType_Mob)
 				{
-
+					
 				}
 			}
 		}
-
-		//std::cout << "y : "<< it.second->GetPosition().Y <<  std::endl;
-
+		
 		it.second->Update(_delta);
 	}
 }

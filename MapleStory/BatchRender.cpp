@@ -58,7 +58,8 @@ void BatchRender::BatchDraw(EMRenderType _type, Gdiplus::Image* _img, const Gdip
 		BatchUI.insert(element);
 }
 
-void BatchRender::BatchDraw(EMRenderType _type, Gdiplus::CachedBitmap* _cachedBitmap, const Gdiplus::Rect& _rect, const Gdiplus::Point& _origin, int _z, float _alpha, float _red, bool _flip)
+void BatchRender::BatchDraw(EMRenderType _type, Gdiplus::CachedBitmap* _cachedBitmap, 
+	const Gdiplus::Rect& _rect, const Gdiplus::Point& _origin, int _z, float _alpha, float _red, bool _flip)
 {
 	if (!bDraw)
 		Clear();
@@ -87,10 +88,8 @@ void BatchRender::BatchDraw(EMRenderType _type, Gdiplus::CachedBitmap* _cachedBi
 
 void BatchRender::Draw(Gdiplus::Graphics* _view)
 {
-	//std::cout << "BatchMap : " << BatchMap.size() << std::endl;
 	for (auto it : BatchMap)
 	{
-	//	if(it.z == 1)
 		Render(_view, it, true);
 	}
 
@@ -114,8 +113,6 @@ void BatchRender::DrawEnd()
 
 void BatchRender::Render(Gdiplus::Graphics* _view, const BatchElement& _element)
 {
-	//Gdiplus::Rect Dst(Size.X,Size.Y, m_pImg->GetWidth(), m_pImg->GetHeight());
-
 	DWORD Tick = GetTickCount64();
 	DWORD Delta = Tick - PreTick;
 	
@@ -153,12 +150,8 @@ void BatchRender::Render(Gdiplus::Graphics* _view, const BatchElement& _element)
 
 	else
 	{
-		//_view->DrawCachedBitmap(_element.cachedBitmap, _element.Pos.X - _element.Origin.X, _element.Pos.Y - _element.Origin.Y);
 		_view->DrawImage(_element.img, Gdiplus::Rect(_element.Pos.X - _element.Origin.X, _element.Pos.Y - _element.Origin.Y, _element.SizeX, _element.SizeY));
 	}
-
-//	if(Delta != 0)
-	//	std::cout << "½Ã°£ : " << Delta << std::endl;
 
 	PreTick = Tick;
 }
