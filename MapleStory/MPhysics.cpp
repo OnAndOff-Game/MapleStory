@@ -53,7 +53,7 @@ void MPhysics::Init()
 void MPhysics::Update(MObject* _obj, float _delta)
 {
 	int stab = 0;
-	float delta = _delta * CONVERT_SECOND * PHYSICS_EXACTVALUE;
+	float delta = _delta * CONVERT_SECOND * PHYSICS_EXACTVALUE * 5;
 
 	Gdiplus::PointF position(_obj->GetPosition().X, _obj->GetPosition().Y);
 	Gdiplus::PointF cross;

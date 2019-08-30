@@ -21,6 +21,8 @@ Node::Node(const char* fileName)
 	xmlDoc = new rapidxml::xml_document<char>();
 	xmlDoc->parse<0>(xmlFile->data());
 	node = xmlDoc->first_node();
+
+	// Release();
 }
 
 Node::~Node()
