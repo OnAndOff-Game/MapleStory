@@ -54,13 +54,40 @@ void BatchRender::BatchDraw(EMRenderType _type, Gdiplus::Image* _img, const Gdip
 		BatchUI.insert(element);
 }
 
+void BatchRender::BatchDraw(EMRenderType _type, Gdiplus::CachedBitmap* _cachedBitmap, const Gdiplus::Rect& _rect, const Gdiplus::Point& _origin, int _z, float _alpha, float _red, bool _flip)
+{
+	if (!bDraw)
+		Clear();
+
+	BatchElement element;
+
+	_rect.GetLocation(&element.Pos);
+	element.Origin = _origin;
+	element.SizeX = _rect.Width;
+	element.SizeY = _rect.Height;
+	element.alpha = _alpha;
+	element.red = _red;
+	element.bFlip = _flip;
+	element.z = _z;
+	element.cachedBitmap = _cachedBitmap;
+
+	if (_type == EMRenderType::eMRenderType_Map)
+		BatchMap.insert(element);
+
+	else if (_type == EMRenderType::eMRenderType_Object)
+		BatchObj.insert(element);
+
+	else if (_type == EMRenderType::eMRenderType_UI)
+		BatchUI.insert(element);
+}
+
 void BatchRender::Draw(Gdiplus::Graphics* _view)
 {
 	//std::cout << "BatchMap : " << BatchMap.size() << std::endl;
 	for (auto it : BatchMap)
 	{
 	//	if(it.z == 1)
-		Render(_view, it);
+		Render(_view, it, true);
 	}
 
 	for (auto it : BatchObj)
@@ -70,7 +97,7 @@ void BatchRender::Draw(Gdiplus::Graphics* _view)
 
 	for (auto it : BatchUI)
 	{
-		Render(_view, it);
+		Render(_view, it, true);
 	}
 
 	bDraw = true;
@@ -79,21 +106,6 @@ void BatchRender::Draw(Gdiplus::Graphics* _view)
 void BatchRender::DrawEnd()
 {
 	bDraw = false;
-}
-
-CachedBitmap* BatchRender::BmpToCahcedBmp(Gdiplus::Image* img, int SizeX, int SizeY)
-{
-	CClientDC dc(theApp.m_pMainWnd);
-	Graphics G(dc);
-
-	Bitmap* m_pBmp = new Bitmap(SizeX, SizeY, &G);
-	Graphics* pG = new Graphics(m_pBmp);
-	pG->DrawImage(img, 0, 0, SizeX, SizeY);
-	CachedBitmap* cachedbmp = new CachedBitmap(m_pBmp, &G);
-
-	delete pG;
-	delete m_pBmp;
-	return cachedbmp;
 }
 
 void BatchRender::Render(Gdiplus::Graphics* _view, const BatchElement& _element)
@@ -137,14 +149,19 @@ void BatchRender::Render(Gdiplus::Graphics* _view, const BatchElement& _element)
 
 	else
 	{
+		//_view->DrawCachedBitmap(_element.cachedBitmap, _element.Pos.X - _element.Origin.X, _element.Pos.Y - _element.Origin.Y);
 		_view->DrawImage(_element.img, Gdiplus::Rect(_element.Pos.X - _element.Origin.X, _element.Pos.Y - _element.Origin.Y, _element.SizeX, _element.SizeY));
-		//_view->DrawCachedBitmap(_element.cachedImg, _element.Pos.X - _element.Origin.X, _element.Pos.Y - _element.Origin.Y);
 	}
 
 //	if(Delta != 0)
 	//	std::cout << "½Ã°£ : " << Delta << std::endl;
 
 	PreTick = Tick;
+}
+
+void BatchRender::Render(Gdiplus::Graphics* _view, const BatchElement& _element, bool isCachedBitmap)
+{
+	_view->DrawCachedBitmap(_element.cachedBitmap, _element.Pos.X - _element.Origin.X, _element.Pos.Y - _element.Origin.Y);
 }
 
 

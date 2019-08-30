@@ -17,7 +17,7 @@ Map::Map(const char* fileName)
 {
 	std::string filePath = fileName;
 	world = new World();
-	mapNode = Node(filePath.c_str());
+	mapNode = new Node(filePath.c_str());
 
 
 	//pMob = new Mob("Mob/131.img.xml");
@@ -48,20 +48,21 @@ void Map::Load(int InMapCode)
 	filePath += ".img.xml";
 
 	// 해제
-	mapNode.Release();
-	mapNode = Node(filePath.c_str());
-	world->Clear();
+	world->Clear();	
+	if(mapNode !=nullptr)
+		mapNode->Release();
+	mapNode = new Node(filePath.c_str());
 	OBJMGR->Reset();
 	ROAD->GetInstance()->Release();
 
-	// 사운드 로드
-	Node info = mapNode["info"];
-	world->layer[0].info.bgm = info["bgm"].GetValueString();
-	std::string soundPath = "Sound/" + world->layer[0].info.bgm + ".mp3";
-	//SoundManager->LoadBackGroundSound(soundPath);
+	//// 사운드 로드
+	//Node info = mapNode[0]["info"];
+	//world->layer[0].info.bgm = info["bgm"].GetValueString();
+	//std::string soundPath = "Sound/" + world->layer[0].info.bgm + ".mp3";
+	////SoundManager->LoadBackGroundSound(soundPath);
 
-	// 맵의 사이즈
-	Node miniMap = mapNode["miniMap"];
+	////// 맵의 사이즈
+	Node miniMap = mapNode[0]["miniMap"];
 	world->centerPos.x = miniMap["centerX"].GetValueInt();
 	world->centerPos.y = miniMap["centerY"].GetValueInt();
 	world->mapSize.x = miniMap["width"].GetValueInt();
@@ -69,64 +70,62 @@ void Map::Load(int InMapCode)
 
 	for (int i = 0; i < LAYER_SIZE; i++)
 	{
-		Node info = mapNode[i]["info"]["tS"];
+		Node info = mapNode[0][i]["info"]["tS"];
 		if (!info.IsNull())
 		{
 			world->layer[i].info.tS = "Tile\\" + info.GetValueString() + ".img";
 		}
 
-		Node tile = mapNode[i]["tile"];
-
+		Node tile = mapNode[0][i]["tile"];
 		for (auto Itr = tile.begin(); Itr; Itr++)
 		{
 			world->TileData(Itr, i);
 		}
-		Node obj = mapNode[i]["obj"];
+		Node obj = mapNode[0][i]["obj"];
 		for (auto Itr = obj.begin(); Itr; Itr++)
 		{
 			world->ObjData(Itr, i);
 		}
 	}
 
-	Node portal = mapNode["portal"];
+	Node portal = mapNode[0]["portal"];
 	for (auto Itr = portal.begin(); Itr; Itr++)
 	{
 		world->PortalData(Itr);
 	}
 
-	Node life = mapNode["life"];
-	for (auto Itr = life.begin(); Itr; Itr++)
-	{
-		std::string w = Itr["type"].GetValueString();
-		if(!Itr["type"].GetValueString().compare("m"))
-			world->EnemyData(Itr);
-	}
+	//Node life = mapNode[0]["life"];
+	//for (auto Itr = life.begin(); Itr; Itr++)
+	//{
+	//	std::string w = Itr["type"].GetValueString();
+	//	if(!Itr["type"].GetValueString().compare("m"))
+	//		world->EnemyData(Itr);
+	//}
 
-	Node ladderRope = mapNode["ladderRope"];
+	Node ladderRope = mapNode[0]["ladderRope"];
 	for (auto Itr = ladderRope.begin(); Itr; Itr++)
 	{
 		world->LadderData(Itr);
 	}
 
-	// TODO : 아직 사용 안합니다.
-	//Node BackGround = mapNode["back"];
-	//for (auto o = BackGround.begin(); o; o = o++)
-	//{
-	//	world->BackData(o);
-	//}
+	Node BackGround = mapNode[0]["back"];
+	for (auto o = BackGround.begin(); o; o = o++)
+	{
+		world->BackData(o);
+	}
 
-	ROAD->LoadData(&mapNode["foothold"]);
+	ROAD->LoadData(&mapNode[0]["foothold"]);
 	SoundManager->PlaySound(Sound_BackGround);
-	mapNode.Release();
 }
 
 void Map::Update(float delta)
 {
-	//for (auto t : world->back)
-	//{
-	//	t->Update(delta);
-	//	break;
-	//}
+	for (auto t : world->background)
+	{
+		t->Update(delta);
+		if (t->BackData.type == 4)
+			break;;
+	}
 
 	for (int i = 0; i < LAYER_SIZE; i++)
 	{
@@ -161,7 +160,7 @@ void Map::Release()
 			delete Itr;
 		}
 	}
-	delete	world;
+	delete world;
 }
 
 void Map::PlayerInPortal(MCharacter* player)

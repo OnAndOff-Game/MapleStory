@@ -55,7 +55,8 @@ void ResourceManager::LoadBackGroundSound(std::string BgmPath)
 {
 	if (!curBgSound.compare(BgmPath))
 		return;
-	delete music[0];
+	music[Sound_BackGround]->release();
+
 	curBgSound = BgmPath;
 	soundResult = soundSystem->createSound(curBgSound.c_str(), SoundType::Sound_BackGround, NULL, &music[Sound_BackGround]);
 }
@@ -66,7 +67,7 @@ void ResourceManager::LoadSound()
 		"Sound/Bgm00/GoPicnic.mp3",
 		"Sound/Game/Jump.mp3",
 		"Sound/Game/Portal.mp3",
-		"Sound/Game/Portal.mp3" };
+		"Sound/Game/Jump.mp3" };
 
 	for (int i = 0; i < Sound_Cnt; i++)
 	{

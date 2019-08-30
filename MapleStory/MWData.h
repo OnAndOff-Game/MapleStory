@@ -45,6 +45,7 @@ struct BatchElement
 	int SizeX;
 	int SizeY;
 	Gdiplus::Image* img;
+	Gdiplus::CachedBitmap* cachedBitmap;
 
 	int z;
 	float alpha;

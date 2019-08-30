@@ -20,7 +20,8 @@ Node::Node(const char* fileName)
 	xmlFile = new rapidxml::file<char>(fileName);
 	xmlDoc = new rapidxml::xml_document<char>();
 	xmlDoc->parse<0>(xmlFile->data());
-	node = xmlDoc->first_node();
+
+	node = xmlDoc->first_node(); 
 }
 
 Node::~Node()
@@ -73,6 +74,16 @@ void Node::ChildList()
 
 void Node::Release()
 {
+	if (xmlDoc != nullptr)
+	{
+		delete xmlDoc;
+		xmlDoc = nullptr;
+	}
+	if (xmlFile != nullptr)
+	{
+		delete xmlFile;
+		xmlFile = nullptr;
+	}
 }
 
 

@@ -36,6 +36,9 @@ void MCharacter::Init()
 
 	m_pState = new StandingState();
 
+	m_nHp = 2500;
+	m_nHp = 3000;
+
 	//skills.push_back(new FlashJumpSkill());
 	m_pDF = new MDamageFont();
 }
@@ -70,7 +73,7 @@ void MCharacter::Update(float _delta)
 	physics->SetImgData(m_pSprites->GetCurrentImgData());
 
 	if (physics->IsJumping())
-		physics->SetVelocityX(Lerp(physics->GetVelocityX(), 0, _delta * 0.02));
+		physics->SetVelocityX(Lerp(physics->GetVelocityX(), 0, _delta * 0.01));
 
 	if (GetAsyncKeyState(VK_LCONTROL))
 	{

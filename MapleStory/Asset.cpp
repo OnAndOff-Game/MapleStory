@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "MapleStory.h"
 #include "Asset.h"
 
 Asset::Asset()
@@ -24,6 +25,8 @@ Asset::Asset(EMRenderType _type, const std::string& _assetname, int _z, bool _bi
 	Red = Alpha = 1.0f;
 	CustomPos.X = ImgSize.X / 2;
 	CustomPos.Y = ImgSize.Y / 2;
+
+	m_pCachedBitmap = BmpToCahcedBmp(m_pImg, ImgSize.X, ImgSize.Y);
 }
 
 Asset::Asset(EMRenderType _type, const std::string& _assetname, IMG_DATA const& _imgdata, bool _billboard)
@@ -43,7 +46,11 @@ Asset::Asset(EMRenderType _type, const std::string& _assetname, IMG_DATA const& 
 	ImgSize.X = rect.Width = m_pImg->GetWidth();
 	ImgSize.Y = rect.Height = m_pImg->GetHeight();
 	Red = Alpha = 1.0f;
+
+	m_pCachedBitmap = BmpToCahcedBmp(m_pImg,ImgSize.X,ImgSize.Y);
 }
+
+
 
 Asset::Asset(EMRenderType _type, const std::string& _imgname, Gdiplus::Rect& _size, int _z, bool _billboard)
 {
@@ -61,6 +68,8 @@ Asset::Asset(EMRenderType _type, const std::string& _imgname, Gdiplus::Rect& _si
 	Red = Alpha = 1.0f;
 	CustomPos.X = _size.Width / 2;
 	CustomPos.Y = _size.Height / 2;
+
+	m_pCachedBitmap = BmpToCahcedBmp(m_pImg, rect.Width, rect.Height);
 }
 
 Asset::~Asset()
@@ -89,12 +98,23 @@ void Asset::Update(MObject* _obj, float _delta)
 			rect.Y = _obj->Transform.Translation.Y + offsetPosition.Y;
 		}
 
-		if (rect.X - rect.Width < Constants::SCREEN_SIZE_X  &&
-			rect.X + rect.Width > 0 &&
-			rect.Y - rect.Height< Constants::SCREEN_SIZE_Y &&
-			rect.Y + rect.Height > 0)
-			BATCHRENDER->BatchDraw(m_eType, m_pImg, rect, CustomPos, z, Alpha, Red, bFlip);
+		if (m_eType == EMRenderType::eMRenderType_Object)
+		{
 
+			if (rect.X - rect.Width < Constants::SCREEN_SIZE_X &&
+				rect.X + rect.Width > 0 &&
+				rect.Y - rect.Height < Constants::SCREEN_SIZE_Y &&
+				rect.Y + rect.Height > 0)
+				BATCHRENDER->BatchDraw(m_eType, m_pImg, rect, CustomPos, z, Alpha, Red, bFlip);
+		}
+		else
+		{
+			if (rect.X - rect.Width < Constants::SCREEN_SIZE_X &&
+				rect.X + rect.Width > 0 &&
+				rect.Y - rect.Height < Constants::SCREEN_SIZE_Y &&
+				rect.Y + rect.Height > 0)
+				BATCHRENDER->BatchDraw(m_eType, m_pCachedBitmap, rect, CustomPos, z, Alpha, Red, bFlip);
+		}
 	}
 }
 
@@ -105,6 +125,16 @@ void Asset::Render(Gdiplus::Graphics* _memG)
 
 void Asset::Release()
 {
+	//if (m_pImg != nullptr)
+	//{
+	//	delete m_pImg;
+	//	m_pImg = nullptr;
+	//}
+	if (m_pCachedBitmap != nullptr)
+	{
+		delete m_pCachedBitmap;
+		m_pCachedBitmap = nullptr;
+	}
 }
 
 //void Asset::SetAssetData(const std::string& _assetname)
@@ -150,4 +180,20 @@ Gdiplus::Point& Asset::GetImgSize()
 Gdiplus::Rect& Asset::GetSize()
 {
 	return rect;
+}
+
+Gdiplus::CachedBitmap* Asset::BmpToCahcedBmp(Gdiplus::Image* img, int SizeX, int SizeY)
+{
+	CClientDC dc(theApp.m_pMainWnd);
+	Graphics G(dc);
+
+	Bitmap* m_pBmp = new Bitmap(SizeX, SizeY, &G);
+	Graphics* pG = new Graphics(m_pBmp);
+	m_pBmp->RotateFlip(Rotate180FlipY);
+	pG->DrawImage(img, 0, 0, SizeX, SizeY);
+	CachedBitmap* cachedbmp = new CachedBitmap(m_pBmp, &G);
+
+	delete pG;
+	delete m_pBmp;
+	return cachedbmp;
 }

@@ -39,7 +39,7 @@ public:
 	operator bool() const { return node ? true : false; }
 
 private:
-	rapidxml::xml_node<char>* node;
-	rapidxml::xml_document<char>* xmlDoc;
+	rapidxml::xml_node<>* node;
+	rapidxml::xml_document<>* xmlDoc;
 	rapidxml::file<>* xmlFile;
 };

@@ -181,9 +181,6 @@ void Mob::LoadData(const std::string& _filename)
 {
 	Node node = Node(_filename.c_str());
 
-	if (!node.IsNull())
-		return;
-
 	std::string sprname = _filename; // ¿Ã∏ß
 	sprname.replace(sprname.find(".xml"), 4, "");
 

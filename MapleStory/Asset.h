@@ -18,25 +18,24 @@ public:
 
 	void SetAlpha(float _alpha);
 	void SetRed(float _r);
-	void SetAlphablending();
 
 	void SetFlip(bool _flip) { bFlip = _flip; }
 
-	void SetRotate(bool _bRotate);
-	void SetDrawPoint();
-	void SetScale();
 	void SetOffset(Gdiplus::Point& InOffsetPosition);
 	
 	Gdiplus::Point& GetImgSize();
 	Gdiplus::Rect& GetSize();
-	Gdiplus::Rect& GetCollisionBounding();
 	
 
 private:
+	// 비트맵을 캐시비트맵으로 바꿔줍니다.
+	Gdiplus::CachedBitmap* BmpToCahcedBmp(Gdiplus::Image* img, int SizeX, int SizeY);
+
 
 	EMRenderType	m_eType;
 
 	Gdiplus::Image* m_pImg;
+	Gdiplus::CachedBitmap* m_pCachedBitmap;
 	Gdiplus::Point CustomPos;
 	Gdiplus::Point ImgSize;
 	Gdiplus::Point offsetPosition;

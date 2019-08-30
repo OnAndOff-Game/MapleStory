@@ -13,8 +13,8 @@ void GameScene::Init()
 	map = new Map(100000000);
 	map->Init();
 
-	pFont = new MDamageFont();
-	pFont->Init();
+	//pFont = new MDamageFont();
+	//pFont->Init();
 
 	player = new MCharacter("Mob/131.img.xml");
 	player->Init();
@@ -24,17 +24,17 @@ void GameScene::Init()
 	gameUI = new GameUI();
 	gameUI->Init();
 	
-	OBJMGR->SetObject(player->objectId.GetObjectId(), player);
+	//OBJMGR->SetObject(player->objectId.GetObjectId(), player);
 }
 
 void GameScene::Update(float Delta)
 {
-	//player->Update(Delta);
+	player->Update(Delta);
 	//pMob->Update(Delta);
 	//pMob2->Update(Delta);
 	
-	if (GetAsyncKeyState('F'))
-		pFont->SetDamage(4000, player->GetPosition());
+	//if (GetAsyncKeyState('F'))
+	//	pFont->SetDamage(4000, player->GetPosition());
 
 	pFont->Update(Delta);
 
@@ -46,6 +46,10 @@ void GameScene::Update(float Delta)
 	// Æ÷Å» ÀÌµ¿
 	if (GetAsyncKeyState('A'))
 		map->PlayerInPortal(player);
+	if (KEY_DOWN('Q'))
+	{
+		map->Load(100000000);
+	}
 
 
 	if (GetAsyncKeyState('O'))
@@ -70,12 +74,13 @@ void GameScene::Update(float Delta)
 	{
 		View::Target.X -= right;
 	}
-	View::CameraFollow(5 * Delta);
+	View::CameraFollow(3 * Delta);
 }
 
 
 void GameScene::Render(Gdiplus::Graphics* _memG)
 {
+	gameUI->Render(_memG);
 }
 
 void GameScene::Release()
