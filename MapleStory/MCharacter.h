@@ -50,6 +50,10 @@ public:
 	MPhysics* physics;
 	ObjectId objectId;
 
+	int m_nHp;
+	int m_nMp;
+	int m_nMaxHp;
+	int m_nMaxMp;
 private:
 	
 	//const MobInfo* m_pMobInfo;
@@ -74,9 +78,7 @@ private:
 
 	bool m_bDie;
 	bool bFalling;
-	   	 
-	int m_nHp;
-	int m_nMp;
+	   	
 
 	int skillCnt;
 	int attackCnt;

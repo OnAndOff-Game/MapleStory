@@ -1,6 +1,8 @@
 #include "pch.h"
+#include "Asset.h"
 #include "UIBackground.h"
 #include "UIGaugeBar.h"
+#include "MCharacter.h"
 #include "GameUI.h"
 
 GameUI::GameUI() : background{ nullptr },
@@ -19,6 +21,7 @@ void GameUI::Init()
 
 	background->Init();
 	gaugeBar->Init();
+	
 }
 
 void GameUI::Update(float _delta)
@@ -35,6 +38,12 @@ void GameUI::Render(Gdiplus::Graphics* _memG)
 	_memG->DrawString(L"58", -1, &font, Gdiplus::PointF(50.0f, 665.0f), &Brush);
 	_memG->DrawString(L"¸¶¹ý»ç", -1, &font, Gdiplus::PointF(120.0f, 650.0f), &Brush);
 	_memG->DrawString(L"Pinkbean", -1, &font, Gdiplus::PointF(120.0f,670.0f), &Brush);
+
+	CString playerInfoStr;
+	playerInfoStr.Format(_T("%d / %d"), playerHP, playerMaxHP);
+	_memG->DrawString(playerInfoStr, -1, &font, Gdiplus::PointF(335.0f, 650.0f), &Brush);
+	playerInfoStr.Format(_T("%d / %d"), playerMP, playerMaxMP);
+	_memG->DrawString(playerInfoStr, -1, &font, Gdiplus::PointF(485.0f, 650.0f), &Brush);
 }
 
 void GameUI::Release()
@@ -50,4 +59,12 @@ void GameUI::Release()
 		gaugeBar->Release();
 		delete gaugeBar;
 	}
+}
+
+void GameUI::GetPlayerInfo(MCharacter* player)
+{
+	playerHP = player->m_nHp;
+	playerMaxHP = player->m_nMaxHp;
+	playerMP = player->m_nMp;
+	playerMaxMP = player->m_nMaxMp;
 }

@@ -63,23 +63,22 @@ void ResourceManager::LoadBackGroundSound(std::string BgmPath)
 	if (!curBgSound.compare(BgmPath))
 		return;
 	music[Sound_BackGround]->release();
-
 	curBgSound = BgmPath;
-	soundResult = soundSystem->createSound(curBgSound.c_str(), SoundType::Sound_BackGround, NULL, &music[Sound_BackGround]);
+	soundResult = soundSystem->createSound(curBgSound.c_str(), FMOD_LOOP_NORMAL, NULL, &music[Sound_BackGround]);
 }
 
 void ResourceManager::LoadSound()
 {
 	const char* str[] = { 
-		"Sound/Bgm00/GoPicnic.mp3",
-		"Sound/Game/Jump.mp3",
+		"Sound/Bgm00/FloralLife.mp3",
 		"Sound/Game/Portal.mp3",
+		"Sound/Game/Jump.mp3",
 		"Sound/Game/Jump.mp3" };
 
 	for (int i = 0; i < Sound_Cnt; i++)
 	{
 		Sound* Temp;
-		soundResult = soundSystem->createSound(str[i], i, NULL, &Temp);
+		soundResult = soundSystem->createSound(str[i], FMOD_DEFAULT, NULL, &Temp);
 		if (soundResult == FMOD_RESULT::FMOD_OK)
 		{
 			music.push_back(Temp);
