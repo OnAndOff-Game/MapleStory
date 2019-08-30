@@ -5,7 +5,6 @@ class Asset;
 class Map;
 class Mob;
 class MCharacter;
-class MDamageFont;
 class GameUI;
 
 class GameScene : public Scene
@@ -21,6 +20,5 @@ public:
 private:
 	Map* map;
 	MCharacter* player;
-	MDamageFont* pFont;
 	GameUI* gameUI;
 };

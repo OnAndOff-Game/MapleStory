@@ -17,8 +17,7 @@ MDamageFont::~MDamageFont()
 }
 
 void MDamageFont::Init()
-{
-	   
+{	   
 	for (int i = 0; i < 10; ++i)
 	{
 		std::string path = "Font/101.";
@@ -80,6 +79,7 @@ void MDamageFont::Release()
 		{
 			m_pFont[i]->Release();
 			delete m_pFont[i];
+			m_pFont[i] = nullptr;
 		}
 	}
 

@@ -3,7 +3,7 @@
 #include "Asset.h"
 
 Asset::Asset() : img{ nullptr }, fliping{ false }, rendering{ true },
-red{ PERCENT_MAX }, alpha{ PERCENT_MAX }
+red{ PERCENT_MAX }, alpha{ PERCENT_MAX }, m_pCachedBitmap{ nullptr }
 {
 }
 
@@ -126,7 +126,11 @@ void Asset::Update(MObject* _obj, float _delta)
 	}
 
 	void Asset::Release()
-	{		
+	{	
+		if (m_pCachedBitmap != nullptr)
+		{
+			delete m_pCachedBitmap;
+		}
 	}
 
 	void Asset::SetAlpha(float inAlpha)
