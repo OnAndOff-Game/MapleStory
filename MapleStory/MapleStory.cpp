@@ -52,7 +52,7 @@ ULONG_PTR gpToken;
 BOOL CMapleStoryApp::InitInstance()
 {
 
-	//_CrtSetBreakAlloc(350);
+	//_CrtSetBreakAlloc(374);
 	//_CrtMemDumpAllObjectsSince(0);
 	
 	//_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);

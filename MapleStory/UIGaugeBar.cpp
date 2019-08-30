@@ -3,7 +3,8 @@
 #include "Asset.h"
 #include "UIGaugeBar.h"
 
-UIGaugeBar::UIGaugeBar()
+UIGaugeBar::UIGaugeBar() : gaugeBarSprite{ nullptr }, 
+gaugeBarGraduationSprite{ nullptr }
 {
 }
 
@@ -24,4 +25,19 @@ void UIGaugeBar::Update(float _delta)
 {
 	gaugeBarSprite->Update(this, _delta);
 	gaugeBarGraduationSprite->Update(this, _delta);
+}
+
+void UIGaugeBar::Release()
+{
+	if (gaugeBarSprite != nullptr)
+	{
+		gaugeBarSprite->Release();
+		delete gaugeBarSprite;
+	}
+
+	if (gaugeBarGraduationSprite != nullptr)
+	{
+		gaugeBarGraduationSprite->Release();
+		delete gaugeBarGraduationSprite;
+	}
 }

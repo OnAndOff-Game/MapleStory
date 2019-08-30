@@ -8,6 +8,7 @@ public:
 	virtual void Init() override;
 	virtual void LoadData(const std::string& _filename) override;
 	virtual void Update(float _delta) override;
+	void Release();
 
 private:
 	// baseBackgroundSprite[0] -> 채팅, 아이콘의 백그라운드
