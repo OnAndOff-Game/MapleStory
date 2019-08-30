@@ -14,4 +14,3 @@ private:
 	Asset* gaugeBarSprite; // 체력, 마력, 경험치의 게이지바 스프라이트
 	Asset* gaugeBarGraduationSprite; // 게이지바의 그라데이션 스프라이트
 };
-

@@ -13,7 +13,7 @@ public:
 	void Update(MObject* _obj, float _delta);
 	void Render(Gdiplus::Graphics* _memG);
 	void Release();
-	
+
 	void SetAlpha(float inAlpha);
 	void SetRed(float inRed);
 	
@@ -25,9 +25,14 @@ public:
 	Gdiplus::Rect& GetSize();
 	
 private:
+	// 비트맵을 캐시비트맵으로 바꿔줍니다.
+	Gdiplus::CachedBitmap* BmpToCahcedBmp(Gdiplus::Image* inImg, int inSizeX, int inSizeY);
+
+private:
 
 	EMRenderType	renderType;
 
+	Gdiplus::CachedBitmap* m_pCachedBitmap;
 	Gdiplus::Image* img;
 
 	Gdiplus::Rect rect;

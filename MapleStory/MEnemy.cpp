@@ -4,6 +4,7 @@
 
 MEnemy::MEnemy(const ENEMY& _lifedata)
 {
+	m_eObjType = EMObjType::eMObjType_Mob;
 	enemyData = _lifedata;
 	std::string filePath = "Mob/";
 	filePath += enemyData.id + ".img.xml";

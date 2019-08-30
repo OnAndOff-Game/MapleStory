@@ -42,7 +42,7 @@ void Maple::World::BackData(Node node)
 	std::string fileName = "back." + temp.no + ".png";
 
 	MBackground* pBack;
-	if (temp.type == 3)
+	if (temp.type == 4)
 		pBack = new MBackground(temp, new Asset(EMRenderType::eMRenderType_Map, path + '/' + fileName, Gdiplus::Rect(0, 0, Constants::SCREEN_SIZE_X, Constants::SCREEN_SIZE_Y), 0, true));
 	else
 		pBack = new MBackground(temp, new Asset(EMRenderType::eMRenderType_Map, path + '/' + fileName, 0));
@@ -67,7 +67,6 @@ void Maple::World::ObjData(Node node, int index)
 	std::string fileName = temp.l0 + "." + temp.l1 + "." + temp.l2 + ".0" + ".png";
 
 	TempObj* pTempObj = new TempObj(temp, new Asset(EMRenderType::eMRenderType_Map, path + '/' + fileName, index));
-
 	//SpriteManager->LoadResource(path.c_str());
 	pTempObj->SetPosition(temp.x, temp.y);
 	layer[index].obj.push_back(pTempObj);
@@ -76,6 +75,7 @@ void Maple::World::ObjData(Node node, int index)
 void Maple::World::TileData(Node node, int index)
 {
 	TILE temp;
+
 	temp.x = node["x"].GetValueInt();
 	temp.y = node["y"].GetValueInt();
 	temp.u = node["u"].GetValueString();
@@ -128,22 +128,22 @@ void Maple::World::EnemyData(Node node)
 {
 	ENEMY temp;
 	temp.type = node["type"].GetValueString();
-	if (!temp.type.compare("n")) return;
+	//if (!temp.type.compare("n")) return;
 	temp.id = "3230100";
-	temp.x = node["x"].GetValueInt();
-	temp.y = node["y"].GetValueInt();
+	//temp.x = node["x"].GetValueInt();
+	//temp.y = node["y"].GetValueInt();
 
-	//TODO : 지금은 사용하지 않습니다///////////////
-	//temp.id = o["id"].GetValueInt();
-	//temp.mobTime = o["mobTime"].GetValueInt();
-	//temp.f = o["f"].GetValueInt();
-	//temp.hide = o["hide"].GetValueInt();
-	//temp.fh = o["fh"].GetValueInt();
-	//temp.cy = o["cy"].GetValueInt();
-	////////////////////////////////////////////
+	////TODO : 지금은 사용하지 않습니다///////////////
+	////temp.id = o["id"].GetValueInt();
+	////temp.mobTime = o["mobTime"].GetValueInt();
+	////temp.f = o["f"].GetValueInt();
+	////temp.hide = o["hide"].GetValueInt();
+	////temp.fh = o["fh"].GetValueInt();
+	////temp.cy = o["cy"].GetValueInt();
+	//////////////////////////////////////////////
 
-	temp.movementLeft = node["rx0"].GetValueInt();
-	temp.movementRight = node["rx1"].GetValueInt();
+	//temp.movementLeft = node["rx0"].GetValueInt();
+	//temp.movementRight = node["rx1"].GetValueInt();
 
 	MEnemy* pEnemy = new MEnemy(temp);
 	pEnemy->Init();
@@ -188,9 +188,9 @@ void Maple::World::Clear()
 		}
 	}
 	background.clear();
+
 	footHold.clear();
-
-
+	
 	for (auto it : portal)
 	{
 		if (it != nullptr)
@@ -220,4 +220,5 @@ void Maple::World::Clear()
 		}
 	}	
 	ladderRope.clear();
+
 }

@@ -237,14 +237,8 @@
     <ClInclude Include="MParser.h">
       <Filter>Xml</Filter>
     </ClInclude>
-    <ClInclude Include="MEnemy.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="StandingState.h">
       <Filter>State</Filter>
-    </ClInclude>
-    <ClInclude Include="UICharacterInfo.h">
-      <Filter>Game\UI</Filter>
     </ClInclude>
     <ClInclude Include="UIGaugeBar.h">
       <Filter>Game\UI</Filter>
@@ -254,6 +248,9 @@
     </ClInclude>
     <ClInclude Include="UIBackground.h">
       <Filter>Game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="MEnemy.h">
+      <Filter>Map</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -416,9 +413,6 @@
     <ClCompile Include="MParser.cpp">
       <Filter>Xml</Filter>
     </ClCompile>
-    <ClCompile Include="MEnemy.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="UIGaugeBar.cpp">
       <Filter>Game\UI</Filter>
     </ClCompile>
@@ -428,8 +422,8 @@
     <ClCompile Include="UIBackground.cpp">
       <Filter>Game\UI</Filter>
     </ClCompile>
-    <ClCompile Include="UICharacterInfo.cpp">
-      <Filter>Game\UI</Filter>
+    <ClCompile Include="MEnemy.cpp">
+      <Filter>Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

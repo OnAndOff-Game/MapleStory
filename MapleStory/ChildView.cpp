@@ -61,17 +61,17 @@ void CChildView::OnPaint()
 	Gdiplus::SolidBrush whiteBrush(Gdiplus::Color(255, 51, 102, 204));
 	MemG.FillRectangle(&whiteBrush, 0, 0, rc.Width(), rc.Height());
 	// Scene 렌더
-	SceneManager::GetInstance().RenderScene(&MemG);
 
 	BATCHRENDER->Draw(&MemG);
 
 
 	ROAD->Render(&MemG);
 
-	CachedBitmap cB(&BackBuffer, &MainG);
+	SceneManager::GetInstance().RenderScene(&MemG);
+	//CachedBitmap cB(&BackBuffer, &MainG);
 
-	//MainG.DrawImage(&BackBuffer, 0, 0, rc.Width(), rc.Height());
-	MainG.DrawCachedBitmap(&cB, 0, 0);
+	MainG.DrawImage(&BackBuffer, 0, 0, rc.Width(), rc.Height());
+	//MainG.DrawCachedBitmap(&cB, 0, 0);
 
 	BATCHRENDER->DrawEnd();
 

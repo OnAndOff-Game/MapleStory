@@ -28,6 +28,7 @@ public:
 
 	void BatchDraw(EMRenderType _type, Gdiplus::Image* _img, const Gdiplus::Point& _pos, int _z, float _alpha = 1.0f, bool _flip = false);
 	void BatchDraw(EMRenderType _type, Gdiplus::Image* _img, const Gdiplus::Rect& _rect, const Gdiplus::Point& _origin, int _z, float _alpha = 1.0f, float _red = 1.0f, bool _flip = false);
+	void BatchDraw(EMRenderType _type, Gdiplus::CachedBitmap* _cachedBitmap, const Gdiplus::Rect& _rect, const Gdiplus::Point& _origin, int _z, float _alpha = 1.0f, float _red = 1.0f, bool _flip = false);
 
 
 	void Draw(Gdiplus::Graphics* _view);
@@ -36,10 +37,9 @@ public:
 	void Clear();
 
 private:
-	// 비트맵을 캐시비트맵으로 바꿔줍니다.
-	Gdiplus::CachedBitmap* BmpToCahcedBmp(Gdiplus::Image* img, int SizeX, int SizeY);
-
+	
 	void Render(Gdiplus::Graphics* _view, const BatchElement& _element);
+	void Render(Gdiplus::Graphics* _view, const BatchElement& _element, bool isCachedBitmap);
 
 private:
 

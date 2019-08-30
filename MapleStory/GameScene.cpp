@@ -33,8 +33,8 @@ void GameScene::Update(float Delta)
 	//pMob->Update(Delta);
 	//pMob2->Update(Delta);
 	
-	if (GetAsyncKeyState('F'))
-		pFont->SetDamage(4000, player->GetPosition());
+	//if (GetAsyncKeyState('F'))
+	//	pFont->SetDamage(4000, player->GetPosition());
 
 	if (KEY_DOWN(VK_ESCAPE))
 	{
@@ -51,7 +51,7 @@ void GameScene::Update(float Delta)
 	// Æ÷Å» ÀÌµ¿
 	if (GetAsyncKeyState('A'))
 		map->PlayerInPortal(player);
-	
+
 	if (GetAsyncKeyState('O'))
 		ROAD->DrawLine(true);
 	
@@ -75,12 +75,13 @@ void GameScene::Update(float Delta)
 		View::Target.X -= right;
 	}
 
-	View::CameraFollow(Delta);
+	View::CameraFollow(3 * Delta);
 }
 
 
 void GameScene::Render(Gdiplus::Graphics* _memG)
 {
+	gameUI->Render(_memG);
 }
 
 void GameScene::Release()

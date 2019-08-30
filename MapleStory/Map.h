@@ -19,7 +19,6 @@ public:
 	void Init();
 	void Load(int InMapCode);
 	void Update(float delta);
-	void Render(CDC* pDC);
 	void Release();
 
 	void PlayerInPortal(MCharacter* player);
@@ -31,7 +30,7 @@ private:
 	MCharacter* player;
 
 	Mob* pMob;
-	Node mapNode;
+	Node* mapNode;
 
 	Gdiplus::PointF Target;
 };
