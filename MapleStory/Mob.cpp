@@ -100,7 +100,7 @@ void Mob::SetComponent(Component* _pComp)
 
 int Mob::GetPushed()
 {
-	return 0;//m_MobInfo.pushed;
+	return 100;//m_MobInfo.pushed;
 }
 
 int Mob::GetPAtk()

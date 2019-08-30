@@ -13,7 +13,6 @@ public:
 	void LoadData(const std::string& _filename);
 	void Update(float _delta);
 	virtual void Update(MCharacter* player,float _delta);
-
 private:
 
 	//MSpriteComponent

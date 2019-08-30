@@ -36,8 +36,8 @@ void MCharacter::Init()
 
 	m_pState = new StandingState();
 
-	m_nHp = 2500;
-	m_nHp = 3000;
+	m_nHp = m_nMaxHp= 2500;
+	m_nMp = m_nMaxMp =3000;
 
 	//skills.push_back(new FlashJumpSkill());
 	m_pDF = new MDamageFont();
@@ -93,7 +93,7 @@ void MCharacter::Update(float _delta)
 			HandleInput(EMAnimType::eMAnimType_Jumping);
 			physics->SetVelocityY(-1.2);
 			physics->SetJumping(true);
-			SoundManager->PlaySound(1);
+			SoundManager->PlaySound(SoundType::Sound_Jump);
 		}
 	}
 

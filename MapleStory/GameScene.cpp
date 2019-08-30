@@ -51,6 +51,7 @@ void GameScene::Update(float Delta)
 
 	// 인게임 모든 HUD
 	gameUI->Update(Delta);
+	gameUI->GetPlayerInfo(player);
 
 	// 카메라 이동
 	View::Target = player->GetPosition();

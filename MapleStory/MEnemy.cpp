@@ -8,7 +8,7 @@ MEnemy::MEnemy(const ENEMY& _lifedata)
 	enemyData = _lifedata;
 	std::string filePath = "Mob/";
 	filePath += enemyData.id + ".img.xml";
-	std::cout << filePath << std::endl;
+	//std::cout << filePath << std::endl;
 	LoadData(filePath);
 }
 
