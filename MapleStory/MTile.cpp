@@ -37,6 +37,7 @@ void MTile::Release()
 {
 	if (mAsset != nullptr)
 	{
+		mAsset->Release();
 		delete mAsset;
 		mAsset = nullptr;
 	}

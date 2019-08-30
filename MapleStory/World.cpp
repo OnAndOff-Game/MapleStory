@@ -130,8 +130,8 @@ void Maple::World::EnemyData(Node node)
 	temp.type = node["type"].GetValueString();
 	//if (!temp.type.compare("n")) return;
 	temp.id = "3230100";
-	//temp.x = node["x"].GetValueInt();
-	//temp.y = node["y"].GetValueInt();
+	temp.x = node["x"].GetValueInt();
+	temp.y = node["y"].GetValueInt();
 
 	////TODO : 지금은 사용하지 않습니다///////////////
 	////temp.id = o["id"].GetValueInt();
@@ -142,8 +142,8 @@ void Maple::World::EnemyData(Node node)
 	////temp.cy = o["cy"].GetValueInt();
 	//////////////////////////////////////////////
 
-	//temp.movementLeft = node["rx0"].GetValueInt();
-	//temp.movementRight = node["rx1"].GetValueInt();
+	temp.movementLeft = node["rx0"].GetValueInt();
+	temp.movementRight = node["rx1"].GetValueInt();
 
 	MEnemy* pEnemy = new MEnemy(temp);
 	pEnemy->Init();
